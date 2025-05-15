@@ -1,12 +1,11 @@
 class ManutençãoPassageiros:
 
-    def __init__():
-        
-
+    def __init__(self):
+        pass
 
     def incluir():
         pass
-
+            
     def excluir():
         pass
 
