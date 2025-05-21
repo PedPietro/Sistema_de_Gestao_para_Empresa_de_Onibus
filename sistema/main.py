@@ -1,0 +1,1 @@
+#add funçao conecta bd aq no principal bbzudos
