@@ -26,8 +26,18 @@ class ManutençãoPassageiros:
         for p in 
 
     def buscar():
-        pass
+        id_passageiro = input("ID do passageiro a buscar:")
+        for p in passageiros:
+            if p["id"] == id_passageiro:
+                print(f"ID: {p['id']}, Nome: {p['nome']}, CPF: {p['cpf']}\n")
+                return
+            print("Passageiro não encontrado.\n")
 
     def listar():
-        pass
+        if not passageiros:
+            print("Nenhum passageiro cadastrado.\n")
+        else:
+            for p in passageiros:
+                print(f"ID: {p['id']}, Nome: {p['nome']}, CPF: {p['cpf']}\n")
+                print()
 
