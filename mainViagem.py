@@ -1,5 +1,5 @@
 import os
-from conectaBD import co
+from conectaBD import conexao
 
 def seletor(): # CRUD: Create Retrieve Update Delete
     opcao = 1
