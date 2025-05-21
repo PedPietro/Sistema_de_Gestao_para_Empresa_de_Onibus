@@ -1,16 +1,29 @@
 class ManutençãoPassageiros:
 
     def __init__(self):
-        pass
-
+        passageiros = []
+    
+     #lista que guarda os passageiros
     def incluir():
-        pass
+        id_passageiro = input("ID do passageiro: ")
+        nome = input("Nome: ")
+        cpf = input("CPF: ")
+        passageiro = {"id": id_passageiro, "nome": nome, "cpf": cpf}
+        passageiros.append(passageiro)
+        print("Passageiro incluido com sucesso!\n")
             
     def excluir():
-        pass
-
+        id_passageiro = input("ID do passageiro que deseja excluir: ")
+        for p in passageiros:
+            if p["id"] == id_passageiro:
+                passageiros.remove(p)
+                print("Passageiro excluido com sucesso!")
+                return
+        print("Passageiro não encontrado")
+            
     def alterar():
-        pass
+        id_passageiro = input("ID do passageiro que deseja alterar: ")
+        for p in 
 
     def buscar():
         pass
