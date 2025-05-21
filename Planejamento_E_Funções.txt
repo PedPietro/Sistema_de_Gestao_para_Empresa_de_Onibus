@@ -24,3 +24,7 @@ Programação: trabalhar por pair programmming (programação em pares/duplas)
 4. Prever momentos de demonstração do que tiver sido desenvolvido
 
 Entrega final: 12 de junho 
+
+
+
+ideia: fazer um programa principal onde nele vamos selecionar onde iremos mexer, que no caso serao as classes manutençao, vai ter um arquivo para cada classe e dentro dessa classe vai ter um segundo seletor com oq vamos fazer: incluir, excluir, alterar, buscar E listar.
