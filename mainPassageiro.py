@@ -1,5 +1,4 @@
 class ManutençãoPassageiros:
-
     def __init__(self):
         pass
 
