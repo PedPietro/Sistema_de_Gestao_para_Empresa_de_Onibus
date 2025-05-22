@@ -1,11 +1,13 @@
 class ManutençãoPassageiros:
     def __init__(self):
-        self.passageiros = []
+        self.passageiros = [] #lista q armazena os passageiros
         
     def incluir_passageiro(self):
+        #solicitando os dados do passageiro ao usuario
         id_passageiro = input("ID do passageiro: ")
         nome = input("Nome: ")
         cpf = input("CPF: ")
+        #criando um dicio
         passageiro = {"id": id_passageiro, "nome": nome, "cpf": cpf}
         self.passageiros.append(passageiro)
         print("Passageiro incluido com sucesso!\n")
