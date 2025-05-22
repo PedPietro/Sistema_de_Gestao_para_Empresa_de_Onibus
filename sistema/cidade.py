@@ -12,7 +12,7 @@ class ManutencaoCidade:
         print("Cidade incluída com sucesso!\n")
        
     def excluir(self):
-        print("Excluir")
+        print("Excluir motorista:")
 
     def alterar(self):
         pass
