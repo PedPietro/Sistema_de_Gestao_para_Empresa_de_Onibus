@@ -1,49 +1,108 @@
-class ManutençãoPassageiros:
+import os
+
+class ManutencaoPassageiros:
     def __init__(self):
-        self.passageiros = [] #lista q armazena os passageiros
-        
+        self.passageiros = []  # lista que armazena os passageiros
+
     def incluir_passageiro(self):
-        #solicitando os dados do passageiro ao usuario
-        id_passageiro = input("ID do passageiro: ")
-        nome = input("Nome: ")
-        cpf = input("CPF: ")
-        #criando um dicio
+        print("Incluir passageiro:")
+        id_passageiro = input("Digite o ID do passageiro: ")
+        nome = input("Digite o nome: ")
+        cpf = input("Digite o CPF: ")
         passageiro = {"id": id_passageiro, "nome": nome, "cpf": cpf}
         self.passageiros.append(passageiro)
-        print("Passageiro incluido com sucesso!\n")
-            
+        print("Passageiro incluído com sucesso!\n")
+
     def excluir_passageiro(self):
-        id_passageiro = input("ID do passageiro que deseja excluir: ")
+        print("Excluir passageiro:")
+        id_passageiro = input("Digite o ID do passageiro que deseja excluir: ")
+        encontrou = False
         for p in self.passageiros:
             if p["id"] == id_passageiro:
                 self.passageiros.remove(p)
-                print("Passageiro excluido com sucesso!")
-                return
-        print("Passageiro não encontrado")
-            
+                encontrou = True
+                print("Passageiro excluído com sucesso!\n")
+                break
+        if not encontrou:
+            print("Passageiro não encontrado.\n")
+
     def alterar_passageiro(self):
-        id_passageiro = input("ID do passageiro a alterar: ")
+        print("Alterar passageiro:")
+        id_passageiro = input("Digite o ID do passageiro a alterar: ")
+        encontrou = False
         for p in self.passageiros:
             if p["id"] == id_passageiro:
-                p["nome"] = input("Novo nome: ")
-                p["cpf"] = input("Novo CPF: ")
+                novo_nome = input("Digite o novo nome: ")
+                novo_cpf = input("Digite o novo CPF: ")
+                p["nome"] = novo_nome
+                p["cpf"] = novo_cpf
+                encontrou = True
                 print("Passageiro alterado com sucesso!\n")
-                return
-        print("Passageiro não encontrado.\n")
-                
+                break
+        if not encontrou:
+            print("Passageiro não encontrado.\n")
+
     def buscar_passageiro(self):
-        id_passageiro = input("ID do passageiro a buscar:")
+        print("Buscar passageiro:")
+        id_passageiro = input("Digite o ID do passageiro a buscar: ")
+        encontrou = False
         for p in self.passageiros:
             if p["id"] == id_passageiro:
-                print(f"ID: {p['id']}, Nome: {p['nome']}, CPF: {p['cpf']}\n")
-                return
+                print("ID:", p["id"])
+                print("Nome:", p["nome"])
+                print("CPF:", p["cpf"])
+                encontrou = True
+                break
+        if not encontrou:
             print("Passageiro não encontrado.\n")
 
     def listar_passageiro(self):
-        if not self.passageiros:
+        print("Lista de passageiros:")
+        if len(self.passageiros) == 0:
             print("Nenhum passageiro cadastrado.\n")
         else:
             for p in self.passageiros:
-                print(f"ID: {p['id']}, Nome: {p['nome']}, CPF: {p['cpf']}\n")
+                print("ID:", p["id"])
+                print("Nome:", p["nome"])
+                print("CPF:", p["cpf"])
                 print()
 
+def main():
+    sistema = ManutencaoPassageiros()
+    opcao = 1
+    while opcao != 0:
+        os.system("cls") or None
+        print("Menu de opções - Passageiros")
+        print("0. Terminar a execução do programa")
+        print("1. Incluir passageiro")
+        print("2. Excluir passageiro")
+        print("3. Alterar passageiro")
+        print("4. Buscar passageiro")
+        print("5. Listar passageiros")
+        print()
+        entrada = input("Digite a opção desejada: ")
+        if entrada.isdigit():
+            opcao = int(entrada)
+        else:
+            opcao = -1  # opção inválida
+
+        if opcao == 1:
+            sistema.incluir_passageiro()
+        elif opcao == 2:
+            sistema.excluir_passageiro()
+        elif opcao == 3:
+            sistema.alterar_passageiro()
+        elif opcao == 4:
+            sistema.buscar_passageiro()
+        elif opcao == 5:
+            sistema.listar_passageiro()
+        elif opcao == 0:
+            print("Encerrando o programa...")
+        else:
+            print("Opção inválida.\n")
+
+        if opcao != 0:
+            input("Tecle [Enter] para continuar...")
+
+if __name__ == "__main__":
+    main()

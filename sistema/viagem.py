@@ -1,6 +1,14 @@
+import os
 class viagem():
-    def __init__():
-        pass
+    def __init__(self):
+        self.status = "planejada"
     
-    def seletordeopcoes():
+    def Registroinicio(self):
+        self.status = "Em andamento"
+
+    def Registrofinal(self):
+        self.status = "Finalizada"
+    
+    def Liberarpassageirosevagas(self):
         pass
+        
