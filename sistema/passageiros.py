@@ -15,16 +15,16 @@ class ManutencaoPassageiros:
                 nome = input("Nome do Passageiro: ")
                 telefone = input("Cpf do Passageiro: ")
                 email = input("Email do Passageiro: ")
-    
+     
                 # montamos string com o comando Insert contendo os dados digitados:
                 sComando =  "insert into Passageiro " +\
                             " (cpf, nome, telefone, email)"+\
-                            "VALUES (?, ?, ?, ?)"
+                            "VALUES ("+cpf+", "+nome+", "+telefone+", "+email+")"
                 
                 # fazemos o cursor enviar ao servidor, para análise e execução,
                 # a string com o comando Insert acima
                 try: 
-                    meuCursor.execute(sComando,[cpf, nome, telefone, email])
+                    meuCursor.execute(sComando)
                     print("Passageiro incluído com sucesso!")
                 except: # em caso de erro
                     print("Não foi possível incluir. Pode haver Passageiro repetido.")
