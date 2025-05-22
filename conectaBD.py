@@ -1,4 +1,4 @@
-import pyodbc
+import pyodbc as bd
 
 conexao = None
 
