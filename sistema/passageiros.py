@@ -28,14 +28,56 @@ class ManutencaoPassageiros:
                     print("Passageiro incluído com sucesso!")
                 except: # em caso de erro
                     print("Não foi possível incluir. Pode haver Passageiro repetido.")
-    def excluir():
-        pass
+    def excluir(self):
+        print("Excluir passageiro:")
+        id_passageiro = input("Digite o ID do passageiro que deseja excluir: ")
+        encontrou = False
+        for p in self.passageiros:
+            if p["id"] == id_passageiro:
+                self.passageiros.remove(p)
+                encontrou = True
+                print("Passageiro excluído com sucesso!\n")
+                break
+        if not encontrou:
+            print("Passageiro não encontrado.\n")
 
-    def alterar():
-        pass
+    def alterar(self):
+        print("Alterar passageiro:")
+        id_passageiro = input("Digite o ID do passageiro a alterar: ")
+        encontrou = False
+        for p in self.passageiros:
+            if p["id"] == id_passageiro:
+                novo_nome = input("Digite o novo nome: ")
+                novo_cpf = input("Digite o novo CPF: ")
+                p["nome"] = novo_nome
+                p["cpf"] = novo_cpf
+                encontrou = True
+                print("Passageiro alterado com sucesso!\n")
+                break
+        if not encontrou:
+            print("Passageiro não encontrado.\n")
     
-    def buscar():
-        pass
+    def buscar(self):
+        print("Buscar passageiro:")
+        id_passageiro = input("Digite o ID do passageiro a buscar: ")
+        encontrou = False
+        for p in self.passageiros:
+            if p["id"] == id_passageiro:
+                print("ID:", p["id"])
+                print("Nome:", p["nome"])
+                print("CPF:", p["cpf"])
+                encontrou = True
+                break
+        if not encontrou:
+            print("Passageiro não encontrado.\n")
 
-    def listar():
-        pass
+    def listar(self):
+        print("Lista de passageiros:")
+        if len(self.passageiros) == 0:
+            print("Nenhum passageiro cadastrado.\n")
+        else:
+            for p in self.passageiros:
+                print("ID:", p["id"])
+                print("Nome:", p["nome"])
+                print("CPF:", p["cpf"])
+                print()
