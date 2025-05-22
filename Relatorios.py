@@ -29,7 +29,7 @@ class Relatorios:
             ORDER BY pa.assento
             """
 
-            resultado = self.cursor.execute(consulta, id_viagem)fetchall()
+            resultado = self.cursor.execute(consulta, id_viagem)()
 
             if not resultado:
                 print("Nenhum passageiro encontrado para esta viagem.") 
@@ -42,7 +42,7 @@ class Relatorios:
                 nome, cpf, assento, data_hora = linha
                 print(f"{nome:<20}{cpf:<7}{assento:<7}{data_hora}")
 
-            except Exception as e:
+        except Exception as e:
             print("Erro ao gerar relátorio:", e)
             
         
