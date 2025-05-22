@@ -13,6 +13,18 @@ class ManutencaoCidade:
        
     def excluir(self):
         print("Excluir motorista:")
+        id_motorista = input("Digite o ID do motorista que deseja excluir:")
+
+        encontrou = False
+        for m in self.motoristas:
+            if m ["id"] == id_motorista:
+                self.motoristas.remove(m)
+
+        encontrou = True
+        print("Motorista exclúido com sucesso!\n")
+        break
+    if not encontrou:
+        print("Motorista não encontrado.\n")
 
     def alterar(self):
         pass
