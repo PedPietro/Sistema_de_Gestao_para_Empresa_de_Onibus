@@ -40,6 +40,6 @@ class Relatorios:
             print("-" * 60)
             for linha in resultado:
                 nome, cpf, assento, data_hora = linha
-                print(f"{nome:<20}{cpf:<7}{assento:<20}")
+                print(f"{nome:<20}{cpf:<7}{assento:<7}{}")
             
         
