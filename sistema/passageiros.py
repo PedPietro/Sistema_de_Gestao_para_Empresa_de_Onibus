@@ -1,7 +1,7 @@
-class ManutencaoPassageiros:
-    def incluir():
-        pass
 
+class ManutencaoPassageiros:
+    def incluir():              # Salva os dados do formulário (incluídos ou editados) no banco de dados
+            cursor.excute
     def excluir():
         pass
 
