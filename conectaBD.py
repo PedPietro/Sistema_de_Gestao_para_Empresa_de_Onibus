@@ -1,19 +1,20 @@
-import pyodbc
+import pyodbc as bd
+import os 
+import getpass as gp
 
-conexao = None
-
-def conectar(ra: str, senha: str):
+def conectouAoBancoDeDados() -> bool: # informará se conseguiu ou não conectar
     global conexao
+    os.system('cls') or None
+    senha = gp.getpass("Digite a senha do seu banco de dados:") # pede a senha
     try:
-        conexao = pyodbc.connect(
-            driver="{SQL Server}",
-            server="regulus.cotuca.unicamp.br",
-            database=f"BD:{ra}",
-            uid=f"BB{ra}",
-            pwd=senha
-        )
-        print("conexão com o banco de dados estabelecida com sucesso!")
+        conexao = bd.connect(driver="{SQL Server}",
+                             server="regulus.cotuca.unicamp.br",
+                             database="u24147",
+                             uid="u24147",     # seu username no servidor de BD
+                             pwd=f"{senha}")    # substitui variável senha 
+                                                # pela senha digitada
+        print("Conexão bem sucedida!")
         return True
-    except Exception as erro:
-        print("ERRO ao conectar ao banco de dados:", erro)
+    except:
+        print("Não foi possível conectar ao banco de dados")
         return False
