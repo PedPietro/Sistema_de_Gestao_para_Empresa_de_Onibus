@@ -12,26 +12,26 @@ def seletorDeOpcoes():
     
     opcao = str(input("Escolha: "))
     match opcao:
-        case "1": op1()
-        case "2": op2()
-        case "3": op3()
-        case "4": op4()
+        case "1": cadastropassageiros()
+        case "2": cadastroviagens()
+        case "3": vendapassagens()
+        case "4": registroinicioefinal()
         
     espera = input("Pressione Enter para finalizar...")
     print("Obrigado pelo uso!")
     
     
-def op1():
+def cadastropassageiros():
     pass
     
-def op2():
+def cadastroviagens():
     pass
     
-def op3():
+def vendapassagens():
     pass
     
     
-def op4():
+def registroinicioefinal():
     #Registro de inicio e de final de viagem, liberando passageiros e vagas
     os.system('cls') or None
     print("Selecione uma opção:")
