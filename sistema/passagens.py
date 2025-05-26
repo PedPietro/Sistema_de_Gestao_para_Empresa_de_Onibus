@@ -2,7 +2,11 @@ class ManutencaoPassagens:
     def __init__(self):
         self.passagens = []  # lista que armazena as passagens
 
+<<<<<<< HEAD
     def vender(self):
+=======
+    def vendapassagens(self):
+>>>>>>> d5476b0ca3c5081bdc4419bae8b7f447140ff803
         print("Incluir passagem:")
         id_passagem = input("Digite o ID da passagem: ")
         id_passageiro = input("Digite o ID do passageiro: ")
