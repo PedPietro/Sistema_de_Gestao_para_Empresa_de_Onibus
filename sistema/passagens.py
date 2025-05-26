@@ -2,7 +2,7 @@ class ManutencaoPassagens:
     def __init__(self):
         self.passagens = []  # lista que armazena as passagens
 
-    def incluir(self):
+    def vender(self):
         print("Incluir passagem:")
         id_passagem = input("Digite o ID da passagem: ")
         id_passageiro = input("Digite o ID do passageiro: ")
@@ -21,36 +21,15 @@ class ManutencaoPassagens:
         self.passagens.append(passagem)
         print("Passagem incluída com sucesso!\n")
 
-    def excluir(self):
-        print("Excluir passagem:")
-        id_passagem = input("Digite o ID da passagem que deseja excluir: ")
+    def cancelar(self):
+        print("Cancelar passagem:")
+        id_passagem = input("Digite o ID da passagem que deseja cancelar: ")
         encontrou = False
         for p in self.passagens:
             if p["id"] == id_passagem:
                 self.passagens.remove(p)
                 encontrou = True
-                print("Passagem excluída com sucesso!\n")
-                break
-        if not encontrou:
-            print("Passagem não encontrada.\n")
-
-    def alterar(self):
-        print("Alterar passagem:")
-        id_passagem = input("Digite o ID da passagem a alterar: ")
-        encontrou = False
-        for p in self.passagens:
-            if p["id"] == id_passagem:
-                novo_passageiro = input("Digite o novo ID do passageiro: ")
-                nova_viagem = input("Digite o novo ID da viagem: ")
-                novo_assento = input("Digite o novo número do assento: ")
-                novo_preco = input("Digite o novo valor da passagem: ")
-
-                p["passageiro"] = novo_passageiro
-                p["viagem"] = nova_viagem
-                p["assento"] = novo_assento
-                p["preco"] = novo_preco
-                encontrou = True
-                print("Passagem alterada com sucesso!\n")
+                print("Passagem cancelar com sucesso!\n")
                 break
         if not encontrou:
             print("Passagem não encontrada.\n")
@@ -83,3 +62,6 @@ class ManutencaoPassagens:
                 print("Assento:", p["assento"])
                 print("Preço:", p["preco"])
                 print()
+
+    def disponibilidade(self):
+        pass

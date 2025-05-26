@@ -4,6 +4,11 @@ import pyodbc as bd
 import getpass as gp
 
 class ManutencaoPassageiros:
+
+    def __init__(self):
+        self.passageiros = [] # vetor que guarda os passageiros
+    
+
     def incluir():              # Salva os dados do formulário (incluídos ou editados) no banco de dados
         meuCursor = conexao.cursor() # cria um cursor, objeto de comandos de SQL
         cpf = 1

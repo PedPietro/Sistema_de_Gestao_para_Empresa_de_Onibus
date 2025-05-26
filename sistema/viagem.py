@@ -1,5 +1,18 @@
 import os
-class viagem():
+class Viagem():
+
+    def excluir():
+        pass
+
+    def alterar():
+        pass
+
+    def buscar():
+        pass
+
+    def listar():
+        pass
+
     def __init__(self):
         self.status = "planejada"
     
