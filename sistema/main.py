@@ -1,6 +1,10 @@
 #add funçao conecta bd aq no principal bbzudos
-from viagem import viagem
-import os
+import os 
+from passageiros import ManutencaoPassageiros
+from onibus import ManutencaoOnibus
+from passagens import ManutencaoPassagens
+from viagem import Viagem
+from motorista import ManutencaoMotorista
 def seletorDeOpcoes():
     print("Em qual sistema vc deseja mexer?")
     print("1 - Cadastro de Passageiros")
@@ -17,19 +21,76 @@ def seletorDeOpcoes():
         case "3": vendapassagens()
         case "4": registroinicioefinal()
         
-    espera = input("Pressione Enter para finalizar...")
+    opcao = input("Pressione Enter para finalizar...")
     print("Obrigado pelo uso!")
     
     
 def cadastropassageiros():
-    pass
+    #Manutenção passageiros, excluir, alterar, buscar e listar
+    os.system('cls') or None
+    print("Selecione uma opção:")
+    print("0 - Finalizar")
+    print("1 - Excluir Passageiros")
+    print("2 - Alterar Passageiros")
+    print("3 - Buscar Passageiros")
+    print("4 - Listar Passageiros")
+            
+    escolha = str (input("Escolha: "))
+    passageiros = ManutencaoPassageiros()
+    match escolha:
+        case "1": passageiros.excluir()
+        case "2": passageiros.alterar()
+        case "3": passageiros.buscar()
+        case "4": passageiros.listar()
+
+    escolha = input("Pressione Enter para finalizar...")
+    print("Obrigado pelo uso!")
+        
+        
+                
     
 def cadastroviagens():
-    pass
+    #Manutenção viagem, excluir, alterar, buscar e listar
+    os.system('cls') or None
+    print("Selecione uma opção:")
+    print("0 - Finalizar")
+    print("1 - Excluir Viagem")
+    print("2 - Alterar Viagem")
+    print("3 - Buscar Viagem")
+    print("4 - Listar Viagem")
+            
+    escolha = str (input("Escolha: "))
+    viagem = Viagem()
+    match escolha:
+        case "1": viagem.excluir()
+        case "2": viagem.alterar()
+        case "3": viagem.buscar()
+        case "4": viagem.listar()
+        
+    escolha = input("Pressione Enter para finalizar...")
+    print("Obrigado pelo uso!")
+        
     
 def vendapassagens():
-    pass
-    
+    #Manutenção passagens, excluir, alterar, buscar e listar
+    os.system('cls') or None
+    print("Selecione uma opção:")
+    print("0 - Finalizar")
+    print("1 - Vender Passagens")
+    print("2 - Cancelar Passageiros")
+    print("3 - Buscar Passageiros")
+    print("4 - Listar Passagens")
+    print("5 - Verificar Disponibilidade")
+            
+    escolha = str (input("Escolha: "))
+    passagens = ManutencaoPassagens()
+    match escolha:
+        case "1": passagens.vender()
+        case "2": passagens.cancelar()
+        case "3": passagens.buscar()
+        case "4": passagens.listar()
+        case "5": passagens.disponibilidade
+        
     
 def registroinicioefinal():
     #Registro de inicio e de final de viagem, liberando passageiros e vagas
@@ -41,13 +102,13 @@ def registroinicioefinal():
     print("3 - Liberar Passageiros e Vagas")
             
     escolha = str (input("Escolha: "))
-    passageiros = viagem()
+    viagem = Viagem()
     match escolha:
-        case "1": passageiros.Registroinicio()
-        case "2": passageiros.Registrofinal()
-        case "3": passageiros.Liberarpassageirosevagas()
+        case "1": viagem.Registroinicio
+        case "2": viagem.Registrofinal()
+        case "3": viagem.Liberarpassageirosevagas()
                 
-    espera = input("Pressione Enter para finalizar...")
+    escolha = input("Pressione Enter para finalizar...")
     print("Obrigado pelo uso!")
         
         
