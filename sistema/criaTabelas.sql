@@ -19,7 +19,7 @@ CREATE TABLE Passageiro (
     cpf char(11) PRIMARY KEY,
     nome varchar(50),
     telefone varchar(15),
-    dataNascimento datetime,
+    dataNascimento date,
     email varchar(100)
 )
 
