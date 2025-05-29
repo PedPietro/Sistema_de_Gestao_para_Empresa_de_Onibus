@@ -1,19 +1,13 @@
 import os
-from conectaBD import conexao
+from conectaBD import conectouAoBancoDeDados() as conexao
 import pyodbc as bd
 import getpass as gp
 
 class ManutencaoPassageiros:
-<<<<<<< HEAD
-
     def __init__(self):
         self.passageiros = [] # vetor que guarda os passageiros
-    
 
-    def incluir():              # Salva os dados do formulário (incluídos ou editados) no banco de dados
-=======
     def cadastropassageiros():              # Salva os dados do formulário (incluídos ou editados) no banco de dados
->>>>>>> d5476b0ca3c5081bdc4419bae8b7f447140ff803
         meuCursor = conexao.cursor() # cria um cursor, objeto de comandos de SQL
         cpf = 1
         while cpf != 0:
