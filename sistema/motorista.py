@@ -2,14 +2,15 @@ class ManutencaoMotorista:
     def __init__(self):
         self.motoristas = []  # lista que armazena os motoristas
 
-    def incluir(self):
+    #Chico Pediu Para Não Incluir Os Dados Na Tabela Por Python
+    '''def incluir(self):
         print("Incluir motorista:")
         id_motorista = input("Digite o ID do motorista: ")
         nome = input("Digite o nome do motorista: ")
         cnh = input("Digite o número da CNH: ")
         motorista = {"id": id_motorista, "nome": nome, "cnh": cnh}
         self.motoristas.append(motorista)
-        print("Motorista incluído com sucesso!\n")
+        print("Motorista incluído com sucesso!\n")'''
 
     def excluir(self):
         print("Excluir motorista:")
