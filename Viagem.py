@@ -1,5 +1,5 @@
 import os
-from conectaBD import conexao
+from sistema.conectaBD import conexao
 import pyodbc as bd
 import getpass as gp
 

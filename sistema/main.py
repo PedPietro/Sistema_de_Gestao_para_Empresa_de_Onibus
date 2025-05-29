@@ -1,10 +1,8 @@
 #add funçao conecta bd aq no principal bbzudos
 import os 
 from passageiros import ManutencaoPassageiros
-from onibus import ManutencaoOnibus
 from passagens import ManutencaoPassagens
 from viagem import Viagem
-from motorista import ManutencaoMotorista
 def seletorDeOpcoes():
     print("Em qual sistema vc deseja mexer?")
     print("1 - Cadastro de Passageiros")
@@ -85,11 +83,11 @@ def vendapassagens():
     escolha = str (input("Escolha: "))
     passagens = ManutencaoPassagens()
     match escolha:
-        case "1": passagens.vender()
+        case "1": passagens.vendapassagens()
         case "2": passagens.cancelar()
         case "3": passagens.buscar()
         case "4": passagens.listar()
-        case "5": passagens.disponibilidade
+        case "5": passagens.disponibilidade()
         
     
 def registroinicioefinal():
@@ -104,7 +102,7 @@ def registroinicioefinal():
     escolha = str (input("Escolha: "))
     viagem = Viagem()
     match escolha:
-        case "1": viagem.Registroinicio
+        case "1": viagem.Registroinicio()
         case "2": viagem.Registrofinal()
         case "3": viagem.Liberarpassageirosevagas()
                 
