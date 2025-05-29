@@ -1,4 +1,4 @@
-1 - Tabela UF
+--1 - Tabela UF
 
 INSERT INTO UF (siglaUF, nomeUF) VALUES 
 ('SP', 'São Paulo'),
@@ -7,7 +7,7 @@ INSERT INTO UF (siglaUF, nomeUF) VALUES
 ('MS', 'Mato Grosso do Sul');
 
 
-2 - Tabela Cidade
+--2 - Tabela Cidade
 
 INSERT INTO Cidade (nome, endereco_terminal, siglaUF) VALUES 
 ('Campinas', 'Terminal Barão Geraldo', 'SP'),
@@ -15,7 +15,7 @@ INSERT INTO Cidade (nome, endereco_terminal, siglaUF) VALUES
 ('Campo Grande', 'Terminal Campo Grande', 'MS');
 
 
-3 - Tabela Motorista
+--3 - Tabela Motorista
 
 INSERT INTO Motorista (nome) VALUES 
 ('Carlos Silva'),
@@ -23,7 +23,7 @@ INSERT INTO Motorista (nome) VALUES
 ('João Pereira');
 
 
-4 - Tabela Onibus
+--4 - Tabela Onibus
 
 INSERT INTO Onibus (capacidade, marca, modelo, idMotorista) VALUES 
 (50, 'Mercedes', 'OF-1721', 1),
@@ -31,7 +31,7 @@ INSERT INTO Onibus (capacidade, marca, modelo, idMotorista) VALUES
 (36, 'Scania', 'K310', 3);
 
 
-5 - Tabela Passageiro
+--5 - Tabela Passageiro
 
 INSERT INTO Passageiro (cpf, nome, telefone, dataNascimento, email) VALUES 
 ('12345678901', 'Ana Souza', '11987654321', '1990-05-10', 'ana@gmail.com'),
@@ -39,7 +39,7 @@ INSERT INTO Passageiro (cpf, nome, telefone, dataNascimento, email) VALUES
 ('34567890123', 'Juliana Costa', '11991234567', '1995-03-15', 'juliana@gmail.com');
 
 
-6 - Tabela Viagem
+--6 - Tabela Viagem
 
 INSERT INTO Viagem (distancia, custo, idCidadeOrigem, idCidadeDestino) VALUES 
 (100, 80.00, 1, 2), -- Campinas -> São Paulo
@@ -47,7 +47,7 @@ INSERT INTO Viagem (distancia, custo, idCidadeOrigem, idCidadeDestino) VALUES
 (100, 85.00, 3, 1); -- Campo Grande -> Campinas
 
 
-7 - Tabela Passagem
+--7 - Tabela Passagem
 
 INSERT INTO Passagem (assento, data_e_hora, idOnibus, cpf, idViagem) VALUES 
 (12, '2025-05-20T10:00:00', 1, '12345678901', 1),
