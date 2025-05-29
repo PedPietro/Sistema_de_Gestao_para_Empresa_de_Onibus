@@ -1,5 +1,5 @@
 import os
-from conectaBD import conectouAoBancoDeDados() as conexao
+from conectaBD import conectouAoBancoDeDados as conexao
 import pyodbc as bd
 import getpass as gp
 
