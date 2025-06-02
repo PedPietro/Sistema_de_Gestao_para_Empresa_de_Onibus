@@ -16,7 +16,8 @@ CREATE TABLE Onibus (
 );
 
 CREATE TABLE Passageiro (
-    cpf char(11) PRIMARY KEY,
+	idPassageiro int primary key identity,
+    cpf char(11),
     nome varchar(50),
     telefone varchar(15),
     dataNascimento date,
@@ -56,7 +57,7 @@ CREATE TABLE Passagem (
     assento int,
     data_e_hora datetime,
     idOnibus int,
-    cpf char(11),
+    idPassageiro int,
     idViagem int
 )
 
@@ -76,8 +77,8 @@ ALTER TABLE Passagem ADD CONSTRAINT FK_Passagem_2
     ON DELETE CASCADE;
  
 ALTER TABLE Passagem ADD CONSTRAINT FK_Passagem_3
-    FOREIGN KEY (cpf)
-    REFERENCES Passageiro (cpf);
+    FOREIGN KEY (idPassageiro)
+    REFERENCES Passageiro (idPassageiro);
  
 ALTER TABLE Passagem ADD CONSTRAINT FK_Passagem_4
     FOREIGN KEY (idViagem)
@@ -90,3 +91,71 @@ select * from Onibus
 select * from UF
 select * from Cidade
 select * from Motorista
+
+
+
+--1 - Tabela UF
+
+INSERT INTO UF (siglaUF, nomeUF) VALUES 
+('SP', 'São Paulo'),
+('RJ', 'Rio de Janeiro'),
+('MG', 'Minas Gerais'),
+('MS', 'Mato Grosso do Sul');
+
+
+--2 - Tabela Cidade
+
+INSERT INTO Cidade (nome, endereco_terminal, siglaUF) VALUES 
+('Campinas', 'Terminal Barão Geraldo', 'SP'),
+('São Paulo', 'Terminal Centro', 'SP'),
+('Campo Grande', 'Terminal Campo Grande', 'MS');
+
+
+--3 - Tabela Motorista
+
+INSERT INTO Motorista (nome) VALUES 
+('Carlos Silva'),
+('Maria Oliveira'),
+('João Pereira');
+
+
+--4 - Tabela Onibus
+
+INSERT INTO Onibus (capacidade, marca, modelo, idMotorista) VALUES 
+(50, 'Mercedes', 'OF-1721', 1),
+(42, 'Volvo', 'B270F', 2),
+(36, 'Scania', 'K310', 3);
+
+
+--5 - Tabela Passageiro
+
+INSERT INTO Passageiro (cpf, nome, telefone, dataNascimento, email) VALUES 
+('12345678901', 'Ana Souza', '11987654321', '1990-05-10', 'ana@gmail.com'),
+('23456789012', 'Pedro Lima', '11998765432', '1985-08-22', 'pedro@gmail.com'),
+('34567890123', 'Juliana Costa', '11991234567', '1995-03-15', 'juliana@gmail.com');
+
+
+--6 - Tabela Viagem
+
+INSERT INTO Viagem (distancia, custo, idCidadeOrigem, idCidadeDestino) VALUES 
+(100, 80.00, 1, 2), -- Campinas -> São Paulo
+(600, 150.00, 2, 3), -- São Paulo -> Campo Grande
+(100, 85.00, 3, 1); -- Campo Grande -> Campinas
+
+
+--7 - Tabela Passagem
+
+INSERT INTO Passagem (assento, data_e_hora, idOnibus, idViagem) VALUES 
+(12, '2025-05-20T10:00:00', 1, 1),
+(8, '2025-05-22T08:30:00', 2, 2),
+(5, '2025-05-25T07:00:00', 3, 3);
+
+
+
+drop table Passageiro
+drop table Passagem
+drop table UF
+drop table Viagem
+drop table Onibus
+drop table Motorista
+drop table Cidade
