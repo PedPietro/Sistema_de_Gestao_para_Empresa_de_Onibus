@@ -3,13 +3,26 @@ import os
 from conectaBD import conectouAoBancoDeDados as conexao
 from passageiros import ManutencaoPassageiros
 from passagens import ManutencaoPassagens
-from viagem import Viagem
+from sistema.Viagem import ManutencaoDeViagem
+import getpass as gp
+import pyodbc as bd
 
-def main():
-    # Conecta ao banco de dados (uma única vez)
-    if not conexao:
-        print("Falha ao conectar ao banco. Encerrando...")
-        return
+def conectouAoBancoDeDados() -> bool: # informará se conseguiu ou não conectar
+        global conexao
+        os.system('cls') or None
+        senha = gp.getpass("Digite a senha do seu banco de dados:") # pede a senha
+        try:
+            conexao = bd.connect(driver="{SQL Server}",
+                            server="regulus.cotuca.unicamp.br",
+                            database="BDseuRA",
+                            uid="BDseuRA", # seu username no servidor de BD
+                            pwd=f"{senha}") # substitui variável senha
+                            # pela senha digitada
+            print("Conexão bem sucedida!")
+            return True
+        except:
+            print("Não foi possível conectar ao banco de dados")
+            return False
 
 def seletorDeOpcoes():
     print("Em qual sistema vc deseja mexer?")
@@ -66,7 +79,7 @@ def cadastroviagens():
     print("4 - Listar Viagem")
             
     escolha = str (input("Escolha: "))
-    viagem = Viagem(conexao)
+    viagem = ManutencaoDeViagem(conexao)
     match escolha:
         case "1": viagem.excluir()
         case "2": viagem.alterar()
@@ -108,7 +121,7 @@ def registroinicioefinal():
     print("3 - Liberar Passageiros e Vagas")
             
     escolha = str (input("Escolha: "))
-    viagem = Viagem(conexao)
+    viagem = ManutencaoDeViagem(conexao)
     match escolha:
         case "1": viagem.Registroinicio()
         case "2": viagem.Registrofinal()
