@@ -49,9 +49,10 @@ INSERT INTO Viagem (distancia, custo, idCidadeOrigem, idCidadeDestino) VALUES
 
 --7 - Tabela Passagem
 
-INSERT INTO Passagem (assento, data_e_hora, idOnibus, cpf, idViagem) VALUES 
-(12, '2025-05-20T10:00:00', 1, '12345678901', 1),
-(8, '2025-05-22T08:30:00', 2, '23456789012', 2),
-(5, '2025-05-25T07:00:00', 3, '34567890123', 3);
+INSERT INTO Passagem (assento, data_e_hora, idOnibus, idViagem) VALUES 
+(12, '2025-05-20T10:00:00', 1, 1),
+(8, '2025-05-22T08:30:00', 2, 2),
+(5, '2025-05-25T07:00:00', 3, 3);
 
-T é preciso de nn, nn roda o insert
+
+--T é preciso de nn, nn roda o insert
