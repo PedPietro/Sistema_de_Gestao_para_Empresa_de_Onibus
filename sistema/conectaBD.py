@@ -9,12 +9,12 @@ def conectouAoBancoDeDados() -> bool: # informará se conseguiu ou não conectar
     try:
         conexao = bd.connect(driver="{SQL Server}",
                              server="regulus.cotuca.unicamp.br",
-                             database="BD24147",
-                             uid="BD24147",     # seu username no servidor de BD
+                             database="BD24127",
+                             uid="BD24127",     # seu username no servidor de BD
                              pwd=f"{senha}")    # substitui variável senha 
                                                 # pela senha digitada
         print("Conexão bem sucedida!")
-        return True
+        return conexao
     except:
         print("Não foi possível conectar ao banco de dados")
         return False

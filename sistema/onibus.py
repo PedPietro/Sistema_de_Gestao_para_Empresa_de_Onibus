@@ -1,5 +1,6 @@
 class ManutencaoOnibus:
-    def __init__(self):
+    def __init__(self, conexao):
+        self._conexao = conexao
         self.onibus = []  # lista que armazena os ônibus
 
     def incluir(self):

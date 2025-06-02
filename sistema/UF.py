@@ -1,5 +1,6 @@
 class ManutencaoUF:
-    def __init__(self):
+    def __init__(self,  conexao):
+        self._conexao = conexao
         self.estados = []  # Lista para armazenar os estados (UF)
 
     def incluir(self):

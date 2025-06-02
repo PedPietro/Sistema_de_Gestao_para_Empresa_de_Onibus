@@ -1,5 +1,6 @@
 class ManutencaoCidade:
-    def __init__(self):
+    def __init__(self, conexao):
+        self._conexao = conexao
         self.cidades = []  # lista que armazena as cidades
 
     def incluir(self):

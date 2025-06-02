@@ -1,8 +1,16 @@
 #add funçao conecta bd aq no principal bbzudos
 import os 
+from conectaBD import conectouAoBancoDeDados as conexao
 from passageiros import ManutencaoPassageiros
 from passagens import ManutencaoPassagens
 from viagem import Viagem
+
+def main():
+    # Conecta ao banco de dados (uma única vez)
+    if not conexao:
+        print("Falha ao conectar ao banco. Encerrando...")
+        return
+
 def seletorDeOpcoes():
     print("Em qual sistema vc deseja mexer?")
     print("1 - Cadastro de Passageiros")
@@ -34,7 +42,7 @@ def cadastropassageiros():
     print("4 - Listar Passageiros")
             
     escolha = str (input("Escolha: "))
-    passageiros = ManutencaoPassageiros()
+    passageiros = ManutencaoPassageiros(conexao)
     match escolha:
         case "1": passageiros.excluir()
         case "2": passageiros.alterar()
@@ -58,7 +66,7 @@ def cadastroviagens():
     print("4 - Listar Viagem")
             
     escolha = str (input("Escolha: "))
-    viagem = Viagem()
+    viagem = Viagem(conexao)
     match escolha:
         case "1": viagem.excluir()
         case "2": viagem.alterar()
@@ -81,7 +89,7 @@ def vendapassagens():
     print("5 - Verificar Disponibilidade")
             
     escolha = str (input("Escolha: "))
-    passagens = ManutencaoPassagens()
+    passagens = ManutencaoPassagens(conexao)
     match escolha:
         case "1": passagens.vendapassagens()
         case "2": passagens.cancelar()
@@ -100,7 +108,7 @@ def registroinicioefinal():
     print("3 - Liberar Passageiros e Vagas")
             
     escolha = str (input("Escolha: "))
-    viagem = Viagem()
+    viagem = Viagem(conexao)
     match escolha:
         case "1": viagem.Registroinicio()
         case "2": viagem.Registrofinal()

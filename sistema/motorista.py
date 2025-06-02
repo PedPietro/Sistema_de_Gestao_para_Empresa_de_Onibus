@@ -1,5 +1,6 @@
 class ManutencaoMotorista:
-    def __init__(self):
+    def __init__(self, conexao):
+        self._conexao = conexao
         self.motoristas = []  # lista que armazena os motoristas
 
     #Chico Pediu Para Não Incluir Os Dados Na Tabela Por Python

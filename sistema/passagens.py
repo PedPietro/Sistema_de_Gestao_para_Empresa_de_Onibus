@@ -1,5 +1,6 @@
 class ManutencaoPassagens:
-    def __init__(self):
+    def __init__(self, conexao):
+        self._conexao = conexao
         self.passagens = []  # lista que armazena as passagens
         
     def vendapassagens(self):

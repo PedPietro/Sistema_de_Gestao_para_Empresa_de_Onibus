@@ -1,11 +1,13 @@
 import os
-from conectaBD import conectouAoBancoDeDados as conexao
 import pyodbc as bd
 import getpass as gp
 
 class ManutencaoPassageiros:
-    def __init__(self):
+    def __init__(self, conexao):
+        self._conexao = conexao
         self.passageiros = [] # vetor que guarda os passageiros
+
+
 
     '''def cadastropassageiros():              # Salva os dados do formulário (incluídos ou editados) no banco de dados
         meuCursor = conexao.cursor() # cria um cursor, objeto de comandos de SQL
@@ -86,18 +88,19 @@ class ManutencaoPassageiros:
                 print()'''
 
     def listar(self):
-        meuCursor = conexao.cursor()  # objeto de manipulação de dados
+        meuCursor = self._conexao.cursor()  # objeto de manipulação de dados
         try:  
             result = meuCursor.execute(
                 'SELECT numdepto, NOMEDEPTO, GERENTE_NUMSEGSOCIAL, ' +
                 ' GERENTE_DATAINICIAL ' +
                 ' FROM EMPRESA.DEPARTAMENTO ')    
             registros = result.fetchall() #fetchall serve para pegar todos os dados de um select
+            return registros
         except:
             print("Erro na busca dos dados\n")
             return
-        
+        '''
         print("Num. Nome       Gerente    Data Inicial")
         for depto in registros:
             print(f"{depto[0]}   {depto[1]}    {depto[2]}    {depto[3]}")
-        input("Tecle [enter] para terminar:")
+        input("Tecle [enter] para terminar:")'''
