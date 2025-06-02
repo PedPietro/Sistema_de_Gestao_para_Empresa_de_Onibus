@@ -1,4 +1,4 @@
-import os
+'''import os
 class Viagem():
 
     def excluir():
@@ -25,3 +25,11 @@ class Viagem():
     def Liberarpassageirosevagas(self):
         pass
         
+
+
+
+
+'''
+
+
+#cod exemplo de IA
