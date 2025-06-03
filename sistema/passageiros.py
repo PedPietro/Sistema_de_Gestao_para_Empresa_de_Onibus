@@ -132,7 +132,7 @@ class ManutencaoPassageiros:
                             print("Não foi possível excluir. Pode ser uma viagem em uso por outra tabela.") 
         
         meuCursor.commit() # enviar as mudanças para o BD 
-
+#precisava de um commit kkkkkkk
     def buscar(self):
         print("Buscar passageiro:")
         id_passageiro = input("Digite o ID do passageiro a buscar: ")
