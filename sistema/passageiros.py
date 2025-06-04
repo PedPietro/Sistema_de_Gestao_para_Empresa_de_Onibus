@@ -162,9 +162,9 @@ class ManutencaoPassageiros:
         meuCursor = self._conexao.cursor()  # objeto de manipulação de dados
         try:  
             result = meuCursor.execute(
-                'SELECT numdepto, NOMEDEPTO, GERENTE_NUMSEGSOCIAL, ' +
-                ' GERENTE_DATAINICIAL ' +
-                ' FROM EMPRESA.DEPARTAMENTO ')    
+                'SELECT assento, data_e_hora, idOnibus, idPassageiro,' +
+                ' idViagem ' +
+                ' FROM EmpresaOnibus.Passagem ')    
             registros = result.fetchall() #fetchall serve para pegar todos os dados de um select
             return registros
         except:

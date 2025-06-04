@@ -1,21 +1,23 @@
+create schema EmpresaOnibus
+
 /* Lógico_Passagem: */
 
-CREATE TABLE Motorista(
+CREATE TABLE EmpresaOnibus.Motorista(
 	nome varchar(50),
 	idMotorista int primary key identity
 	)
 
-CREATE TABLE Onibus (
+CREATE TABLE EmpresaOnibus.Onibus (
     idOnibus int PRIMARY KEY Identity,
     capacidade int,
     marca varchar(20),
     modelo varchar(20),
 	idMotorista int,
 	constraint fkIdidMotorista foreign key(idMotorista)
-		references Motorista(idMotorista),
+		references EmpresaOnibus.Motorista(idMotorista),
 );
 
-CREATE TABLE Passageiro (
+CREATE TABLE EmpresaOnibus.Passageiro (
 	idPassageiro int primary key identity,
     cpf char(11),
     nome varchar(50),
@@ -24,7 +26,7 @@ CREATE TABLE Passageiro (
     email varchar(100)
 )
 
-CREATE TABLE Cidade (
+CREATE TABLE EmpresaOnibus.Cidade (
     idCidade int PRIMARY KEY Identity,
     nome varchar(50),
     endereco_terminal varchar(100),
@@ -40,19 +42,19 @@ Terminal:
 
 
 
-CREATE TABLE Viagem (
+CREATE TABLE EmpresaOnibus.Viagem (
     idViagem int PRIMARY KEY Identity,
     distancia int,  
     custo money,
     idCidadeOrigem int,
     idCidadeDestino int,
 	constraint fkIdCidadeOrigem foreign key(idCidadeOrigem)
-		references Cidade(idCidade),
+		references EmpresaOnibus.Cidade(idCidade),
     constraint fkIdCidadeDestino foreign key(idCidadeDestino)
-		references Cidade(idCidade)
+		references EmpresaOnibus.Cidade(idCidade)
 )
 
-CREATE TABLE Passagem (
+CREATE TABLE EmpresaOnibus.Passagem (
     IdPassagem int PRIMARY KEY Identity,
     assento int,
     data_e_hora datetime,
@@ -61,42 +63,41 @@ CREATE TABLE Passagem (
     idViagem int
 )
 
-CREATE TABLE UF (
+CREATE TABLE EmpresaOnibus.UF (
     siglaUF char(2) PRIMARY KEY,
     nomeUF varchar(30)
 );
  
-ALTER TABLE Cidade ADD CONSTRAINT FK_Cidade_2
+ALTER TABLE EmpresaOnibus.Cidade ADD CONSTRAINT FK_Cidade_2
     FOREIGN KEY (siglaUF)
-    REFERENCES UF (siglaUF)
+    REFERENCES EmpresaOnibus.UF (siglaUF)
     ON DELETE CASCADE;
  
-ALTER TABLE Passagem ADD CONSTRAINT FK_Passagem_2
+ALTER TABLE EmpresaOnibus.Passagem ADD CONSTRAINT FK_Passagem_2
     FOREIGN KEY (idOnibus)
-    REFERENCES Onibus (idOnibus)
+    REFERENCES EmpresaOnibus.Onibus (idOnibus)
     ON DELETE CASCADE;
  
-ALTER TABLE Passagem ADD CONSTRAINT FK_Passagem_3
+ALTER TABLE EmpresaOnibus.Passagem ADD CONSTRAINT FK_Passagem_3
     FOREIGN KEY (idPassageiro)
-    REFERENCES Passageiro (idPassageiro);
+    REFERENCES EmpresaOnibus.Passageiro (idPassageiro);
  
-ALTER TABLE Passagem ADD CONSTRAINT FK_Passagem_4
+ALTER TABLE EmpresaOnibus.Passagem ADD CONSTRAINT FK_Passagem_4
     FOREIGN KEY (idViagem)
-    REFERENCES Viagem (idViagem);
+    REFERENCES EmpresaOnibus.Viagem (idViagem);
 
-select * from Passageiro
-select * from Passagem
-select * from Viagem
-select * from Onibus
-select * from UF
-select * from Cidade
-select * from Motorista
-
+select * from EmpresaOnibus.Passageiro
+select * from EmpresaOnibus.Passagem
+select * from EmpresaOnibus.Viagem
+select * from EmpresaOnibus.Onibus
+select * from EmpresaOnibus.UF
+select * from EmpresaOnibus.Cidade
+select * from EmpresaOnibus.Motorista
 
 
 --1 - Tabela UF
 
-INSERT INTO UF (siglaUF, nomeUF) VALUES 
+INSERT INTO EmpresaOnibus.UF (siglaUF, nomeUF) VALUES 
 ('SP', 'São Paulo'),
 ('RJ', 'Rio de Janeiro'),
 ('MG', 'Minas Gerais'),
@@ -105,7 +106,7 @@ INSERT INTO UF (siglaUF, nomeUF) VALUES
 
 --2 - Tabela Cidade
 
-INSERT INTO Cidade (nome, endereco_terminal, siglaUF) VALUES 
+INSERT INTO EmpresaOnibus.Cidade (nome, endereco_terminal, siglaUF) VALUES 
 ('Campinas', 'Terminal Barão Geraldo', 'SP'),
 ('São Paulo', 'Terminal Centro', 'SP'),
 ('Campo Grande', 'Terminal Campo Grande', 'MS');
@@ -113,7 +114,7 @@ INSERT INTO Cidade (nome, endereco_terminal, siglaUF) VALUES
 
 --3 - Tabela Motorista
 
-INSERT INTO Motorista (nome) VALUES 
+INSERT INTO EmpresaOnibus.Motorista (nome) VALUES 
 ('Carlos Silva'),
 ('Maria Oliveira'),
 ('João Pereira');
@@ -121,7 +122,7 @@ INSERT INTO Motorista (nome) VALUES
 
 --4 - Tabela Onibus
 
-INSERT INTO Onibus (capacidade, marca, modelo, idMotorista) VALUES 
+INSERT INTO EmpresaOnibus.Onibus (capacidade, marca, modelo, idMotorista) VALUES 
 (50, 'Mercedes', 'OF-1721', 1),
 (42, 'Volvo', 'B270F', 2),
 (36, 'Scania', 'K310', 3);
@@ -129,7 +130,7 @@ INSERT INTO Onibus (capacidade, marca, modelo, idMotorista) VALUES
 
 --5 - Tabela Passageiro
 
-INSERT INTO Passageiro (cpf, nome, telefone, dataNascimento, email) VALUES 
+INSERT INTO EmpresaOnibus.Passageiro (cpf, nome, telefone, dataNascimento, email) VALUES 
 ('12345678901', 'Ana Souza', '11987654321', '1990-05-10', 'ana@gmail.com'),
 ('23456789012', 'Pedro Lima', '11998765432', '1985-08-22', 'pedro@gmail.com'),
 ('34567890123', 'Juliana Costa', '11991234567', '1995-03-15', 'juliana@gmail.com');
@@ -137,7 +138,7 @@ INSERT INTO Passageiro (cpf, nome, telefone, dataNascimento, email) VALUES
 
 --6 - Tabela Viagem
 
-INSERT INTO Viagem (distancia, custo, idCidadeOrigem, idCidadeDestino) VALUES 
+INSERT INTO EmpresaOnibus.Viagem (distancia, custo, idCidadeOrigem, idCidadeDestino) VALUES 
 (100, 80.00, 1, 2), -- Campinas -> São Paulo
 (600, 150.00, 2, 3), -- São Paulo -> Campo Grande
 (100, 85.00, 3, 1); -- Campo Grande -> Campinas
@@ -145,17 +146,17 @@ INSERT INTO Viagem (distancia, custo, idCidadeOrigem, idCidadeDestino) VALUES
 
 --7 - Tabela Passagem
 
-INSERT INTO Passagem (assento, data_e_hora, idOnibus, idViagem) VALUES 
-(12, '2025-05-20T10:00:00', 1, 1),
-(8, '2025-05-22T08:30:00', 2, 2),
-(5, '2025-05-25T07:00:00', 3, 3);
+INSERT INTO EmpresaOnibus.Passagem (assento, data_e_hora, idOnibus, idPassageiro,idViagem) VALUES 
+(12, '2025-05-20T10:00:00', 1, 1,1),
+(8, '2025-05-22T08:30:00', 2, 1,2),
+(5, '2025-05-25T07:00:00', 3, 3,3);
 
+--SE NECESSÁRIO:
+/*drop table EmpresaOnibus.Passageiro
+drop table EmpresaOnibus.Passagem
+drop table EmpresaOnibus.UF
+drop table EmpresaOnibus.Viagem
+drop table EmpresaOnibus.Onibus
+drop table EmpresaOnibus.Motorista
+drop table EmpresaOnibus.Cidade*/
 
-
-drop table Passageiro
-drop table Passagem
-drop table UF
-drop table Viagem
-drop table Onibus
-drop table Motorista
-drop table Cidade
