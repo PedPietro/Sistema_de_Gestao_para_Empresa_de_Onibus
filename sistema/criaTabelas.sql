@@ -145,7 +145,6 @@ INSERT INTO EmpresaOnibus.Viagem (distancia, custo, idCidadeOrigem, idCidadeDest
 
 
 --7 - Tabela Passagem
-
 INSERT INTO EmpresaOnibus.Passagem (assento, data_e_hora, idOnibus, idPassageiro,idViagem) VALUES 
 (12, '2025-05-20T10:00:00', 1, 1,1),
 (8, '2025-05-22T08:30:00', 2, 1,2),
@@ -164,19 +163,20 @@ drop table EmpresaOnibus.Cidade*/
 --POR QUE FEZ ISSO? Para podermos se necessário guardas
 --se necessário as colunas em PYTHON e porque o Chico fez o mesmo :p
 
+--ERRADO, ARRUMAR EM CASA (PIPI)
 --UF
 SELECT siglaUF, nomeUF FROM EmpresaOnibus.UF 
 --CIDADE
-SELECT nome, endereco_terminal, siglaUF FROM EmpresaOnibus.Cidade 
+SELECT idCidade, nome, endereco_terminal, siglaUF FROM EmpresaOnibus.Cidade 
 --MOTORISTA
-SELECT nome FROM EmpresaOnibus.Motorista
+SELECT idMotorista, nome FROM EmpresaOnibus.Motorista
 --ONIBUS
-SELECT capacidade, marca, modelo, idMotorista FROM EmpresaOnibus.Onibus
+SELECT idOnibus, capacidade, marca, modelo, idMotorista FROM EmpresaOnibus.Onibus
 --PASSAGEIRO
-SELECT cpf, nome, telefone, dataNascimento, email FROM EmpresaOnibus.Passageiro
+SELECT idPassageiro, cpf, nome, telefone, dataNascimento, email FROM EmpresaOnibus.Passageiro
 --VIAGEM
 SELECT distancia, custo, idCidadeOrigem, idCidadeDestino FROM EmpresaOnibus.Viagem
 --PASSAGEM
-SELECT assento, data_e_hora, idOnibus, idPassageiro,idViagem FROM EmpresaOnibus.Passagem
+SELECT IdPassagem, assento, data_e_hora, idOnibus, idPassageiro,idViagem FROM EmpresaOnibus.Passagem
 --PASSAGEIRO
 SELECT cpf, nome, telefone, dataNascimento, email FROM EmpresaOnibus.Passageiro
