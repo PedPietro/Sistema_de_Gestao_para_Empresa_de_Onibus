@@ -1,6 +1,6 @@
 --1 - Tabela UF
 
-INSERT INTO UF (siglaUF, nomeUF) VALUES 
+INSERT INTO EmpresaOnibus.UF (siglaUF, nomeUF) VALUES 
 ('SP', 'São Paulo'),
 ('RJ', 'Rio de Janeiro'),
 ('MG', 'Minas Gerais'),
@@ -9,7 +9,7 @@ INSERT INTO UF (siglaUF, nomeUF) VALUES
 
 --2 - Tabela Cidade
 
-INSERT INTO Cidade (nome, endereco_terminal, siglaUF) VALUES 
+INSERT INTO EmpresaOnibus.Cidade (nome, endereco_terminal, siglaUF) VALUES 
 ('Campinas', 'Terminal Barão Geraldo', 'SP'),
 ('São Paulo', 'Terminal Centro', 'SP'),
 ('Campo Grande', 'Terminal Campo Grande', 'MS');
@@ -17,7 +17,7 @@ INSERT INTO Cidade (nome, endereco_terminal, siglaUF) VALUES
 
 --3 - Tabela Motorista
 
-INSERT INTO Motorista (nome) VALUES 
+INSERT INTO EmpresaOnibus.Motorista (nome) VALUES 
 ('Carlos Silva'),
 ('Maria Oliveira'),
 ('João Pereira');
@@ -25,7 +25,7 @@ INSERT INTO Motorista (nome) VALUES
 
 --4 - Tabela Onibus
 
-INSERT INTO Onibus (capacidade, marca, modelo, idMotorista) VALUES 
+INSERT INTO EmpresaOnibus.Onibus (capacidade, marca, modelo, idMotorista) VALUES 
 (50, 'Mercedes', 'OF-1721', 1),
 (42, 'Volvo', 'B270F', 2),
 (36, 'Scania', 'K310', 3);
@@ -33,7 +33,7 @@ INSERT INTO Onibus (capacidade, marca, modelo, idMotorista) VALUES
 
 --5 - Tabela Passageiro
 
-INSERT INTO Passageiro (cpf, nome, telefone, dataNascimento, email) VALUES 
+INSERT INTO EmpresaOnibus.Passageiro (cpf, nome, telefone, dataNascimento, email) VALUES 
 ('12345678901', 'Ana Souza', '11987654321', '1990-05-10', 'ana@gmail.com'),
 ('23456789012', 'Pedro Lima', '11998765432', '1985-08-22', 'pedro@gmail.com'),
 ('34567890123', 'Juliana Costa', '11991234567', '1995-03-15', 'juliana@gmail.com');
@@ -41,7 +41,7 @@ INSERT INTO Passageiro (cpf, nome, telefone, dataNascimento, email) VALUES
 
 --6 - Tabela Viagem
 
-INSERT INTO Viagem (distancia, custo, idCidadeOrigem, idCidadeDestino) VALUES 
+INSERT INTO EmpresaOnibus.Viagem (distancia, custo, idCidadeOrigem, idCidadeDestino) VALUES 
 (100, 80.00, 1, 2), -- Campinas -> São Paulo
 (600, 150.00, 2, 3), -- São Paulo -> Campo Grande
 (100, 85.00, 3, 1); -- Campo Grande -> Campinas
@@ -49,10 +49,7 @@ INSERT INTO Viagem (distancia, custo, idCidadeOrigem, idCidadeDestino) VALUES
 
 --7 - Tabela Passagem
 
-INSERT INTO Passagem (assento, data_e_hora, idOnibus, idViagem) VALUES 
-(12, '2025-05-20T10:00:00', 1, 1),
-(8, '2025-05-22T08:30:00', 2, 2),
-(5, '2025-05-25T07:00:00', 3, 3);
-
-
---T é preciso de nn, nn roda o insert
+INSERT INTO EmpresaOnibus.Passagem (assento, data_e_hora, idOnibus, idPassageiro,idViagem) VALUES 
+(12, '2025-05-20T10:00:00', 1, 1,1),
+(8, '2025-05-22T08:30:00', 2, 1,2),
+(5, '2025-05-25T07:00:00', 3, 3,3);

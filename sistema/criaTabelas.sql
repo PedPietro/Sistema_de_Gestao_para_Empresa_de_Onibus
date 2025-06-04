@@ -160,3 +160,23 @@ drop table EmpresaOnibus.Onibus
 drop table EmpresaOnibus.Motorista
 drop table EmpresaOnibus.Cidade*/
 
+--SELECTS DO JEITO DO CHICO:
+--POR QUE FEZ ISSO? Para podermos se necessário guardas
+--se necessário as colunas em PYTHON e porque o Chico fez o mesmo :p
+
+--UF
+SELECT siglaUF, nomeUF FROM EmpresaOnibus.UF 
+--CIDADE
+SELECT nome, endereco_terminal, siglaUF FROM EmpresaOnibus.Cidade 
+--MOTORISTA
+SELECT nome FROM EmpresaOnibus.Motorista
+--ONIBUS
+SELECT capacidade, marca, modelo, idMotorista FROM EmpresaOnibus.Onibus
+--PASSAGEIRO
+SELECT cpf, nome, telefone, dataNascimento, email FROM EmpresaOnibus.Passageiro
+--VIAGEM
+SELECT distancia, custo, idCidadeOrigem, idCidadeDestino FROM EmpresaOnibus.Viagem
+--PASSAGEM
+SELECT assento, data_e_hora, idOnibus, idPassageiro,idViagem FROM EmpresaOnibus.Passagem
+--PASSAGEIRO
+SELECT cpf, nome, telefone, dataNascimento, email FROM EmpresaOnibus.Passageiro
