@@ -39,30 +39,39 @@ class ManutencaoPassageiros:
         idPassageiro = 1
         while idPassageiro != 0:
             # pedimos que o usuário digite o número do departamento a ser alterado
-            idPassageiro = int(input("Número do Passagigeiro (0 para terminar): "))
+            idPassageiro = int(input("Número do Passageiro (0 para terminar): "))
             
             if idPassageiro!= 0: # usuário não quer terminar o cadastro
                 # verifica no BD se existe um departamento com esse número digitado
                 sComando = 'SELECT idPassageiro, cpf, nome, '+\
                 ' telefone, dataNascimento, email '+\
-                ' FROM Passageiro '+\
+                ' FROM EmpresaOnibus.Passageiro '+\
                 ' WHERE idPassageiro = ?'
                 result = meuCursor.execute(sComando, idPassageiro)                   
                 registros = result.fetchall()
                 if len(registros) == 0:
-                    print("Departamento não encontrado.")
+                    print("Passageiro não encontrado.")
                 else:
                     print("Registro encontrado:")
-                    nomeDepto = registros[0][3]     # 1o campo do 1o registro
-                    gerente   = registros[0][0]     # 2o campo do 1o registro
-                    data      = registros[0][5]     # 3o campo do 1o registro      
-                    print("Nome do Passageiro: "+nomeDepto)
-                    print("Gerente:"+gerente)
-                    print("Data inicial:"+data)
+                    idPassageiro            = registros[0][0]
+                    cpf           = registros[0][1]
+                    nome               = registros[0][2]
+                    telefone      = registros[0][3]
+                    dataNascimento     = registros[0][4]
+                    email     = registros[0][5]
+                    print("ID Passageiro: " + str(idPassageiro))
+                    print("CPF: "+cpf)
+                    print("Nome: "+nome)
+                    print("Telefone: "+telefone)
+                    print("Data De Nascimento: "+dataNascimento)
+                    print("Email: "+email)
                     print("Digite os novos dados. [Enter] manterá os atuais:")
-                    nomeDepto = input("Nome do departamento: ")
-                    gerente = input("Cpf do gerente: ")
-                    data = input("Data de início do gerente (dd/mm/aaaa): ")
+                    idPassageiro = input("ID do Passageiro: ")
+                    cpf = input("Cpf do Passageiro: ")
+                    nome = input("Nome do Passageiro: ")
+                    telefone = input("Telefone do Passageiro: ")
+                    dataNascimento = input("Data de Nascimento do Passageiro(dd/mm/yyyy): ")
+                    email = input("Email do Passageiro: ")
                     
                     # montamos string com o comando Update contendo os 
                     # dados digitados:
@@ -76,13 +85,16 @@ class ManutencaoPassageiros:
                     if data == "":                  # usuário digitou [Enter]
                         data = registros[0][2]      # data original do BD
                         
-                    sComando =  " Update empresa.departamento "+\
-                                " SET nomeDepto = ?, "+\
-                                "     gerente_NumSegSocial = ?, "+\
-                                "     gerente_dataInicial = Convert(date, ?, 103) "+\
-                                " where numDepto = ? "
+                    sComando =  " Update EmpresaOnibus.Passageiro "+\
+                                " SET idPassageiro = ?, "+\
+                                "     cpf = ?, "+\
+                                "     nome = ?, "+\
+                                "     telefone = ?, "+\
+                                "     dataNascimento = Convert(date, ?, 103) "+\
+                                "     email = ?, "+\
+                                " where idPassageiro = ? "
                     try:
-                        meuCursor.execute(sComando,[nomeDepto, gerente, data, idPassageiro])
+                        meuCursor.execute(sComando,[idPassageiro, cpf, nome, telefone, dataNascimento, email])
                         print("Departamento alterado com sucesso!")
                     except: # em caso de erro
                         print("Não foi possível alterar. Verifique os dados.")
@@ -92,84 +104,115 @@ class ManutencaoPassageiros:
     def excluir(self):
         meuCursor = self.conexao.cursor() # objeto de manipulação de dados (insert, update, delete, select)
         # cursor é o objeto que permite ao programa executar comandos SQL no servidor:
-        viagemEscolhida = 1
-        while viagemEscolhida!= 0:
+        passageiroEscolhido = 1
+        while passageiroEscolhido!= 0:
         # pedimos que o usuário digite o número do departamento a ser excluído
-            viagemEscolhida = int(input("Número Da Viagem (0 para terminar): "))
-            if viagemEscolhida != 0: # usuário não quer terminar o cadastro
+            passageiroEscolhido = int(input("ID do Passageiro (0 para terminar): "))
+            if passageiroEscolhido != 0: # usuário não quer terminar o cadastro
                 # verifica no BD se existe um departamento com esse número digitado
                 result = meuCursor.execute(
-                            ' SELECT idViagem, distancia, '+\
-                            ' custo, idCidadeOrigem,'+\
-                            ' idCidadeDestino'+\
-                            ' FROM Viagem '+\
-                            ' WHERE idViagem = ?', viagemEscolhida)
+                            ' SELECT idPassageiro, cpf, '+\
+                            ' nome, telefone,'+\
+                            ' dataNascimento, email'+\
+                            ' FROM EmpresaOnibus.Passageiro '+\
+                            ' WHERE idPassageiro = ?', passageiroEscolhido)
                 registros = result.fetchall()
                 if len(registros) == 0:     # se o departamento não existe, não podemos excluí-lo
-                    print("Viagem não encontrado.")
+                    print("Passageiro não encontrado.")
                 else:
                     print("Registro encontrado:")
-                    idViagem            = registros[0][0]
-                    distancia           = registros[0][1]
-                    custo               = registros[0][2]
-                    idCidadeOrigem      = registros[0][3]
-                    idCidadeDestino     = registros[0][4]
-                    print("ID Viagem: "+idViagem)
-                    print("Distância: "+distancia)
-                    print("Custo: "+custo)
-                    print("Id Cidade Origem: "+idCidadeOrigem)
-                    print("Id Cidade Destino: "+idCidadeDestino)
+                    idPassageiro            = registros[0][0]
+                    cpf           = registros[0][1]
+                    nome               = registros[0][2]
+                    telefone      = registros[0][3]
+                    dataNascimento     = registros[0][4]
+                    email     = registros[0][5]
+                    print("ID Passageiro: " + str(idPassageiro))
+                    print("CPF: "+cpf)
+                    print("Nome: "+nome)
+                    print("Telefone: "+telefone)
+                    print("Data De Nascimento: "+dataNascimento)
+                    print("Email: "+email)
                     resposta = input("Deseja realmente excluir (s/n)?")
                     if resposta == "s":
                     # criamos uma string com o comando Delete para excluir o registro lido
-                        sComando = " Delete from Viagem " +\
-                        " where idViagem = ? " 
+                        sComando = " Delete from EmpresaOnibus.Passageiro " +\
+                        " where idPassageiro = ? " 
                         # fazemos o cursor enviar ao servidor o comando Delete acima criado
                         try: # tente executar o comando abaixo:
-                            meuCursor.execute(sComando, viagemEscolhida)
+                            meuCursor.execute(sComando, passageiroEscolhido)
                             print("Registro excluído.")
                         except: # em caso de erro
-                            print("Não foi possível excluir. Pode ser uma viagem em uso por outra tabela.") 
+                            print("Não foi possível excluir. Pode ser um passageiro em uso por outra tabela.") 
         
         meuCursor.commit() # enviar as mudanças para o BD 
 #precisava de um commit kkkkkkk
     def buscar(self):
-        print("Buscar passageiro:")
-        id_passageiro = input("Digite o ID do passageiro a buscar: ")
-        encontrou = False
-        for p in self.passageiros:
-            if p["id"] == id_passageiro:
-                print("ID:", p["id"])
-                print("Nome:", p["nome"])
-                print("CPF:", p["cpf"])
-                encontrou = True
-                break
-        if not encontrou:
-            print("Passageiro não encontrado.\n")
+        meuCursor = self.conexao.cursor() # objeto de manipulação de dados (insert, update, delete, select)
+        # cursor é o objeto que permite ao programa executar comandos SQL no servidor:
+        passageiroEscolhido = 1
+        while passageiroEscolhido!= 0:
+        # pedimos que o usuário digite o número do departamento a ser excluído
+            passageiroEscolhido = int(input("ID do Passageiro (0 para terminar): "))
+            if passageiroEscolhido != 0: # usuário não quer terminar o cadastro
+                # verifica no BD se existe um departamento com esse número digitado
+                result = meuCursor.execute(
+                            ' SELECT idPassageiro, cpf, '+\
+                            ' nome, telefone,'+\
+                            ' dataNascimento, email'+\
+                            ' FROM EmpresaOnibus.Passageiro '+\
+                            ' WHERE idPassageiro = ?', passageiroEscolhido)
+                registros = result.fetchall()
+                if len(registros) == 0:     # se o departamento não existe, não podemos excluí-lo
+                    print("Passageiro não encontrado.")
+                else:
+                    print("Registro encontrado:")
+                    idPassageiro            = registros[0][0]
+                    cpf           = registros[0][1]
+                    nome               = registros[0][2]
+                    telefone      = registros[0][3]
+                    dataNascimento     = registros[0][4]
+                    email     = registros[0][5]
+                    print("ID Passageiro: " + str(idPassageiro))
+                    print("CPF: "+cpf)
+                    print("Nome: "+nome)
+                    print("Telefone: "+telefone)
+                    print("Data De Nascimento: "+dataNascimento)
+                    print("Email: "+email)
 
-    '''def listar(self):
-        print("Lista de passageiros:")
-        if len(self.passageiros) == 0:
-            print("Nenhum passageiro cadastrado.\n")
-        else:
-            for p in self.passageiros:
-                print("ID:", p["id"])
-                print("Nome:", p["nome"])
-                print("CPF:", p["cpf"])
-                print()'''
-
+        meuCursor.commit()
+                    
     def listar(self):
-        meuCursor = self._conexao.cursor()  # objeto de manipulação de dados
-        try:  
-            result = meuCursor.execute(
-                'SELECT assento, data_e_hora, idOnibus, idPassageiro,' +
-                ' idViagem ' +
-                ' FROM EmpresaOnibus.Passagem ')    
-            registros = result.fetchall() #fetchall serve para pegar todos os dados de um select
-            return registros
-        except:
-            print("Erro na busca dos dados\n")
-            return
+        meuCursor = self.conexao.cursor() # objeto de manipulação de dados (insert, update, delete, select)
+        # cursor é o objeto que permite ao programa executar comandos SQL no servidor:
+        passageiroEscolhido = 1
+        while passageiroEscolhido!= 0:
+        # pedimos que o usuário digite o número do departamento a ser excluído
+                # verifica no BD se existe um departamento com esse número digitado
+                result = meuCursor.execute(
+                            ' SELECT idPassageiro, cpf, '+\
+                            ' nome, telefone,'+\
+                            ' dataNascimento, email'+\
+                            ' FROM EmpresaOnibus.Passageiro ')
+                registros = result.fetchall()
+                if len(registros) == 0:     # se o departamento não existe, não podemos excluí-lo
+                    print("Passageiros não encontrados.")
+                else:
+                    print("Registros encontrados:")
+                    idPassageiro            = registros[0][0]
+                    cpf           = registros[0][1]
+                    nome               = registros[0][2]
+                    telefone      = registros[0][3]
+                    dataNascimento     = registros[0][4]
+                    email     = registros[0][5]
+                    print("ID Passageiro: " + str(idPassageiro)+"\n")
+                    print("CPF: "+cpf+"\n")
+                    print("Nome: "+nome+"\n")
+                    print("Telefone: "+telefone+"\n")
+                    print("Data De Nascimento: "+dataNascimento+"\n")
+                    print("Email: "+email+"\n")
+
+        meuCursor.commit()
         '''
         print("Num. Nome       Gerente    Data Inicial")
         for depto in registros:

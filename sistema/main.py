@@ -3,7 +3,7 @@ import os
 from conectaBD import conectouAoBancoDeDados as conexao
 from passageiros import ManutencaoPassageiros
 from passagens import ManutencaoPassagens
-from sistema.Viagem import ManutencaoDeViagem
+from Viagem import ManutencaoDeViagem
 import getpass as gp
 import pyodbc as bd
 
@@ -14,8 +14,8 @@ def conectouAoBancoDeDados() -> bool: # informará se conseguiu ou não conectar
         try:
             conexao = bd.connect(driver="{SQL Server}",
                             server="regulus.cotuca.unicamp.br",
-                            database="BDseuRA",
-                            uid="BDseuRA", # seu username no servidor de BD
+                            database="BD24147",
+                            uid="BD24147", # seu username no servidor de BD
                             pwd=f"{senha}") # substitui variável senha
                             # pela senha digitada
             print("Conexão bem sucedida!")
@@ -133,4 +133,5 @@ def registroinicioefinal():
         
         
 if __name__ == '__main__':
+    conectouAoBancoDeDados()
     seletorDeOpcoes()
