@@ -17,7 +17,7 @@ class ManutencaoPassagens:
                             ' idOnibus, idPassageiro,'+\
                             ' idViagem'+\
                             ' FROM EmpresaOnibus.Passagem '+\
-                            ' WHERE assento = ?', passagemEscolhida)
+                            ' WHERE idPassagem = ?', passagemEscolhida)
                 registros = result.fetchall()
                 if len(registros) == 0:     # se o departamento não existe, não podemos excluí-lo
                     print("Passagem não encontrada.")
@@ -29,7 +29,7 @@ class ManutencaoPassagens:
                     idOnibus               = registros[0][2]
                     idPassageiro      = registros[0][3]
                     idViagem     = registros[0][4]
-                    print("ID da Passagem: " + str(assento))
+                    print("ID da Passagem: " + str(idPassagem))
                     print("Assento: " + str(assento))
                     print("Data e hora: "+data_e_hora)
                     print("ID do Ônibus: "+idOnibus)
@@ -39,13 +39,13 @@ class ManutencaoPassagens:
                     if resposta == "s":
                     # criamos uma string com o comando Delete para excluir o registro lido
                         sComando = " Delete from EmpresaOnibus.Passagem " +\
-                        " where assento = ? " 
+                        " where idPassagem = ? " 
                         # fazemos o cursor enviar ao servidor o comando Delete acima criado
                         try: # tente executar o comando abaixo:
                             meuCursor.execute(sComando, passagemEscolhida)
                             print("Registro excluído.")
                         except: # em caso de erro
-                            print("Não foi possível excluir. Pode ser um passageiro em uso por outra tabela.") 
+                            print("Não foi possível excluir. Pode ser uma passagem em uso por outra tabela.") 
 
     def buscar(self):
         print("Buscar passagem:")
@@ -75,6 +75,8 @@ class ManutencaoPassagens:
                 print("Assento:", p["assento"])
                 print("Preço:", p["preco"])
                 print()
+
+    
 
     def disponibilidade(self):
         pass

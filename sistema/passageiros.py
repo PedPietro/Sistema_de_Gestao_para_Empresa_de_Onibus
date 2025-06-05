@@ -185,36 +185,37 @@ class ManutencaoPassageiros:
     def listar(self):
         meuCursor = self.conexao.cursor() # objeto de manipulação de dados (insert, update, delete, select)
         # cursor é o objeto que permite ao programa executar comandos SQL no servidor:
-        passageiroEscolhido = 1
-        while passageiroEscolhido!= 0:
         # pedimos que o usuário digite o número do departamento a ser excluído
                 # verifica no BD se existe um departamento com esse número digitado
-                result = meuCursor.execute(
+        result = meuCursor.execute(
                             ' SELECT idPassageiro, cpf, '+\
                             ' nome, telefone,'+\
                             ' dataNascimento, email'+\
                             ' FROM EmpresaOnibus.Passageiro ')
-                registros = result.fetchall()
-                if len(registros) == 0:     # se o departamento não existe, não podemos excluí-lo
-                    print("Passageiros não encontrados.")
-                else:
-                    print("Registros encontrados:")
-                    idPassageiro            = registros[0][0]
-                    cpf           = registros[0][1]
-                    nome               = registros[0][2]
-                    telefone      = registros[0][3]
-                    dataNascimento     = registros[0][4]
-                    email     = registros[0][5]
-                    print("ID Passageiro: " + str(idPassageiro)+"\n")
-                    print("CPF: "+cpf+"\n")
-                    print("Nome: "+nome+"\n")
-                    print("Telefone: "+telefone+"\n")
-                    print("Data De Nascimento: "+dataNascimento+"\n")
-                    print("Email: "+email+"\n")
+        registros = result.fetchall()
+        if len(registros) == 0:     # se o departamento não existe, não podemos excluí-lo
+            print("Passageiros não encontrados.")
+        else:
+            print("\tID  \tCpf              \tNome                 \tTelefone             \tData De Nascimento     \tEmail")
+            for passageiro in registros:
+                print(f"\t{passageiro[0]}   \t{passageiro[1]}        \t{passageiro[2]}     \t{passageiro[3]}   \t{passageiro[4]}           \t{passageiro[5]}\n")
+            input("Tecle [enter] para terminar:")
+            '''while passageiro < len(registros):
+                print("Registros encontrados: \n")
+                idPassageiro            = registros[0][0]
+                cpf           = registros[0][1]
+                nome               = registros[0][2]
+                telefone      = registros[0][3]
+                dataNascimento     = registros[0][4]
+                email     = registros[0][5]
+                print("ID Passageiro: " + str(idPassageiro))
+                print("CPF: "+cpf)
+                print("Nome: "+nome)
+                print("Telefone: "+telefone)
+                print("Data De Nascimento: "+dataNascimento)
+                print("Email: "+email+"\n")
+                passageiro =+1'''
 
         meuCursor.commit()
-        '''
-        print("Num. Nome       Gerente    Data Inicial")
-        for depto in registros:
-            print(f"{depto[0]}   {depto[1]}    {depto[2]}    {depto[3]}")
-        input("Tecle [enter] para terminar:")'''
+       
+        
