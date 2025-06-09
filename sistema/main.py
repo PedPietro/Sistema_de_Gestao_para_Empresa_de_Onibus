@@ -3,7 +3,7 @@ import os
 from conectaBD import conectouAoBancoDeDados as conexao
 from passageiros import ManutencaoPassageiros
 from passagens import ManutencaoPassagens
-from Viagem import ManutencaoDeViagem
+from viagem import ManutencaoDeViagem
 import getpass as gp
 import pyodbc as bd
 
@@ -11,7 +11,6 @@ def conectouAoBancoDeDados() -> bool: # informará se conseguiu ou não conectar
         global conexao
         os.system('cls') or None
         senha = "BD24147"
-
         try:
             conexao = bd.connect(driver="{SQL Server}",
                             server="regulus.cotuca.unicamp.br",
