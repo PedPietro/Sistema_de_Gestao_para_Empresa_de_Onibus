@@ -1,0 +1,11 @@
+oque ja esta feito:
+seletor principal
+seletor para cada funçao
+arquivos para cada tabela(só criado)
+banco de dados
+funcoes das funçoes ja prontas:
+(listar passageiros, listar viagens)
+
+oque precisa ser feito:
+arrumar as funçoes
+testar funçoes

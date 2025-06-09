@@ -10,7 +10,7 @@ import pyodbc as bd
 def conectouAoBancoDeDados() -> bool: # informará se conseguiu ou não conectar
         global conexao
         os.system('cls') or None
-        senha = "BD24147" # pede a senha
+        senha = gp.getpass("Digite a senha do seu banco de dados: ") # pede a senha
         try:
             conexao = bd.connect(driver="{SQL Server}",
                             server="regulus.cotuca.unicamp.br",
@@ -110,7 +110,7 @@ def vendapassagens():
         case "4": passagens.listar()
         case "5": passagens.disponibilidade()
         
-
+    
 def registroinicioefinal():
     #Registro de inicio e de final de viagem, liberando passageiros e vagas
     os.system('cls') or None
