@@ -10,7 +10,7 @@ import pyodbc as bd
 def conectouAoBancoDeDados() -> bool: # informará se conseguiu ou não conectar
         global conexao
         os.system('cls') or None
-        senha = gp.getpass("Digite a senha do seu banco de dados:") # pede a senha
+        senha = "BD24147"
         try:
             conexao = bd.connect(driver="{SQL Server}",
                             server="regulus.cotuca.unicamp.br",
@@ -18,6 +18,8 @@ def conectouAoBancoDeDados() -> bool: # informará se conseguiu ou não conectar
                             uid="BD24147", # seu username no servidor de BD
                             pwd=f"{senha}") # substitui variável senha
                             # pela senha digitada
+                            
+                            #senha nova
             print("Conexão bem sucedida!")
             return True
         except:
