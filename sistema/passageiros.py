@@ -36,18 +36,18 @@ class ManutencaoPassageiros:
     def alterar(self):
         # cursor é o objeto que permite ao programa executar comandos SQL no servidor:
         meuCursor = self.conexao.cursor() # objeto de manipulação de dados
-        idPassageiro = 1
-        while idPassageiro != 0:
+        passageiroEscolhido = 1
+        while passageiroEscolhido != 0:
             # pedimos que o usuário digite o número do departamento a ser alterado
-            idPassageiro = int(input("Número do Passageiro (0 para terminar): "))
+            passageiroEscolhido = int(input("Número do Passageiro (0 para terminar): "))
             
-            if idPassageiro!= 0: # usuário não quer terminar o cadastro
+            if passageiroEscolhido!= 0: # usuário não quer terminar o cadastro
                 # verifica no BD se existe um departamento com esse número digitado
                 sComando = 'SELECT idPassageiro, cpf, nome, '+\
                 ' telefone, dataNascimento, email '+\
                 ' FROM EmpresaOnibus.Passageiro '+\
                 ' WHERE idPassageiro = ?'
-                result = meuCursor.execute(sComando, idPassageiro)                   
+                result = meuCursor.execute(sComando, passageiroEscolhido)                   
                 registros = result.fetchall()
                 if len(registros) == 0:
                     print("Passageiro não encontrado.")
@@ -60,31 +60,43 @@ class ManutencaoPassageiros:
                     dataNascimento     = registros[0][4]
                     email     = registros[0][5]
                     print("ID Passageiro: " + str(idPassageiro))
-                    print("CPF: "+cpf)
-                    print("Nome: "+nome)
-                    print("Telefone: "+telefone)
-                    print("Data De Nascimento: "+dataNascimento)
-                    print("Email: "+email)
-                    print("Digite os novos dados. [Enter] manterá os atuais:")
-                    idPassageiro = input("ID do Passageiro: ")
-                    cpf = input("Cpf do Passageiro: ")
-                    nome = input("Nome do Passageiro: ")
-                    telefone = input("Telefone do Passageiro: ")
-                    dataNascimento = input("Data de Nascimento do Passageiro(dd/mm/yyyy): ")
-                    email = input("Email do Passageiro: ")
+                    print("CPF: "+str(cpf))
+                    print("Nome: "+str(nome))
+                    print("Telefone: "+str(telefone))
+                    print("Data De Nascimento: "+str(dataNascimento))
+                    print("Email: "+str(email))
                     
+                    print("Digite os novos dados. [Enter] manterá os atuais:")
+                    
+                    idPassageiro = int(input("ID do Passageiro: "))
+                    if idPassageiro == "":             # usuário digitou [Enter]
+                        idPassageiro = registros[0][0] # nome original do BD
+
+                    cpf = str(input("Cpf do Passageiro: "))
+                    if cpf == "":               # usuário digitou [Enter]
+                        cpf = registros[0][1]   # gerente original do BD
+
+                    nome = str(input("Nome do Passageiro: "))
+                    if nome == "":                  # usuário digitou [Enter]
+                        nome = registros[0][2]      # data original do BD
+
+
+                    telefone = str(input("Telefone do Passageiro: "))
+                    if telefone == "":                  # usuário digitou [Enter]
+                        telefone = registros[0][3]      # data original do BD
+
+                    dataNascimento = str(input("Data de Nascimento do Passageiro (yyyy/mm/dd): "))
+                    if dataNascimento == "":                  # usuário digitou [Enter]
+                        dataNascimento = registros[0][4]      # data original do BD
+    
+
+                    email = str(input("Email do Passageiro: "))
+                    if email == "":                  # usuário digitou [Enter]
+                        email = registros[0][5]      # data original do BD
+
                     # montamos string com o comando Update contendo os 
                     # dados digitados:
-                    
-                    if nomeDepto == "":             # usuário digitou [Enter]
-                        nomeDepto = registros[0][0] # nome original do BD
-                        
-                    if gerente == "":               # usuário digitou [Enter]
-                        gerente = registros[0][1]   # gerente original do BD
-                        
-                    if data == "":                  # usuário digitou [Enter]
-                        data = registros[0][2]      # data original do BD
-                        
+
                     sComando =  " Update EmpresaOnibus.Passageiro "+\
                                 " SET idPassageiro = ?, "+\
                                 "     cpf = ?, "+\
@@ -94,12 +106,13 @@ class ManutencaoPassageiros:
                                 "     email = ?, "+\
                                 " where idPassageiro = ? "
                     try:
-                        meuCursor.execute(sComando,[idPassageiro, cpf, nome, telefone, dataNascimento, email])
-                        print("Departamento alterado com sucesso!")
+                        meuCursor.execute(sComando,idPassageiro, cpf, nome, telefone, dataNascimento, email, passageiroEscolhido)
+                        meuCursor.commit() # registrar definitivamente as mudanças para o BD 
+                        print("Passageiro alterado com sucesso!")
                     except: # em caso de erro
                         print("Não foi possível alterar. Verifique os dados.")
         
-        meuCursor.commit() # registrar definitivamente as mudanças para o BD 
+                
 
     def excluir(self):
         meuCursor = self.conexao.cursor() # objeto de manipulação de dados (insert, update, delete, select)
@@ -166,19 +179,19 @@ class ManutencaoPassageiros:
                 if len(registros) == 0:     # se o departamento não existe, não podemos excluí-lo
                     print("Passageiro não encontrado.")
                 else:
-                    print("Registro encontrado:")
+                    print("\nRegistro encontrado:")
                     idPassageiro            = registros[0][0]
                     cpf           = registros[0][1]
                     nome               = registros[0][2]
                     telefone      = registros[0][3]
                     dataNascimento     = registros[0][4]
                     email     = registros[0][5]
-                    print("ID Passageiro: " + str(idPassageiro))
-                    print("CPF: "+cpf)
-                    print("Nome: "+nome)
-                    print("Telefone: "+telefone)
-                    print("Data De Nascimento: "+dataNascimento)
-                    print("Email: "+email)
+                    print("\nID Passageiro: " + str(idPassageiro))
+                    print(f"CPF: {cpf}")
+                    print(f"Nome: {nome}")
+                    print(f"Telefone: {telefone}")
+                    print(f"Data De Nascimento: {dataNascimento}")
+                    print(f"Email: {email}\n")
 
         meuCursor.commit()
                     
@@ -196,11 +209,14 @@ class ManutencaoPassageiros:
         if len(registros) == 0:     # se o departamento não existe, não podemos excluí-lo
             print("Passageiros não encontrados.")
         else:
-            print("\tID  \tCpf              \tNome                 \tTelefone             \tData De Nascimento     \tEmail")
+            print("ID. \tCpf              \tNome                 \tTelefone       \tData De Nascimento     \tEmail")
             for passageiro in registros:
-                print(f"\t{passageiro[0]}   \t{passageiro[1]}        \t{passageiro[2]}     \t{passageiro[3]}   \t{passageiro[4]}           \t{passageiro[5]}\n")
+                #arrumar indexação dessa merda aaaaaaaaaaaaa
+                print(f"{passageiro[0]}   \t{passageiro[1]:20}        \t{passageiro[2]}     \t{passageiro[3]}   \t{passageiro[4]}           \t{passageiro[5]}")
             input("Tecle [enter] para terminar:")
-            '''while passageiro < len(registros):
+
+        meuCursor.commit()
+        '''while passageiro < len(registros):
                 print("Registros encontrados: \n")
                 idPassageiro            = registros[0][0]
                 cpf           = registros[0][1]
@@ -215,7 +231,5 @@ class ManutencaoPassageiros:
                 print("Data De Nascimento: "+dataNascimento)
                 print("Email: "+email+"\n")
                 passageiro =+1'''
-
-        meuCursor.commit()
-       
+      
         
