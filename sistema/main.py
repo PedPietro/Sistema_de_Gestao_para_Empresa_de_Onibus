@@ -3,7 +3,7 @@ import os
 from conectaBD import conectouAoBancoDeDados as conexao
 from passageiros import ManutencaoPassageiros
 from passagens import ManutencaoPassagens
-from Viagem import ManutencaoDeViagem
+from viagem import ManutencaoDeViagem
 import getpass as gp
 import pyodbc as bd
 
