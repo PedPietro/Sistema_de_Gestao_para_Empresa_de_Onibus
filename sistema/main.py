@@ -3,7 +3,9 @@ import os
 from conectaBD import conectouAoBancoDeDados as conexao
 from passageiros import ManutencaoPassageiros
 from passagens import ManutencaoPassagens
-from Viagem import ManutencaoDeViagem
+from viagem import ManutencaoDeViagem
+from motorista import ManutencaoMotorista
+from onibus import ManutencaoOnibus
 import getpass as gp
 import pyodbc as bd
 
@@ -30,25 +32,29 @@ def seletorDeOpcoes():
     print("2 - Cadastro de Viagens")
     print("3 - Venda de Passagens")
     print("4 - Registro de inicio e de final de viagem, liberando passageiros e vagas")
+    print("5 - Cadastro de Motoristas")
+    print("6 - Busca de Ônibus")
     #opçoes para o balcão presencial(nn web)
     #preencher tabelas diretamente no SSMS usando insrt e nn por programação
     
     opcao = str(input("Escolha: "))
     match opcao:
-        case "1": cadastropassageiros()
-        case "2": cadastroviagens()
-        case "3": vendapassagens()
-        case "4": registroinicioefinal()
+        case "1": cadastroPassageiros()
+        case "2": cadastroViagens()
+        case "3": vendaPassagens()
+        case "4": registroInicioeFinal()
+        case "5": cadastroMotorista()
+        case "6": buscaOnibus()
         
     opcao = input("Pressione Enter para finalizar...")
     print("Obrigado pelo uso!")
     
     
-def cadastropassageiros():
+def cadastroPassageiros():
     #Manutenção passageiros, excluir, alterar, buscar e listar
     os.system('cls') or None
     print("Selecione uma opção:")
-    print("0 - Finalizar")
+    print("0 - Voltar Ao Seletor")
     print("1 - Excluir Passageiros")
     print("2 - Alterar Passageiros")
     print("3 - Buscar Passageiros")
@@ -57,6 +63,7 @@ def cadastropassageiros():
     escolha = str (input("Escolha: "))
     passageiros = ManutencaoPassageiros(conexao)
     match escolha:
+        case "0": seletorDeOpcoes()
         case "1": passageiros.excluir()
         case "2": passageiros.alterar()
         case "3": passageiros.buscar()
@@ -66,13 +73,51 @@ def cadastropassageiros():
     print("Obrigado pelo uso!")
         
         
-                
+def cadastroMotorista():
+    #Manutenção passageiros, excluir, alterar, buscar e listar
+    os.system('cls') or None
+    print("Selecione uma opção:")
+    print("0 - Voltar Ao Seletor")
+    print("1 - Excluir Motorista")
+    print("2 - Alterar Motorista")
+    print("3 - Buscar Motorista")
+    print("4 - Listar Motorista")
+            
+    escolha = str (input("Escolha: "))
+    motorista = ManutencaoMotorista(conexao)
+    match escolha:
+        case "0": seletorDeOpcoes()
+        case "1": motorista.excluir()
+        case "2": motorista.alterar()
+        case "3": motorista.buscar()
+        case "4": motorista.listar()
+
+    escolha = input("Pressione Enter para finalizar...")
+    print("Obrigado pelo uso!")                
     
-def cadastroviagens():
+def buscaOnibus():
+    #Manutenção passageiros, excluir, alterar, buscar e listar
+    os.system('cls') or None
+    print("Selecione uma opção:")
+    print("0 - Voltar Ao Seletor")
+    print("1 - Buscar Ônibus")
+    print("2 - Listar Ônibus")
+            
+    escolha = str (input("Escolha: "))
+    onibus = ManutencaoOnibus(conexao)
+    match escolha:
+        case "0": seletorDeOpcoes()
+        case "1": onibus.buscar()
+        case "2": onibus.listar()
+
+    escolha = input("Pressione Enter para finalizar...")
+    print("Obrigado pelo uso!")     
+
+def cadastroViagens():
     #Manutenção viagem, excluir, alterar, buscar e listar
     os.system('cls') or None
     print("Selecione uma opção:")
-    print("0 - Finalizar")
+    print("0 - Voltar Ao Seletor")
     print("1 - Excluir Viagem")
     print("2 - Alterar Viagem")
     print("3 - Buscar Viagem")
@@ -81,6 +126,7 @@ def cadastroviagens():
     escolha = str (input("Escolha: "))
     viagem = ManutencaoDeViagem(conexao)
     match escolha:
+        case "0": seletorDeOpcoes()
         case "1": viagem.excluir()
         case "2": viagem.alterar()
         case "3": viagem.buscar()
@@ -90,11 +136,11 @@ def cadastroviagens():
     print("Obrigado pelo uso!")
         
     
-def vendapassagens():
+def vendaPassagens():
     #Manutenção passagens, excluir, alterar, buscar e listar
     os.system('cls') or None
     print("Selecione uma opção:")
-    print("0 - Finalizar")
+    print("0 - Voltar Ao Seletor")
     print("1 - Vender Passagens")
     print("2 - Cancelar Passageiros")
     print("3 - Buscar Passageiros")
@@ -104,6 +150,7 @@ def vendapassagens():
     escolha = str (input("Escolha: "))
     passagens = ManutencaoPassagens(conexao)
     match escolha:
+        case "0": seletorDeOpcoes()
         case "1": passagens.vendapassagens()
         case "2": passagens.cancelar()
         case "3": passagens.buscar()
@@ -111,11 +158,11 @@ def vendapassagens():
         case "5": passagens.disponibilidade()
         
 
-def registroinicioefinal():
+def registroInicioeFinal():
     #Registro de inicio e de final de viagem, liberando passageiros e vagas
     os.system('cls') or None
     print("Selecione uma opção:")
-    print("0 - Finalizar")
+    print("0 - Voltar Ao Seletor")
     print("1 - Registro do Inicio da Viagem")
     print("2 - Registro do Final da Viagem")
     print("3 - Liberar Passageiros e Vagas")
@@ -123,11 +170,12 @@ def registroinicioefinal():
     escolha = str (input("Escolha: "))
     viagem = ManutencaoDeViagem(conexao)
     match escolha:
+        case "0": seletorDeOpcoes()
         case "1": viagem.Registroinicio()
         case "2": viagem.Registrofinal()
         case "3": viagem.Liberarpassageirosevagas()
                 
-    escolha = input("Pressione Enter para finalizar...")
+    escolha = input("Pressione Enter para finalizar ou 0 para continuar...")
     print("Obrigado pelo uso!")
         
         

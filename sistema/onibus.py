@@ -3,70 +3,61 @@ class ManutencaoOnibus:
         self._conexao = conexao
         self.onibus = []  # lista que armazena os ônibus
 
-    def incluir(self):
-        print("Incluir ônibus:")
-        id_onibus = input("Digite o ID do ônibus: ")
-        placa = input("Digite a placa do ônibus: ")
-        modelo = input("Digite o modelo do ônibus: ")
-        capacidade = input("Digite a capacidade de passageiros: ")
-        onibus = {"id": id_onibus, "placa": placa, "modelo": modelo, "capacidade": capacidade}
-        self.onibus.append(onibus)
-        print("Ônibus incluído com sucesso!\n")
-
-    def excluir(self):
-        print("Excluir ônibus:")
-        id_onibus = input("Digite o ID do ônibus que deseja excluir: ")
-        encontrou = False
-        for o in self.onibus:
-            if o["id"] == id_onibus:
-                self.onibus.remove(o)
-                encontrou = True
-                print("Ônibus excluído com sucesso!\n")
-                break
-        if not encontrou:
-            print("Ônibus não encontrado.\n")
-
-    def alterar(self):
-        print("Alterar ônibus:")
-        id_onibus = input("Digite o ID do ônibus a alterar: ")
-        encontrou = False
-        for o in self.onibus:
-            if o["id"] == id_onibus:
-                nova_placa = input("Digite a nova placa: ")
-                novo_modelo = input("Digite o novo modelo: ")
-                nova_capacidade = input("Digite a nova capacidade: ")
-                o["placa"] = nova_placa
-                o["modelo"] = novo_modelo
-                o["capacidade"] = nova_capacidade
-                encontrou = True
-                print("Ônibus alterado com sucesso!\n")
-                break
-        if not encontrou:
-            print("Ônibus não encontrado.\n")
-
     def buscar(self):
-        print("Buscar ônibus:")
-        id_onibus = input("Digite o ID do ônibus a buscar: ")
-        encontrou = False
-        for o in self.onibus:
-            if o["id"] == id_onibus:
-                print("ID:", o["id"])
-                print("Placa:", o["placa"])
-                print("Modelo:", o["modelo"])
-                print("Capacidade:", o["capacidade"])
-                encontrou = True
-                break
-        if not encontrou:
-            print("Ônibus não encontrado.\n")
+        meuCursor = self.conexao.cursor() # objeto de manipulação de dados (insert, update, delete, select)
+        # cursor é o objeto que permite ao programa executar comandos SQL no servidor:
+        onibusEscolhido = 1
+        while onibusEscolhido!= 0:
+        # pedimos que o usuário digite o número do departamento a ser excluído
+            onibusEscolhido = int(input("ID do Passageiro (0 para terminar): "))
+            if onibusEscolhido != 0: # usuário não quer terminar o cadastro
+                # verifica no BD se existe um departamento com esse número digitado
+                result = meuCursor.execute(
+                            ' SELECT idOnibus, capacidade, '+\
+                            ' marca, modelo,'+\
+                            ' idMotorista'+\
+                            ' FROM EmpresaOnibus.Onibus '+\
+                            ' WHERE idOnibus = ?', onibusEscolhido)
+                registros = result.fetchall()
+                if len(registros) == 0:     # se o departamento não existe, não podemos excluí-lo
+                    print("Passageiro não encontrado.")
+                else:
+                    print("\nRegistro encontrado:")
+                    idOnibus            = registros[0][0]
+                    capacidade           = registros[0][1]
+                    marca               = registros[0][2]
+                    modelo      = registros[0][3]
+                    idMotorista     = registros[0][4]
+
+                    print(f"\nID Ônibus:  {idOnibus}")
+                    print(f"Capacidade: {capacidade}")
+                    print(f"Marca: {marca}")
+                    print(f"Modelo: {modelo}")
+                    print(f"ID Motorista: {idMotorista}")
+
+
+        meuCursor.commit()
 
     def listar(self):
-        print("Lista de ônibus:")
-        if len(self.onibus) == 0:
-            print("Nenhum ônibus cadastrado.\n")
+        meuCursor = self._conexao.cursor() # objeto de manipulação de dados (insert, update, delete, select)
+        # cursor é o objeto que permite ao programa executar comandos SQL no servidor:
+        # pedimos que o usuário digite o número do departamento a ser excluído
+                # verifica no BD se existe um departamento com esse número digitado
+        result = meuCursor.execute(
+                            ' SELECT idOnibus, capacidade, '+\
+                            ' marca, modelo,'+\
+                            ' idMotorista'+\
+                            ' FROM EmpresaOnibus.Onibus')
+        registros = result.fetchall()
+        if len(registros) == 0:     # se o departamento não existe, não podemos excluí-lo
+            print("Motoristas não encontrados.")
         else:
-            for o in self.onibus:
-                print("ID:", o["id"])
-                print("Placa:", o["placa"])
-                print("Modelo:", o["modelo"])
-                print("Capacidade:", o["capacidade"])
-                print()
+            print("12345678901234567890123456789012345678901234567890123456789012345678901234567890")
+            print("ID. \tCapacidade  \tMarca  \tModelo \tID Motorista")
+            for motorista in registros:
+                #arrumar indexação dessa merda aaaaaaaaaaaaa
+                
+                print(f"{motorista[0]}   \t{motorista[1]}          \t{motorista[2]} \t{motorista[3]} \t{motorista[4]}           ")
+            input("Tecle [enter] para terminar:")
+
+        meuCursor.commit()

@@ -58,20 +58,25 @@ class ManutencaoMotorista:
 
     
     def listar(self):
-        meuCursor = self.conexao.cursor() 
-        meuCursor.execute('SELECT idMotorista, nome FROM EmpresaOnibus.Motorista ')
-        registros = meuCursor.fetchall()
-        if len(registros) == 0: 
+        meuCursor = self._conexao.cursor() # objeto de manipulação de dados (insert, update, delete, select)
+        # cursor é o objeto que permite ao programa executar comandos SQL no servidor:
+        # pedimos que o usuário digite o número do departamento a ser excluído
+                # verifica no BD se existe um departamento com esse número digitado
+        result = meuCursor.execute(
+                            ' SELECT idMotorista, nome '+\
+                            ' FROM EmpresaOnibus.Motorista ')
+        registros = result.fetchall()
+        if len(registros) == 0:     # se o departamento não existe, não podemos excluí-lo
             print("Motoristas não encontrados.")
         else:
-            print("\tID\tnome ")
-            print("\t--\t------------------------")
+            print("ID. \tNome")
             for motorista in registros:
-                print(f"\t{motorista[0]}\t{motorista[1]}")
-                
+                #arrumar indexação dessa merda aaaaaaaaaaaaa
+                print(f"{motorista[0]}   \t{motorista[1]:20}")
             input("Tecle [enter] para terminar:")
+
             
-        meuCursor.close()
+        meuCursor.commit()
         
         
         '''CREATE TABLE EmpresaOnibus.Motorista(
