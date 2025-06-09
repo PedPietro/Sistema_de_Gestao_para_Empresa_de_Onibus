@@ -56,13 +56,25 @@ class ManutencaoMotorista:
         if not encontrou:
             print("Motorista não encontrado.\n")
 
+    
     def listar(self):
-        print("Lista de motoristas:")
-        if len(self.motoristas) == 0:
-            print("Nenhum motorista cadastrado.\n")
+        meuCursor = self.conexao.cursor() 
+        meuCursor.execute('SELECT idMotorista, nome FROM EmpresaOnibus.Motorista ')
+        registros = meuCursor.fetchall()
+        if len(registros) == 0: 
+            print("Motoristas não encontrados.")
         else:
-            for m in self.motoristas:
-                print("ID:", m["id"])
-                print("Nome:", m["nome"])
-                print("CNH:", m["cnh"])
-                print()
+            print("\tID\tnome ")
+            print("\t--\t------------------------")
+            for motorista in registros:
+                print(f"\t{motorista[0]}\t{motorista[1]}")
+                
+            input("Tecle [enter] para terminar:")
+            
+        meuCursor.close()
+        
+        
+        '''CREATE TABLE EmpresaOnibus.Motorista(
+	nome varchar(50),
+	idMotorista int primary key identity
+	)'''

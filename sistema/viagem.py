@@ -1,5 +1,4 @@
 import os
-
 import pyodbc as bd
 import getpass as gp
 
