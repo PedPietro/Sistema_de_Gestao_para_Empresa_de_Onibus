@@ -1,6 +1,5 @@
 #add funçao conecta bd aq no principal bbzudos
 import os 
-from conectaBD import conectouAoBancoDeDados as conexao
 from passageiros import ManutencaoPassageiros
 from passagens import ManutencaoPassagens
 from viagem import ManutencaoDeViagem
