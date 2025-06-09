@@ -18,8 +18,6 @@ def conectouAoBancoDeDados() -> bool: # informará se conseguiu ou não conectar
                             uid="BD24147", # seu username no servidor de BD
                             pwd=f"{senha}") # substitui variável senha
                             # pela senha digitada
-                            
-                            #senha nova
             print("Conexão bem sucedida!")
             return True
         except:
@@ -112,7 +110,7 @@ def vendapassagens():
         case "4": passagens.listar()
         case "5": passagens.disponibilidade()
         
-
+    
 def registroinicioefinal():
     #Registro de inicio e de final de viagem, liberando passageiros e vagas
     os.system('cls') or None
