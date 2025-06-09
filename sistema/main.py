@@ -1,18 +1,18 @@
 #add funçao conecta bd aq no principal bbzudos
 import os 
-from conectaBD import conectouAoBancoDeDados as conexao
 from passageiros import ManutencaoPassageiros
 from passagens import ManutencaoPassagens
 from viagem import ManutencaoDeViagem
 from motorista import ManutencaoMotorista
 from onibus import ManutencaoOnibus
+
 import getpass as gp
 import pyodbc as bd
 
 def conectouAoBancoDeDados() -> bool: # informará se conseguiu ou não conectar
         global conexao
         os.system('cls') or None
-        senha = "BD24147" # pede a senha
+        senha = "BD24147"
         try:
             conexao = bd.connect(driver="{SQL Server}",
                             server="regulus.cotuca.unicamp.br",
@@ -159,6 +159,9 @@ def vendaPassagens():
         
 
 def registroInicioeFinal():
+    pass
+    
+def registroinicioefinal():
     #Registro de inicio e de final de viagem, liberando passageiros e vagas
     os.system('cls') or None
     print("Selecione uma opção:")
