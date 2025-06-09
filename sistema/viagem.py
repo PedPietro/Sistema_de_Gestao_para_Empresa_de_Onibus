@@ -141,19 +141,21 @@ class ManutencaoDeViagem:
     def listar(self):
         meuCursor = self.conexao.cursor() # objeto de manipulação de dados
         # busca no BD os registros de departamentos
-        try: 
-            result = meuCursor.execute(
-                                    ' SELECT idViagem, distancia, '+\
-                                    ' custo, idCidadeOrigem, idCidadeOrigem'+\
-                                    ' FROM Viagem order by idViagem') 
-            registros = result.fetchall()
-        except:
-            print("Erro na busca dos dados\n")
-            
-        print(f"{'ID':<5} {'CPF':<12} {'Nome':<30} {'Telefone':<30} {'Nascimento':<12} {'Email'}")
-        for passageiro in registros:
-            print(f"{passageiro[0]:<5} {passageiro[1]:<12} {passageiro[2]:<20} {passageiro[3]:<15} {passageiro[4]:<12} {passageiro[5]}")
-        input("Tecle [enter] para terminar:")
+        #try: 
+        result = meuCursor.execute(
+                                ' SELECT idViagem, distancia, '+\
+                                ' custo, idCidadeOrigem, idCidadeDestino'+\
+                                ' FROM EmpresaOnibus.Viagem') 
+        registros = result.fetchall()
+        #except:
+        #   print("Erro na busca dos dados\n")
+        if len(registros) == 0:
+            print("Viagens não encontradas")
+        else:
+            print("ID.   \tDistância \tCusto           ID Cidade Origem     ID Cidade Destino")
+            for viagem in registros:
+                print(f"{viagem[0]:<5} \t{viagem[1]:<9} \t{viagem[2]:<15} {viagem[3]:<20} {viagem[4]:<25}")
+            input("Tecle [enter] para terminar:")
 
     def buscar():
         pass                    
