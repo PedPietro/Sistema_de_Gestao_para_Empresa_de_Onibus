@@ -212,7 +212,7 @@ class ManutencaoPassageiros:
             print("ID. \tCpf              \tNome                 \tTelefone       \tData De Nascimento     \tEmail")
             for passageiro in registros:
                 #arrumar indexação dessa merda aaaaaaaaaaaaa
-                print(f"{passageiro[0]}   \t{passageiro[1]:20}        \t{passageiro[2]}     \t{passageiro[3]}   \t{passageiro[4]}           \t{passageiro[5]}")
+                print(f"{passageiro[0]}   \t{passageiro[1]}        \t{passageiro[2]}     \t{passageiro[3]}   \t{passageiro[4]}           \t{passageiro[5]}")
             input("Tecle [enter] para terminar:")
 
         meuCursor.commit()
