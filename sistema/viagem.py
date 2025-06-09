@@ -150,9 +150,9 @@ class ManutencaoDeViagem:
         except:
             print("Erro na busca dos dados\n")
             
-        print("ID. Distância        Custo     idCidadeOrigem idCidadeOrigem")
-        for depto in registros:
-            print(f"{depto[0]}\t{depto[1]}\t{depto[2]}\t{depto[3]}")
+        print(f"{'ID':<5} {'CPF':<12} {'Nome':<30} {'Telefone':<30} {'Nascimento':<12} {'Email'}")
+        for passageiro in registros:
+            print(f"{passageiro[0]:<5} {passageiro[1]:<12} {passageiro[2]:<20} {passageiro[3]:<15} {passageiro[4]:<12} {passageiro[5]}")
         input("Tecle [enter] para terminar:")
 
     def buscar():

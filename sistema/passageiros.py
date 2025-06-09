@@ -196,9 +196,9 @@ class ManutencaoPassageiros:
         if len(registros) == 0:     # se o departamento não existe, não podemos excluí-lo
             print("Passageiros não encontrados.")
         else:
-            print("\tID  \tCpf              \tNome                 \tTelefone             \tData De Nascimento     \tEmail")
+            print("\tID. \tCpf              \tNome                 \tTelefone       \tData De Nascimento     \tEmail")
             for passageiro in registros:
-                print(f"\t{passageiro[0]}   \t{passageiro[1]}        \t{passageiro[2]}     \t{passageiro[3]}   \t{passageiro[4]}           \t{passageiro[5]}\n")
+                print(f"\t{passageiro[0]}   \t{passageiro[1]}        \t{passageiro[2]}     \t{passageiro[3]}   \t{passageiro[4]};           \t{passageiro[5]};\n")
             input("Tecle [enter] para terminar:")
             '''while passageiro < len(registros):
                 print("Registros encontrados: \n")

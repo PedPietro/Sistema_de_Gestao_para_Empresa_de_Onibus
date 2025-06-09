@@ -128,6 +128,24 @@ INSERT INTO EmpresaOnibus.Onibus (capacidade, marca, modelo, idMotorista) VALUES
 (36, 'Scania', 'K310', 3);
 
 
+ALTER TABLE EmpresaOnibus.Onibus
+ADD placa varchar(8) NOT NULL like '[A-Z][A-Z][A-Z][0-9][A-Z][0-9][0-9]'
+
+ALTER TABLE EmpresaOnibus.Onibus
+ADD CONSTRAINT chk_placa_mercosul CHECK (
+    placa COLLATE Latin1_General_CS_AS LIKE '[A-Z][A-Z][A-Z][0-9][A-Z][0-9][0-9]'
+);
+
+UPDATE EmpresaOnibus.Onibus
+SET placa = 'BRA1C23' WHERE idOnibus = 1;
+
+UPDATE EmpresaOnibus.Onibus
+SET placa = 'DEF2D45' WHERE idOnibus = 2;
+
+UPDATE EmpresaOnibus.Onibus
+SET placa = 'GHI3E67' WHERE idOnibus = 3;
+
+
 --5 - Tabela Passageiro
 
 INSERT INTO EmpresaOnibus.Passageiro (cpf, nome, telefone, dataNascimento, email) VALUES 
