@@ -153,7 +153,8 @@ class ManutencaoDeViagem:
         else:
             print("ID.   \tAssento \tData e Hora   \tID Ônibus \tID Passageiro \tID Viagem")
             for passagem in registros:
-                print(f"{passagem[0]:<5} \t{passagem[1]:<10} \t{passagem[2]:<15} {passagem[3]:<20} {passagem[4]:<25} {passagem[5]:<30}")
+                print(f"{passagem[0]:<5} \t{passagem[1]:<10} \t{passagem[2].strftime('%Y-%m-%d'):<15} {passagem[3]:<20} {passagem[4]:<25} {passagem[5]:<30}")
+                # passagem[2].strftime() serve para converter o datetime do bd em texto
             input("Tecle [enter] para terminar:")
 
     def buscar(self):
