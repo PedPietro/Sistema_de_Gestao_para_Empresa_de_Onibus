@@ -4,7 +4,7 @@ class ManutencaoPassagens:
         self.passagens = []  # lista que armazena as passagens
 
     def excluir(self):
-        meuCursor = self.conexao.cursor() # objeto de manipulação de dados (insert, update, delete, select)
+        meuCursor = self._conexao.cursor() # objeto de manipulação de dados (insert, update, delete, select)
         # cursor é o objeto que permite ao programa executar comandos SQL no servidor:
         passagemEscolhida = 1
         while passagemEscolhida!= 0:
@@ -48,7 +48,7 @@ class ManutencaoPassagens:
                             print("Não foi possível excluir. Pode ser uma passagem em uso por outra tabela.") 
 
     def buscar(self):
-        meuCursor = self.conexao.cursor() # objeto de manipulação de dados (insert, update, delete, select)
+        meuCursor = self._conexao.cursor() # objeto de manipulação de dados (insert, update, delete, select)
         # cursor é o objeto que permite ao programa executar comandos SQL no servidor:
         passagemEscolhida = 1
         while passagemEscolhida!= 0:
@@ -80,7 +80,7 @@ class ManutencaoPassagens:
                     print(f"ID Viagem: {idViagem}\n")          
 
     def listar(self):
-        meuCursor = self.conexao.cursor() # objeto de manipulação de dados
+        meuCursor = self._conexao.cursor() # objeto de manipulação de dados
         # busca no BD os registros de departamentos
         #try: 
         result = meuCursor.execute(

@@ -4,12 +4,12 @@ class ManutencaoOnibus:
         self.onibus = []  # lista que armazena os ônibus
 
     def buscar(self):
-        meuCursor = self.conexao.cursor() # objeto de manipulação de dados (insert, update, delete, select)
+        meuCursor = self._conexao.cursor() # objeto de manipulação de dados (insert, update, delete, select)
         # cursor é o objeto que permite ao programa executar comandos SQL no servidor:
         onibusEscolhido = 1
         while onibusEscolhido!= 0:
         # pedimos que o usuário digite o número do departamento a ser excluído
-            onibusEscolhido = int(input("ID do Passageiro (0 para terminar): "))
+            onibusEscolhido = int(input("ID do Ônibus (0 para terminar): "))
             if onibusEscolhido != 0: # usuário não quer terminar o cadastro
                 # verifica no BD se existe um departamento com esse número digitado
                 result = meuCursor.execute(
@@ -20,7 +20,7 @@ class ManutencaoOnibus:
                             ' WHERE idOnibus = ?', onibusEscolhido)
                 registros = result.fetchall()
                 if len(registros) == 0:     # se o departamento não existe, não podemos excluí-lo
-                    print("Passageiro não encontrado.")
+                    print("\nÔnibus não encontrado.\n")
                 else:
                     print("\nRegistro encontrado:")
                     idOnibus            = registros[0][0]
@@ -33,7 +33,7 @@ class ManutencaoOnibus:
                     print(f"Capacidade: {capacidade}")
                     print(f"Marca: {marca}")
                     print(f"Modelo: {modelo}")
-                    print(f"ID Motorista: {idMotorista}")
+                    print(f"ID Motorista: {idMotorista}\n")
 
 
         meuCursor.commit()
@@ -42,14 +42,14 @@ class ManutencaoOnibus:
         meuCursor = self._conexao.cursor() # objeto de manipulação de dados (insert, update, delete, select)
         # cursor é o objeto que permite ao programa executar comandos SQL no servidor:
         # pedimos que o usuário digite o número do departamento a ser excluído
-                # verifica no BD se existe um departamento com esse número digitado
+        # verifica no BD se existe um departamento com esse número digitado
         result = meuCursor.execute(
                             ' SELECT idOnibus, capacidade, '+\
                             ' marca, modelo,'+\
                             ' idMotorista'+\
                             ' FROM EmpresaOnibus.Onibus')
         registros = result.fetchall()
-        if len(registros) == 0:     # se o departamento não existe, não podemos excluí-lo
+        if len(registros) == 0:
             print("Motoristas não encontrados.")
         else:
             print("12345678901234567890123456789012345678901234567890123456789012345678901234567890")

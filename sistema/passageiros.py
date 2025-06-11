@@ -4,7 +4,7 @@ import getpass as gp
 
 class ManutencaoPassageiros:
     def __init__(self, conexao):
-        self.conexao = conexao
+        self._conexao = conexao
         self.passageiros = [] # vetor que guarda os passageiros
 
 
@@ -35,7 +35,7 @@ class ManutencaoPassageiros:
                     print("Não foi possível incluir. Pode haver Passageiro repetido.")'''
     def alterar(self):
         # cursor é o objeto que permite ao programa executar comandos SQL no servidor:
-        meuCursor = self.conexao.cursor() # objeto de manipulação de dados
+        meuCursor = self._conexao.cursor() # objeto de manipulação de dados
         passageiroEscolhido = 1
         while passageiroEscolhido != 0:
             # pedimos que o usuário digite o número do departamento a ser alterado
@@ -115,7 +115,7 @@ class ManutencaoPassageiros:
                 
 
     def excluir(self):
-        meuCursor = self.conexao.cursor() # objeto de manipulação de dados (insert, update, delete, select)
+        meuCursor = self._conexao.cursor() # objeto de manipulação de dados (insert, update, delete, select)
         # cursor é o objeto que permite ao programa executar comandos SQL no servidor:
         passageiroEscolhido = 1
         while passageiroEscolhido!= 0:
@@ -161,7 +161,7 @@ class ManutencaoPassageiros:
         meuCursor.commit() # enviar as mudanças para o BD 
 #precisava de um commit kkkkkkk
     def buscar(self):
-        meuCursor = self.conexao.cursor() # objeto de manipulação de dados (insert, update, delete, select)
+        meuCursor = self._conexao.cursor() # objeto de manipulação de dados (insert, update, delete, select)
         # cursor é o objeto que permite ao programa executar comandos SQL no servidor:
         passageiroEscolhido = 1
         while passageiroEscolhido!= 0:
@@ -196,7 +196,7 @@ class ManutencaoPassageiros:
         meuCursor.commit()
                     
     def listar(self):
-        meuCursor = self.conexao.cursor() # objeto de manipulação de dados (insert, update, delete, select)
+        meuCursor = self._conexao.cursor() # objeto de manipulação de dados (insert, update, delete, select)
         # cursor é o objeto que permite ao programa executar comandos SQL no servidor:
         # pedimos que o usuário digite o número do departamento a ser excluído
                 # verifica no BD se existe um departamento com esse número digitado

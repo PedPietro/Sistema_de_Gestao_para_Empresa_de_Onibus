@@ -5,7 +5,7 @@ import getpass as gp
 class ManutencaoDeViagem:
 
     def __init__(self, conexao):
-        self.conexao = conexao
+        self._conexao = conexao
 
     '''def incluir(self):
         meuCursor = self.conexao.cursor() # cria um cursor, objeto de comandos de SQL
@@ -39,7 +39,7 @@ class ManutencaoDeViagem:
 '''
     def alterar(self):
         # cursor é o objeto que permite ao programa executar comandos SQL no servidor:
-        meuCursor = self.conexao.cursor() # objeto de manipulação de dados
+        meuCursor = self._conexao.cursor() # objeto de manipulação de dados
         numDeptoDigitado = 1
         while numDeptoDigitado != 0:
             # pedimos que o usuário digite o número do departamento a ser alterado
@@ -94,7 +94,7 @@ class ManutencaoDeViagem:
         meuCursor.commit() # registrar definitivamente as mudanças para o BD 
 
     def excluir(self):
-        meuCursor = self.conexao.cursor() # objeto de manipulação de dados (insert, update, delete, select)
+        meuCursor = self._conexao.cursor() # objeto de manipulação de dados (insert, update, delete, select)
         # cursor é o objeto que permite ao programa executar comandos SQL no servidor:
         viagemEscolhida = 1
         while viagemEscolhida!= 0:
@@ -138,7 +138,7 @@ class ManutencaoDeViagem:
         meuCursor.commit() # enviar as mudanças para o BD 
 
     def listar(self):
-        meuCursor = self.conexao.cursor() # objeto de manipulação de dados
+        meuCursor = self._conexao.cursor() # objeto de manipulação de dados
         # busca no BD os registros de departamentos
         #try: 
         result = meuCursor.execute(
@@ -157,7 +157,7 @@ class ManutencaoDeViagem:
             input("Tecle [enter] para terminar:")
 
     def buscar(self):
-        meuCursor = self.conexao.cursor() # objeto de manipulação de dados (insert, update, delete, select)
+        meuCursor = self._conexao.cursor() # objeto de manipulação de dados (insert, update, delete, select)
         # cursor é o objeto que permite ao programa executar comandos SQL no servidor:
         passagemEscolhida = 1
         while passagemEscolhida!= 0:
