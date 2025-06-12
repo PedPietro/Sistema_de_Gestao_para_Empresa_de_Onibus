@@ -1,8 +1,8 @@
 caso precisem do cod correto do sql, é esse:
 
 !!!!!!!
-nome do meu bd: BD24127
-senha do meu bd: betinha
+nome do meu bd: BD24147
+senha do meu bd: BD24147
 !!!!!!!
 
 /* Lógico_Passagem: */

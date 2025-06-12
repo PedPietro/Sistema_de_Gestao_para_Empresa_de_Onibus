@@ -23,8 +23,19 @@ Programação: trabalhar por pair programmming (programação em pares/duplas)
 3. Uma duplas testa o código desenvolvido pela outra dupla
 4. Prever momentos de demonstração do que tiver sido desenvolvido
 
-Entrega final: 12 de junho 
-
+Entrega final: 13 de junho 
 
 
 ideia: fazer um programa principal onde nele vamos selecionar onde iremos mexer, que no caso serao as classes manutençao, vai ter um arquivo para cada classe e dentro dessa classe vai ter um segundo seletor com oq vamos fazer: incluir, excluir, alterar, buscar E listar.
+
+oque ja esta feito:
+seletor principal
+seletor para cada funçao
+arquivos para cada tabela(só criado)
+banco de dados
+funcoes das funçoes ja prontas:
+(listar passageiros, listar viagens)
+
+oque precisa ser feito:
+arrumar as funçoes
+testar funçoes
