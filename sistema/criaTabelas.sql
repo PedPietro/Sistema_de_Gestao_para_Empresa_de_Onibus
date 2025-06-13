@@ -1,137 +1,198 @@
-CREATE SCHEMA EmpresaOnibus;
+create schema EmpresaOnibus
 
--- 1. Tabela UF
-CREATE TABLE EmpresaOnibus.UF (
-    siglaUF CHAR(2) PRIMARY KEY,
-    nomeUF VARCHAR(30) NOT NULL
-);
+/* Lógico_Passagem: */
 
--- 2. Tabela Cidade
-CREATE TABLE EmpresaOnibus.Cidade (
-    idCidade INT PRIMARY KEY IDENTITY,
-    nome VARCHAR(50) NOT NULL,
-    endereco_terminal VARCHAR(100),
-    siglaUF CHAR(2),
-    CONSTRAINT FK_Cidade_UF FOREIGN KEY (siglaUF)
-        REFERENCES EmpresaOnibus.UF(siglaUF)
-        ON DELETE CASCADE
-);
+CREATE TABLE EmpresaOnibus.Motorista(
+	nome varchar(50),
+	idMotorista int primary key identity
+	)
 
--- 3. Tabela Motorista
-CREATE TABLE EmpresaOnibus.Motorista (
-    idMotorista INT PRIMARY KEY IDENTITY,
-    nome VARCHAR(50) NOT NULL
-);
-
--- 4. Tabela Ônibus
 CREATE TABLE EmpresaOnibus.Onibus (
-    idOnibus INT PRIMARY KEY IDENTITY,
-    capacidade INT NOT NULL,
-    marca VARCHAR(20),
-    modelo VARCHAR(20),
-    placa VARCHAR(8) NOT NULL,
-    CONSTRAINT chk_placa_mercosul CHECK (
-        placa LIKE '[A-Z][A-Z][A-Z][0-9][A-Z][0-9][0-9]'
-    )
+    idOnibus int PRIMARY KEY Identity,
+    capacidade int,
+    marca varchar(20),
+    modelo varchar(20),
+	idMotorista int,
+	constraint fkIdidMotorista foreign key(idMotorista)
+		references EmpresaOnibus.Motorista(idMotorista),
 );
 
--- 5. Tabela Viagem (conecta cidades, motorista e ônibus)
-CREATE TABLE EmpresaOnibus.Viagem (
-    idViagem INT PRIMARY KEY IDENTITY,
-    distancia INT,
-	dataSaida DATETIME,
-    custo MONEY,
-    idCidadeOrigem INT,
-    idCidadeDestino INT,
-    idOnibus INT,
-    idMotorista INT,
-    CONSTRAINT FK_Viagem_CidadeOrigem FOREIGN KEY (idCidadeOrigem)
-        REFERENCES EmpresaOnibus.Cidade(idCidade),
-    CONSTRAINT FK_Viagem_CidadeDestino FOREIGN KEY (idCidadeDestino)
-        REFERENCES EmpresaOnibus.Cidade(idCidade),
-    CONSTRAINT FK_Viagem_Onibus FOREIGN KEY (idOnibus)
-        REFERENCES EmpresaOnibus.Onibus(idOnibus),
-    CONSTRAINT FK_Viagem_Motorista FOREIGN KEY (idMotorista)
-        REFERENCES EmpresaOnibus.Motorista(idMotorista)
-);
-
--- 6. Tabela Passageiro
 CREATE TABLE EmpresaOnibus.Passageiro (
-    idPassageiro INT PRIMARY KEY IDENTITY,
-    cpf CHAR(11) NOT NULL UNIQUE,
-    nome VARCHAR(50) NOT NULL,
-    telefone VARCHAR(15) NOT NULL,
-    dataNascimento DATE NOT NULL,
-    email VARCHAR(100) UNIQUE NOT NULL
-);
+	idPassageiro int primary key identity,
+    cpf char(11),
+    nome varchar(50),
+    telefone varchar(15),
+    dataNascimento date,
+    email varchar(100)
+)
 
--- 7. Tabela Passagem
+CREATE TABLE EmpresaOnibus.Cidade (
+    idCidade int PRIMARY KEY Identity,
+    nome varchar(50),
+    endereco_terminal varchar(100),
+    siglaUF char(2)
+)
+
+/*
+Terminal: 
+	Terminal Centro
+	Terminal Campo Grande
+	Terminal Barão Geraldo
+*/
+
+
+
+CREATE TABLE EmpresaOnibus.Viagem (
+    idViagem int PRIMARY KEY Identity,
+    distancia int,  
+    custo money,
+    idCidadeOrigem int,
+    idCidadeDestino int,
+	constraint fkIdCidadeOrigem foreign key(idCidadeOrigem)
+		references EmpresaOnibus.Cidade(idCidade),
+    constraint fkIdCidadeDestino foreign key(idCidadeDestino)
+		references EmpresaOnibus.Cidade(idCidade)
+)
+
 CREATE TABLE EmpresaOnibus.Passagem (
-    idPassagem INT PRIMARY KEY IDENTITY,
-    assento INT,
-    idViagem INT,
-    idPassageiro INT,
-    CONSTRAINT FK_Passagem_Viagem FOREIGN KEY (idViagem)
-        REFERENCES EmpresaOnibus.Viagem(idViagem)
-        ON DELETE CASCADE,
-    CONSTRAINT FK_Passagem_Passageiro FOREIGN KEY (idPassageiro)
-        REFERENCES EmpresaOnibus.Passageiro(idPassageiro)
+    IdPassagem int PRIMARY KEY Identity,
+    assento int,
+    data_e_hora datetime,
+    idOnibus int,
+    idPassageiro int,
+    idViagem int
+)
+
+CREATE TABLE EmpresaOnibus.UF (
+    siglaUF char(2) PRIMARY KEY,
+    nomeUF varchar(30)
 );
+ 
+ALTER TABLE EmpresaOnibus.Cidade ADD CONSTRAINT FK_Cidade_2
+    FOREIGN KEY (siglaUF)
+    REFERENCES EmpresaOnibus.UF (siglaUF)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE EmpresaOnibus.Passagem ADD CONSTRAINT FK_Passagem_2
+    FOREIGN KEY (idOnibus)
+    REFERENCES EmpresaOnibus.Onibus (idOnibus)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE EmpresaOnibus.Passagem ADD CONSTRAINT FK_Passagem_3
+    FOREIGN KEY (idPassageiro)
+    REFERENCES EmpresaOnibus.Passageiro (idPassageiro);
+ 
+ALTER TABLE EmpresaOnibus.Passagem ADD CONSTRAINT FK_Passagem_4
+    FOREIGN KEY (idViagem)
+    REFERENCES EmpresaOnibus.Viagem (idViagem);
 
--- INSERINDO DADOS NO MODELO RELACIONAL DA EMPRESA DE ÔNIBUS
+select * from EmpresaOnibus.Passageiro
+select * from EmpresaOnibus.Passagem
+select * from EmpresaOnibus.Viagem
+select * from EmpresaOnibus.Onibus
+select * from EmpresaOnibus.UF
+select * from EmpresaOnibus.Cidade
+select * from EmpresaOnibus.Motorista
 
--- 1. UF
+
+--1 - Tabela UF
+
 INSERT INTO EmpresaOnibus.UF (siglaUF, nomeUF) VALUES 
 ('SP', 'São Paulo'),
 ('RJ', 'Rio de Janeiro'),
 ('MG', 'Minas Gerais'),
 ('MS', 'Mato Grosso do Sul');
 
--- 2. CIDADE
+
+--2 - Tabela Cidade
+
 INSERT INTO EmpresaOnibus.Cidade (nome, endereco_terminal, siglaUF) VALUES 
 ('Campinas', 'Terminal Barão Geraldo', 'SP'),
 ('São Paulo', 'Terminal Centro', 'SP'),
 ('Campo Grande', 'Terminal Campo Grande', 'MS');
 
--- 3. MOTORISTA
+
+--3 - Tabela Motorista
+
 INSERT INTO EmpresaOnibus.Motorista (nome) VALUES 
 ('Carlos Silva'),
 ('Maria Oliveira'),
 ('João Pereira');
 
--- 4. ÔNIBUS
-INSERT INTO EmpresaOnibus.Onibus (capacidade, marca, modelo, placa) VALUES 
-(50, 'Mercedes', 'OF-1721', 'BRA1C23'),
-(42, 'Volvo', 'B270F', 'DEF2D45'),
-(36, 'Scania', 'K310', 'GHI3E67');
 
--- 5. VIAGEM
-INSERT INTO EmpresaOnibus.Viagem (distancia, custo, idCidadeOrigem, idCidadeDestino, idOnibus, idMotorista, dataSaida) VALUES 
-(100, 80.00, 1, 2, 1, 1, '2025-05-20T10:00:00'),   -- Campinas -> São Paulo
-(600, 150.00, 2, 3, 2, 2, '2025-05-20T10:00:00'),  -- São Paulo -> Campo Grande
-(100, 85.00, 3, 1, 3, 3, '2025-05-20T10:00:00');   -- Campo Grande -> Campinas
+--4 - Tabela Onibus
 
--- 6. PASSAGEIRO
+INSERT INTO EmpresaOnibus.Onibus (capacidade, marca, modelo, idMotorista) VALUES 
+(50, 'Mercedes', 'OF-1721', 1),
+(42, 'Volvo', 'B270F', 2),
+(36, 'Scania', 'K310', 3);
+
+
+ALTER TABLE EmpresaOnibus.Onibus
+ADD placa varchar(8) NOT NULL like '[A-Z][A-Z][A-Z][0-9][A-Z][0-9][0-9]'
+
+ALTER TABLE EmpresaOnibus.Onibus
+ADD CONSTRAINT chk_placa_mercosul CHECK (
+    placa COLLATE Latin1_General_CS_AS LIKE '[A-Z][A-Z][A-Z][0-9][A-Z][0-9][0-9]'
+);
+
+UPDATE EmpresaOnibus.Onibus
+SET placa = 'BRA1C23' WHERE idOnibus = 1;
+
+UPDATE EmpresaOnibus.Onibus
+SET placa = 'DEF2D45' WHERE idOnibus = 2;
+
+UPDATE EmpresaOnibus.Onibus
+SET placa = 'GHI3E67' WHERE idOnibus = 3;
+
+
+--5 - Tabela Passageiro
+
 INSERT INTO EmpresaOnibus.Passageiro (cpf, nome, telefone, dataNascimento, email) VALUES 
 ('12345678901', 'Ana Souza', '11987654321', '1990-05-10', 'ana@gmail.com'),
 ('23456789012', 'Pedro Lima', '11998765432', '1985-08-22', 'pedro@gmail.com'),
 ('34567890123', 'Juliana Costa', '11991234567', '1995-03-15', 'juliana@gmail.com');
 
--- 7. PASSAGEM
-INSERT INTO EmpresaOnibus.Passagem (assento, idViagem, idPassageiro) VALUES 
-(12, 1, 1),
-(8, 2, 1),
-(5, 3, 3);
+
+--6 - Tabela Viagem
+
+INSERT INTO EmpresaOnibus.Viagem (distancia, custo, idCidadeOrigem, idCidadeDestino) VALUES 
+(100, 80.00, 1, 2), -- Campinas -> São Paulo
+(600, 150.00, 2, 3), -- São Paulo -> Campo Grande
+(100, 85.00, 3, 1); -- Campo Grande -> Campinas
 
 
-/*
+--7 - Tabela Passagem
+INSERT INTO EmpresaOnibus.Passagem (assento, data_e_hora, idOnibus, idPassageiro,idViagem) VALUES 
+(12, '2025-05-20T10:00:00', 1, 1,1),
+(8, '2025-05-22T08:30:00', 2, 1,2),
+(5, '2025-05-25T07:00:00', 3, 3,3);
+
+--SE NECESSÁRIO:
+/*drop table EmpresaOnibus.Passageiro
 drop table EmpresaOnibus.Passagem
-drop table EmpresaOnibus.Viagem
-drop table EmpresaOnibus.Cidade
 drop table EmpresaOnibus.UF
+drop table EmpresaOnibus.Viagem
 drop table EmpresaOnibus.Onibus
 drop table EmpresaOnibus.Motorista
-drop table EmpresaOnibus.Passageiro
+drop table EmpresaOnibus.Cidade*/
 
-drop schema EmpresaOnibus
-*/
+--SELECTS DO JEITO DO CHICO:
+--POR QUE FEZ ISSO? Para podermos se necessário guardas
+--se necessário as colunas em PYTHON e porque o Chico fez o mesmo :p
+
+--ERRADO, ARRUMAR EM CASA (PIPI)
+--UF
+SELECT siglaUF, nomeUF FROM EmpresaOnibus.UF 
+--CIDADE
+SELECT idCidade, nome, endereco_terminal, siglaUF FROM EmpresaOnibus.Cidade 
+--MOTORISTA
+SELECT idMotorista, nome FROM EmpresaOnibus.Motorista
+--ONIBUS
+SELECT idOnibus, capacidade, marca, modelo, idMotorista FROM EmpresaOnibus.Onibus
+--PASSAGEIRO
+SELECT idPassageiro, cpf, nome, telefone, dataNascimento, email FROM EmpresaOnibus.Passageiro
+--VIAGEM
+SELECT idViagem, distancia, custo, idCidadeOrigem, idCidadeDestino FROM EmpresaOnibus.Viagem
+--PASSAGEM
+SELECT IdPassagem, assento, data_e_hora, idOnibus, idPassageiro,idViagem FROM EmpresaOnibus.Passagem

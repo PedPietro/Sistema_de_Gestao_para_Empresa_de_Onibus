@@ -3,113 +3,48 @@ class ManutencaoUF:
         self._conexao = conexao
         self.estados = []  # Lista para armazenar os estados (UF)
 
-    def incluir(self):
-        print("Incluir estado (UF):")
-        sigla = input("Digite a sigla do estado (ex: SP): ")
-        nome = input("Digite o nome do estado: ")
+def listar_viagem(self):
+    meuCursor = self._conexao.cursor() # objeto de manipulação de dados
+    # busca no BD os registros de departamentos
+    #try: 
+    result = meuCursor.execute(
+                        ' SELECT siglaUF,' \
+                        ' nome'+\
+                        ' FROM Viagem ')
+    registros = result.fetchall()
+    #except:
+    #   print("Erro na busca dos dados\n")
+    if len(registros) == 0:
+        print("Viagens não encontradas")
+    else:
+        print("Sigla UF   \tNome")
+        for uf in registros:
+            print(f"{uf[0]:<5} \t{uf[1]:<10}")
+            # passagem[2].strftime() serve para converter o datetime do bd em texto
+        input("Tecle [enter] para terminar:")
 
-        estado = {
-            "sigla": sigla,
-            "nome": nome
-        }
+def buscar(self):
+    meuCursor = self.conexao.cursor() # objeto de manipulação de dados (insert, update, delete, select)
+    # cursor é o objeto que permite ao programa executar comandos SQL no servidor:
+    ufEscolhida = 1
+    while ufEscolhida!= 0:
+    # pedimos que o usuário digite o número do departamento a ser excluído
+        ufEscolhida = int(input("ID Da UF (0 para terminar): "))
+        if ufEscolhida != 0: # usuário não quer terminar o cadastro
+            # verifica no BD se existe um departamento com esse número digitado
+            result = meuCursor.execute(
+                        ' SELECT siglaUF,' \
+                        ' nome'+\
+                        ' FROM Viagem where idUF = ?', ufEscolhida)
+            registros = result.fetchall()
+            if len(registros) == 0:     # se o departamento não existe, não podemos excluí-lo
+                print("Viagem não encontrado.")
+            else:
+                print("Registro encontrado:")
+                siglaUF            = registros[0][0]
+                nome           = registros[0][1]
 
-        self.estados.append(estado)
-        print("Estado incluído com sucesso!\n")
+                print("Sigla UF: "+siglaUF)
+                print("Nome: "+nome)
 
-    def excluir(self):
-        print("Excluir estado (UF):")
-        sigla = input("Digite a sigla do estado que deseja excluir: ")
-        encontrou = False
-
-        for e in self.estados:
-            if e["sigla"] == sigla:
-                self.estados.remove(e)
-                encontrou = True
-                print("Estado excluído com sucesso!\n")
-                break
-
-        if not encontrou:
-            print("Estado não encontrado.\n")
-
-    def alterar(self):
-        print("Alterar estado (UF):")
-        sigla = input("Digite a sigla do estado que deseja alterar: ")
-        encontrou = False
-
-        for e in self.estados:
-            if e["sigla"] == sigla:
-                novo_nome = input("Digite o novo nome do estado: ")
-                e["nome"] = novo_nome
-                encontrou = True
-                print("Estado alterado com sucesso!\n")
-                break
-
-        if not encontrou:
-            print("Estado não encontrado.\n")
-
-    def buscar(self):
-        print("Buscar estado (UF):")
-        sigla = input("Digite a sigla do estado que deseja buscar: ")
-        encontrou = False
-
-        for e in self.estados:
-            if e["sigla"] == sigla:
-                print("Sigla:", e["sigla"])
-                print("Nome:", e["nome"])
-                encontrou = True
-                break
-
-        if not encontrou:
-            print("Estado não encontrado.\n")
-
-    def listar(self):
-        print("Lista de estados (UF):")
-        if len(self.estados) == 0:
-            print("Nenhum estado cadastrado.\n")
-        else:
-            for e in self.estados:
-                print("Sigla:", e["sigla"])
-                print("Nome:", e["nome"])
-                print()
-
-
-def menu_uf():
-    manutencao = ManutencaoUF()
-    opcao = -1
-
-    while opcao != 0:
-        print("\n=== MENU DE MANUTENÇÃO DE ESTADOS (UF) ===")
-        print("1 - Incluir estado")
-        print("2 - Excluir estado")
-        print("3 - Alterar estado")
-        print("4 - Buscar estado")
-        print("5 - Listar estados")
-        print("0 - Sair")
-        entrada = input("Digite a opção desejada: ")
-
-        if entrada.isdigit():
-            opcao = int(entrada)
-        else:
-            print("Opção inválida. Digite um número.")
-            continue
-
-        match opcao:
-            case 1:
-                manutencao.incluir()
-            case 2:
-                manutencao.excluir()
-            case 3:
-                manutencao.alterar()
-            case 4:
-                manutencao.buscar()
-            case 5:
-                manutencao.listar()
-            case 0:
-                print("Encerrando o menu de manutenção de estados.")
-            case _:
-                print("Opção inválida. Tente novamente.")
-
-
-# Executar se for o programa principal
-if __name__ == "__main__":
-    menu_uf()
+    meuCursor.commit() # enviar as mudanças para o BD                    
