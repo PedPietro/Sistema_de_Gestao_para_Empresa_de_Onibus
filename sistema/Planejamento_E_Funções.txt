@@ -35,11 +35,13 @@ arquivos para cada tabela(só criado)
 banco de dados
 funcoes das funçoes ja prontas:
 (listar passageiros, listar viagens)
+foi refeito o banco de dados
 
 oque precisa ser feito:
 arrumar as funçoes
 testar funçoes
 viagem(cancelar viagem, adicionar passagem e listar viagem)
+poder manipular a viagem( EXCLUIR, CRIAR ETC)]
 
 
 anotaçoes importantes: empresaOnibus.passagem liga passageiros e viagens
