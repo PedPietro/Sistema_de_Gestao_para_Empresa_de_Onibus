@@ -35,7 +35,7 @@ class ManutencaoPassagens:
         # gravados no servidor de banco de dados remoto
         meuCursor.commit() # solicita ao servidor que registre as mudanças no BD 
 
-    def excluir(self):
+    def cancelar(self):
         meuCursor = self._conexao.cursor() # objeto de manipulação de dados (insert, update, delete, select)
         # cursor é o objeto que permite ao programa executar comandos SQL no servidor:
         passagemEscolhida = 1

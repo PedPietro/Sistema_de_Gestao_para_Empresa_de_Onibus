@@ -9,8 +9,8 @@ class ManutencaoPassageiros:
 
 
 
-    '''def cadastropassageiros():              # Salva os dados do formulário (incluídos ou editados) no banco de dados
-        meuCursor = conexao.cursor() # cria um cursor, objeto de comandos de SQL
+    def cadastropassageiros(self):              # Salva os dados do formulário (incluídos ou editados) no banco de dados
+        meuCursor = self._conexao.cursor() # cria um cursor, objeto de comandos de SQL
         cpf = 1
         while cpf != 0:
             # pedimos que o usuário digite os dados do novo Passageiro
@@ -32,7 +32,8 @@ class ManutencaoPassageiros:
                     meuCursor.execute(sComando)
                     print("Passageiro incluído com sucesso!")
                 except: # em caso de erro
-                    print("Não foi possível incluir. Pode haver Passageiro repetido.")'''
+                    print("Não foi possível incluir. Pode haver Passageiro repetido.")
+                    
     def alterar(self):
         # cursor é o objeto que permite ao programa executar comandos SQL no servidor:
         meuCursor = self._conexao.cursor() # objeto de manipulação de dados
@@ -111,8 +112,6 @@ class ManutencaoPassageiros:
                         print("Passageiro alterado com sucesso!")
                     except: # em caso de erro
                         print("Não foi possível alterar. Verifique os dados.")
-        
-                
 
     def excluir(self):
         meuCursor = self._conexao.cursor() # objeto de manipulação de dados (insert, update, delete, select)

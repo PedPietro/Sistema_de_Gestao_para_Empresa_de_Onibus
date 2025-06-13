@@ -4,7 +4,7 @@ from passagens import ManutencaoPassagens
 from viagem import ManutencaoDeViagem
 from motorista import ManutencaoMotorista
 from onibus import ManutencaoOnibus
-from relatorios import Relatorios
+#from relatorios import Relatorios
 
 import pyodbc as bd
 
@@ -55,18 +55,20 @@ def cadastroPassageiros():
     os.system('cls') or None
     print("Manutenção de Passageiros:")
     print("0 - Voltar")
-    print("1 - Excluir Passageiros")
-    print("2 - Alterar Passageiros")
-    print("3 - Buscar Passageiros")
-    print("4 - Listar Passageiros")
+    print("1 - Cadastro de Passageiros")
+    print("2 - Excluir Passageiros")
+    print("3 - Alterar Passageiros")
+    print("4 - Buscar Passageiros")
+    print("5 - Listar Passageiros")
     escolha = input("Escolha: ")
     passageiros = ManutencaoPassageiros(conexao)
     match escolha:
         case "0": return
-        case "1": passageiros.excluir()
-        case "2": passageiros.alterar()
-        case "3": passageiros.buscar()
-        case "4": passageiros.listar()
+        case "1": passageiros.cadastropassageiros()
+        case "2": passageiros.excluir()
+        case "3": passageiros.alterar()
+        case "4": passageiros.buscar()
+        case "5": passageiros.listar()
 
 def cadastroMotorista():
     os.system('cls') or None
@@ -128,7 +130,7 @@ def vendaPassagens():
     passagens = ManutencaoPassagens(conexao)
     match escolha:
         case "0": return
-        case "1": passagens.vendapassagens()
+        case "1": passagens.vender_passagem()
         case "2": passagens.cancelar()
         case "3": passagens.buscar()
         case "4": passagens.listar()
