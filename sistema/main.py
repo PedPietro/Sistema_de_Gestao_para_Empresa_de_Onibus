@@ -1,6 +1,7 @@
 import os 
 from passageiros import ManutencaoPassageiros
 from passagens import ManutencaoPassagens
+from relatorios import Relatorios
 from viagem import ManutencaoDeViagem
 from motorista import ManutencaoMotorista
 from onibus import ManutencaoOnibus
