@@ -39,3 +39,7 @@ funcoes das funçoes ja prontas:
 oque precisa ser feito:
 arrumar as funçoes
 testar funçoes
+viagem(cancelar viagem, adicionar passagem e listar viagem)
+
+
+anotaçoes importantes: empresaOnibus.passagem liga passageiros e viagens
