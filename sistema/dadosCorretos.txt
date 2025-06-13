@@ -1,55 +1,44 @@
---1 - Tabela UF
+-- INSERINDO DADOS NO MODELO RELACIONAL DA EMPRESA DE ÔNIBUS
 
+-- 1. UF
 INSERT INTO EmpresaOnibus.UF (siglaUF, nomeUF) VALUES 
 ('SP', 'São Paulo'),
 ('RJ', 'Rio de Janeiro'),
 ('MG', 'Minas Gerais'),
 ('MS', 'Mato Grosso do Sul');
 
-
---2 - Tabela Cidade
-
+-- 2. CIDADE
 INSERT INTO EmpresaOnibus.Cidade (nome, endereco_terminal, siglaUF) VALUES 
 ('Campinas', 'Terminal Barão Geraldo', 'SP'),
 ('São Paulo', 'Terminal Centro', 'SP'),
 ('Campo Grande', 'Terminal Campo Grande', 'MS');
 
-
---3 - Tabela Motorista
-
+-- 3. MOTORISTA
 INSERT INTO EmpresaOnibus.Motorista (nome) VALUES 
 ('Carlos Silva'),
 ('Maria Oliveira'),
 ('João Pereira');
 
+-- 4. ÔNIBUS
+INSERT INTO EmpresaOnibus.Onibus (capacidade, marca, modelo, placa) VALUES 
+(50, 'Mercedes', 'OF-1721', 'BRA1C23'),
+(42, 'Volvo', 'B270F', 'DEF2D45'),
+(36, 'Scania', 'K310', 'GHI3E67');
 
---4 - Tabela Onibus
+-- 5. VIAGEM
+INSERT INTO EmpresaOnibus.Viagem (distancia, custo, idCidadeOrigem, idCidadeDestino, idOnibus, idMotorista, dataSaida) VALUES 
+(100, 80.00, 1, 2, 1, 1, '2025-05-20T10:00:00'),   -- Campinas -> São Paulo
+(600, 150.00, 2, 3, 2, 2, '2025-05-20T10:00:00'),  -- São Paulo -> Campo Grande
+(100, 85.00, 3, 1, 3, 3, '2025-05-20T10:00:00');   -- Campo Grande -> Campinas
 
-INSERT INTO EmpresaOnibus.Onibus (capacidade, marca, modelo, idMotorista) VALUES 
-(50, 'Mercedes', 'OF-1721', 1),
-(42, 'Volvo', 'B270F', 2),
-(36, 'Scania', 'K310', 3);
-
-
---5 - Tabela Passageiro
-
+-- 6. PASSAGEIRO
 INSERT INTO EmpresaOnibus.Passageiro (cpf, nome, telefone, dataNascimento, email) VALUES 
 ('12345678901', 'Ana Souza', '11987654321', '1990-05-10', 'ana@gmail.com'),
 ('23456789012', 'Pedro Lima', '11998765432', '1985-08-22', 'pedro@gmail.com'),
 ('34567890123', 'Juliana Costa', '11991234567', '1995-03-15', 'juliana@gmail.com');
 
-
---6 - Tabela Viagem
-
-INSERT INTO EmpresaOnibus.Viagem (distancia, custo, idCidadeOrigem, idCidadeDestino) VALUES 
-(100, 80.00, 1, 2), -- Campinas -> São Paulo
-(600, 150.00, 2, 3), -- São Paulo -> Campo Grande
-(100, 85.00, 3, 1); -- Campo Grande -> Campinas
-
-
---7 - Tabela Passagem
-
-INSERT INTO EmpresaOnibus.Passagem (assento, data_e_hora, idOnibus, idPassageiro,idViagem) VALUES 
-(12, '2025-05-20T10:00:00', 1, 1,1),
-(8, '2025-05-22T08:30:00', 2, 1,2),
-(5, '2025-05-25T07:00:00', 3, 3,3);
+-- 7. PASSAGEM
+INSERT INTO EmpresaOnibus.Passagem (assento, idViagem, idPassageiro) VALUES 
+(12, 1, 1),
+(8, 2, 1),
+(5, 3, 3);
