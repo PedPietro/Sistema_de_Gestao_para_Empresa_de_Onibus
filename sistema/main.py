@@ -18,8 +18,8 @@ def conectouAoBancoDeDados() -> bool: # informará se conseguiu ou não conectar
                             server="regulus.cotuca.unicamp.br",
                             database="BD24147",
                             uid="BD24147", # seu username no servidor de BD
-                            pwd=f"{senha}") # substitui variável senha
-                            # pela senha digitada
+                            pwd=f"{senha}")
+                           
             print("Conexão bem sucedida!")
             return True
         except:
@@ -134,7 +134,6 @@ def cadastroViagens():
         
     escolha = input("Pressione Enter para finalizar...")
     print("Obrigado pelo uso!")
-        
     
 def vendaPassagens():
     #Manutenção passagens, excluir, alterar, buscar e listar
@@ -156,10 +155,6 @@ def vendaPassagens():
         case "3": passagens.buscar()
         case "4": passagens.listar()
         case "5": passagens.disponibilidade()
-        
-
-def registroInicioeFinal():
-    pass
     
 def registroinicioefinal():
     #Registro de inicio e de final de viagem, liberando passageiros e vagas

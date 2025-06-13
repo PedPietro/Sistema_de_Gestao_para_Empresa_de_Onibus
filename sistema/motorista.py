@@ -78,8 +78,3 @@ class ManutencaoMotorista:
             
         meuCursor.commit()
         
-        
-        '''CREATE TABLE EmpresaOnibus.Motorista(
-	nome varchar(50),
-	idMotorista int primary key identity
-	)'''
