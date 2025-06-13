@@ -7,6 +7,59 @@ class ManutencaoDeViagem:
     def __init__(self, conexao):
         self._conexao = conexao
 
+    def listar(self):
+        meuCursor = self._conexao.cursor() # objeto de manipulação de dados
+        # busca no BD os registros de departamentos
+        #try: 
+        result = meuCursor.execute(
+                            ' SELECT idViagem, distancia, '+\
+                            ' custo, idCidadeOrigem,'+\
+                            ' idCidadeDestino'+\
+                            ' FROM EmpresaOnibus.Viagem ')
+        registros = result.fetchall()
+        #except:
+        #   print("Erro na busca dos dados\n")
+        if len(registros) == 0:
+            print("Viagens não encontradas")
+        else:
+            print("Id  Distancia  Custo      ID Cidade Origem  ID Cidade Destino")
+            for viagem in registros:
+                print(f"{str(viagem[0]).ljust(3, ' ')} {str(viagem[1]).ljust(10, ' ')} {str(viagem[2]).ljust(10, ' ')} {str(viagem[3]).ljust(17, ' ')} {str(viagem[4])}")
+                # passagem[2].strftime() serve para converter o datetime do bd em texto
+            input("Tecle [enter] para terminar:")
+
+    def buscar(self):
+        meuCursor = self._conexao.cursor() # objeto de manipulação de dados (insert, update, delete, select)
+        # cursor é o objeto que permite ao programa executar comandos SQL no servidor:
+        viagemEscolhida = 1
+        while viagemEscolhida!= 0:
+        # pedimos que o usuário digite o número do departamento a ser excluído
+            viagemEscolhida = int(input("ID Da Viagem (0 para terminar): "))
+            if viagemEscolhida != 0: # usuário não quer terminar o cadastro
+                # verifica no BD se existe um departamento com esse número digitado
+                result = meuCursor.execute(
+                            ' SELECT idViagem, distancia, '+\
+                            ' custo, idCidadeOrigem,'+\
+                            ' idCidadeDestino'+\
+                            ' FROM Viagem '+\
+                            ' WHERE idViagem = ?', viagemEscolhida)
+                registros = result.fetchall()
+                if len(registros) == 0:     # se o departamento não existe, não podemos excluí-lo
+                    print("Viagem não encontrado.")
+                else:
+                    print("Registro encontrado:")
+                    idViagem            = registros[0][0]
+                    distancia           = registros[0][1]
+                    custo               = registros[0][2]
+                    idCidadeOrigem      = registros[0][3]
+                    idCidadeDestino     = registros[0][4]
+                    print("ID Viagem: " + idViagem)
+                    print("Distância: " + distancia)
+                    print("Custo: " + custo)
+                    print("Id Cidade Origem: " + idCidadeOrigem)
+                    print("Id Cidade Destino: " + idCidadeDestino)
+        meuCursor.commit() # enviar as mudanças para o BD           
+        
     '''def incluir(self):
         meuCursor = self.conexao.cursor() # cria um cursor, objeto de comandos de SQL
         numDepto = 1
@@ -81,55 +134,3 @@ class ManutencaoDeViagem:
         
         meuCursor.commit() # enviar as mudanças para o BD 
 '''
-def listar_viagem(self):
-    meuCursor = self._conexao.cursor() # objeto de manipulação de dados
-    # busca no BD os registros de departamentos
-    #try: 
-    result = meuCursor.execute(
-                        ' SELECT idViagem, distancia, '+\
-                        ' custo, idCidadeOrigem,'+\
-                        ' idCidadeDestino'+\
-                        ' FROM Viagem ')
-    registros = result.fetchall()
-    #except:
-    #   print("Erro na busca dos dados\n")
-    if len(registros) == 0:
-        print("Viagens não encontradas")
-    else:
-        print("ID.   \tDistancia \tCusto   \tID Cidade Origem \tID Cidade Destino")
-        for viagem in registros:
-            print(f"{viagem[0]:<5} \t{viagem[1]:<10} \t{viagem[2]:<15} {viagem[3]:<20} {viagem[4]:<25}")
-            # passagem[2].strftime() serve para converter o datetime do bd em texto
-        input("Tecle [enter] para terminar:")
-
-def buscar(self):
-    meuCursor = self._conexao.cursor() # objeto de manipulação de dados (insert, update, delete, select)
-    # cursor é o objeto que permite ao programa executar comandos SQL no servidor:
-    viagemEscolhida = 1
-    while viagemEscolhida!= 0:
-    # pedimos que o usuário digite o número do departamento a ser excluído
-        viagemEscolhida = int(input("ID Da Viagem (0 para terminar): "))
-        if viagemEscolhida != 0: # usuário não quer terminar o cadastro
-            # verifica no BD se existe um departamento com esse número digitado
-            result = meuCursor.execute(
-                        ' SELECT idViagem, distancia, '+\
-                        ' custo, idCidadeOrigem,'+\
-                        ' idCidadeDestino'+\
-                        ' FROM Viagem '+\
-                        ' WHERE idViagem = ?', viagemEscolhida)
-            registros = result.fetchall()
-            if len(registros) == 0:     # se o departamento não existe, não podemos excluí-lo
-                print("Viagem não encontrado.")
-            else:
-                print("Registro encontrado:")
-                idViagem            = registros[0][0]
-                distancia           = registros[0][1]
-                custo               = registros[0][2]
-                idCidadeOrigem      = registros[0][3]
-                idCidadeDestino     = registros[0][4]
-                print("ID Viagem: "+idViagem)
-                print("Distância: "+distancia)
-                print("Custo: "+custo)
-                print("Id Cidade Origem: "+idCidadeOrigem)
-                print("Id Cidade Destino: "+idCidadeDestino)
-    meuCursor.commit() # enviar as mudanças para o BD           
