@@ -1,6 +1,7 @@
 import os 
 from passageiros import ManutencaoPassageiros
 from passagens import ManutencaoPassagens
+from relatorios import Relatorios
 from viagem import ManutencaoDeViagem
 from motorista import ManutencaoMotorista
 from onibus import ManutencaoOnibus
@@ -151,16 +152,16 @@ def registroinicioefinal():
         case "2": viagem.Registrofinal()
         case "3": viagem.Liberarpassageirosevagas()
 
-'''def relatoriosGerenciais():
+def relatoriosGerenciais():
     os.system('cls') or None
     print("Relatórios Gerenciais:")
     print("0 - Voltar")
-    print("1 - Passageiros em uma Viagem")
+    print("1 - Dados de uma Viagem")
     escolha = input("Escolha: ")
     relatorios = Relatorios(conexao)
     match escolha:
         case "0": return
-        case "1": relatorios.passageirosEmUmaViagem()'''
+        case "1": relatorios.passageirosEmUmaViagem()
 
 if __name__ == '__main__':
     if conectouAoBancoDeDados():

@@ -1,0 +1,22 @@
+Id Viagem        : 1
+Distancia        : 100
+Data Saida       : 20-05-2025 10:00:00
+Custo            : 80.0000
+Cidade Origem    : Campinas
+Cidade Destino   : São Paulo
+Id Onibus        : 1
+Onibus           : BRA1C23
+Id Motorista     : 1
+Nome Monitorista : Carlos Silva
+
+============================================
+
+Id Passagem      : 1
+Assento          : 12
+Id Passageiro    : 1
+Nome Passageiro  : Ana Souza
+
+Id Passagem      : 4
+Assento          : 11
+Id Passageiro    : 2
+Nome Passageiro  : Pedro Lima
