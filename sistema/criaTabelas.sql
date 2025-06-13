@@ -193,6 +193,6 @@ SELECT idOnibus, capacidade, marca, modelo, idMotorista FROM EmpresaOnibus.Onibu
 --PASSAGEIRO
 SELECT idPassageiro, cpf, nome, telefone, dataNascimento, email FROM EmpresaOnibus.Passageiro
 --VIAGEM
-SELECT distancia, custo, idCidadeOrigem, idCidadeDestino FROM EmpresaOnibus.Viagem
+SELECT idViagem, distancia, custo, idCidadeOrigem, idCidadeDestino FROM EmpresaOnibus.Viagem
 --PASSAGEM
 SELECT IdPassagem, assento, data_e_hora, idOnibus, idPassageiro,idViagem FROM EmpresaOnibus.Passagem

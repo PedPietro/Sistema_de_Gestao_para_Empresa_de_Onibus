@@ -3,6 +3,38 @@ class ManutencaoPassagens:
         self._conexao = conexao
         self.passagens = []  # lista que armazena as passagens
 
+    def vender_passagem(self):          # Salva os dados do formulário (incluídos ou editados) no banco de dados
+        meuCursor = self._conexao.cursor() # cria um cursor, objeto de comandos de SQL
+        idPassagem = 1
+        while idPassagem != 0:
+            # pedimos que o usuário digite os dados do novo Passageiro
+            idPassagem = int(input("ID da Passagem (0 para terminar): "))
+            
+            if idPassagem != 0: # usuário não quer terminar o cadastro
+                assento = input("Assento: ")
+                data_e_hora = input("Data e Hora(yyyy-mm-ddThh:hh:hh): ")
+                idOnibus = input("Email do Passageiro: ")
+                idPassageiro = input("ID Passagem: ")
+                idViagem = input("ID Viagem: ")
+     
+                # montamos string com o comando Insert contendo os dados digitados:
+                sComando =  "insert into Passagem " +\
+                            " (assento, data_e_hora, idOnibus, idPassageiro, idViagem)"+\
+                            "VALUES (?,Convert(date, ?, 103), ?, ?, ?)"
+                
+                # fazemos o cursor enviar ao servidor, para análise e execução,
+                # a string com o comando Insert acima
+                try: 
+                    meuCursor.execute(sComando[assento, data_e_hora, idOnibus, idPassageiro, idViagem])
+                    print("Passagem incluída com sucesso!")
+                except: # em caso de erro
+                    print("Não foi possível incluir. Pode haver ID repetido.")
+                
+        # após digitar numDepto = 0, paramos o cadastramento
+        # e enviamos os registros inseridos para serem definitivamente
+        # gravados no servidor de banco de dados remoto
+        meuCursor.commit() # solicita ao servidor que registre as mudanças no BD 
+
     def excluir(self):
         meuCursor = self._conexao.cursor() # objeto de manipulação de dados (insert, update, delete, select)
         # cursor é o objeto que permite ao programa executar comandos SQL no servidor:
