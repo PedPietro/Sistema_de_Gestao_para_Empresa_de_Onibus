@@ -1,6 +1,7 @@
 import os
 import pyodbc as bd
 import getpass as gp
+from datetime import datetime                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
 
 class ManutencaoPassageiros:
     def __init__(self, conexao):
@@ -11,28 +12,31 @@ class ManutencaoPassageiros:
 
     def cadastropassageiros(self):              # Salva os dados do formulário (incluídos ou editados) no banco de dados
         meuCursor = self._conexao.cursor() # cria um cursor, objeto de comandos de SQL
-        cpf = 1
-        while cpf != 0:
+        idPassageiro = 1
+        while idPassageiro != 0:
             # pedimos que o usuário digite os dados do novo Passageiro
-            cpf = int(input("CPF do Passageiro (0 para terminar): "))
+            idPassageiro = int(input("ID do novo Passageiro (0 para terminar): "))
             
-            if cpf != 0: # usuário não quer terminar o cadastro
+            if idPassageiro != 0: # usuário não quer terminar o cadastro
+                cpf = input("CPF: ")
                 nome = input("Nome do Passageiro: ")
-                telefone = input("Cpf do Passageiro: ")
+                telefone = input("Telefone: ")
+                dataNascimento_str = input("Data do Nascimento (yyyy/mm/dd): ")
+                dataNascimento = datetime.strptime(dataNascimento_str, "%Y/%m/%d").date()
                 email = input("Email do Passageiro: ")
      
                 # montamos string com o comando Insert contendo os dados digitados:
-                sComando =  "insert into Passageiro " +\
-                            " (cpf, nome, telefone, email)"+\
-                            "VALUES ("+cpf+", "+nome+", "+telefone+", "+email+")"
+                sComando =  "insert into EmpresaOnibus.Passageiro " +\
+                            " (idPassageiro, cpf, nome, telefone, dataNascimento, email)"+\
+                            "VALUES (?, ?, ?, ?, Convert(date, ?, 13), ?)"
                 
                 # fazemos o cursor enviar ao servidor, para análise e execução,
                 # a string com o comando Insert acima
                 try: 
-                    meuCursor.execute(sComando)
+                    meuCursor.execute(sComando, [idPassageiro, cpf, nome, telefone, str(dataNascimento.date()), email])
                     print("Passageiro incluído com sucesso!")
-                except: # em caso de erro
-                    print("Não foi possível incluir. Pode haver Passageiro repetido.")
+                except Exception as e: # em caso de erro
+                    print(f"Não foi possível incluir. Erro: {e}.")
                     
     def alterar(self):
         # cursor é o objeto que permite ao programa executar comandos SQL no servidor:
