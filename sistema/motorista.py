@@ -4,14 +4,33 @@ class ManutencaoMotorista:
         self.motoristas = []  # lista que armazena os motoristas
 
     #Chico Pediu Para Não Incluir Os Dados Na Tabela Por Python
-    '''def incluir(self):
-        print("Incluir motorista:")
-        id_motorista = input("Digite o ID do motorista: ")
-        nome = input("Digite o nome do motorista: ")
-        cnh = input("Digite o número da CNH: ")
-        motorista = {"id": id_motorista, "nome": nome, "cnh": cnh}
-        self.motoristas.append(motorista)
-        print("Motorista incluído com sucesso!\n")'''
+    def incluir(self):          # Salva os dados do formulário (incluídos ou editados) no banco de dados
+        meuCursor = self._conexao.cursor() # cria um cursor, objeto de comandos de SQL
+        idPassageiro = 1
+        while idPassageiro != 0:
+            # pedimos que o usuário digite os dados do novo Passageiro
+            idPassageiro = int(input("ID do novo Passageiro (0 para terminar): "))
+            
+            if idPassageiro != 0: # usuário não quer terminar o cadastro
+                cpf = input("CPF: ")
+                nome = input("Nome do Passageiro: ")
+                telefone = input("Telefone: ")
+                dataNascimento_str = input("Data do Nascimento (yyyy/mm/dd): ")
+                dataNascimento = datetime.strptime(dataNascimento_str, "%Y/%m/%d").date()
+                email = input("Email do Passageiro: ")
+     
+                # montamos string com o comando Insert contendo os dados digitados:
+                sComando =  "insert into EmpresaOnibus.Passageiro " +\
+                            " (cpf, nome, telefone, dataNascimento, email)"+\
+                            "VALUES (?, ?, ?, Convert(date, ?, 13), ?)"
+                
+                # fazemos o cursor enviar ao servidor, para análise e execução,
+                # a string com o comando Insert acima
+                try: 
+                    meuCursor.execute(sComando,(idPassageiro, cpf, nome, telefone, str(dataNascimento), email))
+                    print("Passageiro incluído com sucesso!")
+                except Exception as e: # em caso de erro
+                    print(f"Não foi possível incluir. Erro: {e}.")
 
     def excluir(self):
         print("Excluir motorista:")

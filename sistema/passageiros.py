@@ -10,30 +10,21 @@ class ManutencaoPassageiros:
 
 
 
-    def cadastropassageiros(self):              # Salva os dados do formulário (incluídos ou editados) no banco de dados
+    def cadastro_motorista(self):              # Salva os dados do formulário (incluídos ou editados) no banco de dados
         meuCursor = self._conexao.cursor() # cria um cursor, objeto de comandos de SQL
-        idPassageiro = 1
-        while idPassageiro != 0:
-            # pedimos que o usuário digite os dados do novo Passageiro
-            idPassageiro = int(input("ID do novo Passageiro (0 para terminar): "))
-            
-            if idPassageiro != 0: # usuário não quer terminar o cadastro
-                cpf = input("CPF: ")
-                nome = input("Nome do Passageiro: ")
-                telefone = input("Telefone: ")
-                dataNascimento_str = input("Data do Nascimento (yyyy/mm/dd): ")
-                dataNascimento = datetime.strptime(dataNascimento_str, "%Y/%m/%d").date()
-                email = input("Email do Passageiro: ")
+        opcao = input("Deseja Vender uma passagem? (s/n): ")
+        if opcao == 's':
+                nome = input("Nome: ")
      
                 # montamos string com o comando Insert contendo os dados digitados:
-                sComando =  "insert into EmpresaOnibus.Passageiro " +\
-                            " (idPassageiro, cpf, nome, telefone, dataNascimento, email)"+\
-                            "VALUES (?, ?, ?, ?, Convert(date, ?, 13), ?)"
+                sComando =  "insert into EmpresaOnibus.Motorista " +\
+                            " (nome)"+\
+                            "VALUES (?)"
                 
                 # fazemos o cursor enviar ao servidor, para análise e execução,
                 # a string com o comando Insert acima
                 try: 
-                    meuCursor.execute(sComando, [idPassageiro, cpf, nome, telefone, str(dataNascimento.date()), email])
+                    meuCursor.execute(sComando,(nome))
                     print("Passageiro incluído com sucesso!")
                 except Exception as e: # em caso de erro
                     print(f"Não foi possível incluir. Erro: {e}.")
@@ -41,35 +32,26 @@ class ManutencaoPassageiros:
     def alterar(self):
         # cursor é o objeto que permite ao programa executar comandos SQL no servidor:
         meuCursor = self._conexao.cursor() # objeto de manipulação de dados
-        passageiroEscolhido = 1
-        while passageiroEscolhido != 0:
+        motoristaEscolhido = 1
+        while motoristaEscolhido != 0:
             # pedimos que o usuário digite o número do departamento a ser alterado
-            passageiroEscolhido = int(input("Número do Passageiro (0 para terminar): "))
+            motoristaEscolhido = int(input("ID do Motorista (0 para terminar): "))
             
-            if passageiroEscolhido!= 0: # usuário não quer terminar o cadastro
+            if motoristaEscolhido!= 0: # usuário não quer terminar o cadastro
                 # verifica no BD se existe um departamento com esse número digitado
                 sComando = 'SELECT idPassageiro, cpf, nome, '+\
                 ' telefone, dataNascimento, email '+\
                 ' FROM EmpresaOnibus.Passageiro '+\
                 ' WHERE idPassageiro = ?'
-                result = meuCursor.execute(sComando, passageiroEscolhido)                   
+                result = meuCursor.execute(sComando, motoristaEscolhido)                   
                 registros = result.fetchall()
                 if len(registros) == 0:
                     print("Passageiro não encontrado.")
                 else:
                     print("Registro encontrado:")
-                    idPassageiro            = registros[0][0]
-                    cpf           = registros[0][1]
-                    nome               = registros[0][2]
-                    telefone      = registros[0][3]
-                    dataNascimento     = registros[0][4]
-                    email     = registros[0][5]
-                    print("ID Passageiro: " + str(idPassageiro))
-                    print("CPF: "+str(cpf))
-                    print("Nome: "+str(nome))
-                    print("Telefone: "+str(telefone))
-                    print("Data De Nascimento: "+str(dataNascimento))
-                    print("Email: "+str(email))
+                    nome            = registros[0][0]
+                    print("ID Passageiro: " + nome)
+                    
 
                     print("Digite os novos dados. [Enter] manterá os atuais:")
                     
@@ -111,11 +93,11 @@ class ManutencaoPassageiros:
                                 "     email = ?, "+\
                                 " where idPassageiro = ? "
                     try:
-                        meuCursor.execute(sComando,idPassageiro, cpf, nome, telefone, dataNascimento, email, passageiroEscolhido)
+                        meuCursor.execute(sComando,(idPassageiro, cpf, nome, telefone, dataNascimento, email, motoristaEscolhido))
                         meuCursor.commit() # registrar definitivamente as mudanças para o BD 
                         print("Passageiro alterado com sucesso!")
-                    except: # em caso de erro
-                        print("Não foi possível alterar. Verifique os dados.")
+                    except Exception as e: # em caso de erro
+                        print(f"Não foi possível alterar. Verifique os dados.Erro {e}")
 
     def excluir(self):
         meuCursor = self._conexao.cursor() # objeto de manipulação de dados (insert, update, delete, select)
@@ -158,8 +140,8 @@ class ManutencaoPassageiros:
                         try: # tente executar o comando abaixo:
                             meuCursor.execute(sComando, passageiroEscolhido)
                             print("Registro excluído.")
-                        except: # em caso de erro
-                            print("Não foi possível excluir. Pode ser um passageiro em uso por outra tabela.") 
+                        except Exception as e: # em caso de erro
+                            print(f"Não foi possível excluir. Pode ser um passageiro em uso por outra tabela. Erro:{e}") 
         
         meuCursor.commit() # enviar as mudanças para o BD 
 #precisava de um commit kkkkkkk
@@ -214,29 +196,7 @@ class ManutencaoPassageiros:
         else:
             print("ID. \tCpf              \tNome                 \tTelefone       \tData De Nascimento     \tEmail")
             for passageiro in registros:
-                #arrumar indexação dessa merda aaaaaaaaaaaaa
-
-                print(f"{passageiro[0]}   \t{passageiro[1]}        \t{passageiro[2]:15}     \t{passageiro[3]}   \t{passageiro[4]}           \t{passageiro[5]}")
-
-                print(f"{passageiro[0]}   \t{passageiro[1]}        \t{passageiro[2]}     \t{passageiro[3]}   \t{passageiro[4]}           \t{passageiro[5]}")
+                print(f"{passageiro[0]}   \t{passageiro[1]}        \t{passageiro[2]:15}     \t{passageiro[3]}   \t{passageiro[4]}           \t{passageiro[5]}")          
 
             input("Tecle [enter] para terminar:")
-
         meuCursor.commit()
-        '''while passageiro < len(registros):
-                print("Registros encontrados: \n")
-                idPassageiro            = registros[0][0]
-                cpf           = registros[0][1]
-                nome               = registros[0][2]
-                telefone      = registros[0][3]
-                dataNascimento     = registros[0][4]
-                email     = registros[0][5]
-                print("ID Passageiro: " + str(idPassageiro))
-                print("CPF: "+cpf)
-                print("Nome: "+nome)
-                print("Telefone: "+telefone)
-                print("Data De Nascimento: "+dataNascimento)
-                print("Email: "+email+"\n")
-                passageiro =+1'''
-      
-        

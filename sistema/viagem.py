@@ -1,6 +1,7 @@
 import os
 import pyodbc as bd
 import getpass as gp
+from datetime import datetime
 
 class ManutencaoDeViagem:
 
@@ -22,9 +23,9 @@ class ManutencaoDeViagem:
         if len(registros) == 0:
             print("Viagens não encontradas")
         else:
-            print("Id  Distancia  Custo      ID Cidade Origem  ID Cidade Destino")
+            print("Id  Distancia Data Saída Custo      ID Cidade Origem  ID Cidade Destino ID Onibus ID Motorista")
             for viagem in registros:
-                print(f"{str(viagem[0]).ljust(3, ' ')} {str(viagem[1]).ljust(10, ' ')} {str(viagem[2]).ljust(10, ' ')} {str(viagem[3]).ljust(17, ' ')} {str(viagem[4])}")
+                print(f"{str(viagem[0]).ljust(3, ' ')} {str(viagem[1]).ljust(10, ' ')} {str(viagem[2]).ljust(10, ' ')} {str(viagem[3]).ljust(17, ' ')} {str(viagem[4]).ljust(20, ' ')} {str(viagem[5]).ljust(23, ' ')} {str(viagem[6]).ljust(26, ' ')} {str(viagem[7])}")
                 # passagem[2].strftime() serve para converter o datetime do bd em texto
             input("Tecle [enter] para terminar:")
 
@@ -41,7 +42,7 @@ class ManutencaoDeViagem:
                             ' SELECT idViagem, distancia, '+\
                             ' custo, idCidadeOrigem,'+\
                             ' idCidadeDestino'+\
-                            ' FROM Viagem '+\
+                            ' FROM EmpresaOnibus.Viagem '+\
                             ' WHERE idViagem = ?', viagemEscolhida)
                 registros = result.fetchall()
                 if len(registros) == 0:     # se o departamento não existe, não podemos excluí-lo
@@ -50,47 +51,53 @@ class ManutencaoDeViagem:
                     print("Registro encontrado:")
                     idViagem            = registros[0][0]
                     distancia           = registros[0][1]
-                    custo               = registros[0][2]
-                    idCidadeOrigem      = registros[0][3]
-                    idCidadeDestino     = registros[0][4]
-                    print("ID Viagem: " + idViagem)
-                    print("Distância: " + distancia)
-                    print("Custo: " + custo)
-                    print("Id Cidade Origem: " + idCidadeOrigem)
-                    print("Id Cidade Destino: " + idCidadeDestino)
+                    dataSaida           = registros[0][2]
+                    custo               = registros[0][3]
+                    idCidadeOrigem      = registros[0][4]
+                    idCidadeDestino     = registros[0][5]
+                    idOnibus            = registros[0][5]
+                    idMotorista         = registros[0][6]
+                    print("ID Viagem: "+idViagem)
+                    print("Distância: "+distancia)
+                    print("Data da Saída: "+dataSaida)
+                    print("Custo: "+custo)
+                    print("Id Cidade Origem: "+idCidadeOrigem)
+                    print("Id Cidade Destino: "+idCidadeDestino)
+                    print("Id Ônibus: "+idOnibus)
+                    print("Id Motorista: "+idMotorista)
         meuCursor.commit() # enviar as mudanças para o BD           
         
-    '''def incluir(self):
-        meuCursor = self.conexao.cursor() # cria um cursor, objeto de comandos de SQL
-        numDepto = 1
-        while numDepto != 0:
-            # pedimos que o usuário digite os dados do novo departamento
-            numDepto = int(input("Número do departamento (0 para terminar): "))
+    def incluir(self):
+        meuCursor = self._conexao.cursor() # cria um cursor, objeto de comandos de SQL
+        opcao = input("Deseja Vender uma passagem? (s/n): ")
+        if opcao == 's':
+            distancia = input("Distância: ")
+            dataSaida_str = input("Data Da Saída: ")
+            dataSaida = datetime.strptime(dataSaida_str, "%Y/%m/%d").date()
+            custo = input("Custo: ")
+            idCidadeOrigem = input("ID Cidade Origem: ")
+            idCidadeDestino = input("ID Cidade Destino: ")
+            idOnibus = input("ID Ônibus: ")
+            idMotorista = input("ID Motorista: ")
+            sComando =  "insert into EmpresaOnibus.Viagem " +\
+                        " (distancia, dataSaida, custo,"+\
+                        " idCidadeOrigem, idCidadeDestino, idOnibus, idMotorista)"+\
+                        "VALUES (?,Convert(date, ?, 103), ?, ?, ?)"
             
-            if numDepto != 0: # usuário não quer terminar o cadastro
-                nomeDepto = input("Nome do departamento: ")
-                gerente_ssn = input("Cpf do gerente: ")
-                dataInicial = input("Data de início do gerente (dd/mm/aaaa): ")
-    
-                # montamos string com o comando Insert contendo os dados digitados:
-                sComando =  "insert into empresa.departamento " +\
-                            " (numDepto, nomeDepto, gerente_NumSegSocial, gerente_dataInicial)"+\
-                            "VALUES (?, ?, ?, Convert(date, ?, 103))"
+            try: 
+                meuCursor.execute(sComando,(distancia, str(dataSaida), custo, idCidadeOrigem, idCidadeDestino, idOnibus, idMotorista))
+                print("Viagem Incluída com sucesso!")
+            except Exception as e: # em caso de erro
+                print(f"Não foi possível incluir a viagem. Erro:{e}.")
                 
-                # fazemos o cursor enviar ao servidor, para análise e execução,
-                # a string com o comando Insert acima
-                try: 
-                    meuCursor.execute(sComando,[numDepto, nomeDepto, gerente_ssn, dataInicial])
-                    print("Departamento incluído com sucesso!")
-                except: # em caso de erro
-                    print("Não foi possível incluir. Pode haver departamento repetido.")
+        meuCursor.commit() # solicita ao servidor que registre as mudanças no BD 
                 
         # após digitar numDepto = 0, paramos o cadastramento
         # e enviamos os registros inseridos para serem definitivamente
         # gravados no servidor de banco de dados remoto
         meuCursor.commit() # solicita ao servidor que registre as mudanças no BD 
-'''
-''' def excluir_viagem(self):
+
+    def excluir_viagem(self):
         meuCursor = self._conexao.cursor() # objeto de manipulação de dados (insert, update, delete, select)
         # cursor é o objeto que permite ao programa executar comandos SQL no servidor:
         viagemEscolhida = 1
@@ -102,8 +109,8 @@ class ManutencaoDeViagem:
                 result = meuCursor.execute(
                             ' SELECT idViagem, distancia, '+\
                             ' custo, idCidadeOrigem,'+\
-                            ' idCidadeDestino'+\
-                            ' FROM Viagem '+\
+                            ' idCidadeDestino, idOnibus, idMotorista'+\
+                            ' FROM EmpresaOnibus.Viagem '+\
                             ' WHERE idViagem = ?', viagemEscolhida)
                 registros = result.fetchall()
                 if len(registros) == 0:     # se o departamento não existe, não podemos excluí-lo
@@ -112,14 +119,20 @@ class ManutencaoDeViagem:
                     print("Registro encontrado:")
                     idViagem            = registros[0][0]
                     distancia           = registros[0][1]
-                    custo               = registros[0][2]
-                    idCidadeOrigem      = registros[0][3]
-                    idCidadeDestino     = registros[0][4]
+                    dataSaida           = registros[0][2]
+                    custo               = registros[0][3]
+                    idCidadeOrigem      = registros[0][4]
+                    idCidadeDestino     = registros[0][5]
+                    idOnibus            = registros[0][5]
+                    idMotorista         = registros[0][6]
                     print("ID Viagem: "+idViagem)
                     print("Distância: "+distancia)
+                    print("Data da Saída: "+dataSaida)
                     print("Custo: "+custo)
                     print("Id Cidade Origem: "+idCidadeOrigem)
                     print("Id Cidade Destino: "+idCidadeDestino)
+                    print("Id Ônibus: "+idOnibus)
+                    print("Id Motorista: "+idMotorista)
                     resposta = input("Deseja realmente excluir (s/n)?")
                     if resposta == "s":
                     # criamos uma string com o comando Delete para excluir o registro lido
@@ -129,8 +142,7 @@ class ManutencaoDeViagem:
                         try: # tente executar o comando abaixo:
                             meuCursor.execute(sComando, viagemEscolhida)
                             print("Registro excluído.")
-                        except: # em caso de erro
-                            print("Não foi possível excluir. Pode ser uma viagem em uso por outra tabela.") 
+                        except Exception as e: # em caso de erro
+                            print(f"Não foi possível excluir. Pode ser uma viagem em uso por outra tabela.Erro: {e}") 
         
         meuCursor.commit() # enviar as mudanças para o BD 
-'''

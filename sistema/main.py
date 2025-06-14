@@ -31,10 +31,9 @@ def seletorDeOpcoes():
         print("1 - Manutenção de Passageiros")
         print("2 - Manutenção de Viagens (Rota, Data, Ônibus, Preço e Vagas)")
         print("3 - Venda de Passagens (Visualizar Assentos Disponíveis)")
-        print("4 - Registro de Início e Fim de Viagem")
-        print("5 - Manutenção de Motoristas")
-        print("6 - Consulta de Ônibus")
-        print("7 - Relatórios Gerenciais")
+        print("4 - Manutenção de Motoristas")
+        print("5 - Consulta de Ônibus")
+        print("6 - Relatórios Gerenciais")
         print("0 - Sair")
         
         opcao = str(input("Escolha: "))
@@ -42,10 +41,10 @@ def seletorDeOpcoes():
             case "1": cadastroPassageiros()
             case "2": cadastroViagens()
             case "3": vendaPassagens()
-            case "4": registroinicioefinal()
-            case "5": cadastroMotorista()
-            case "6": buscaOnibus()
-            case "7": relatoriosGerenciais()
+            #case "4": registroinicioefinal()
+            case "4": cadastroMotorista()
+            case "5": buscaOnibus()
+            case "6": relatoriosGerenciais()
             case "0": 
                 print("Saindo... Obrigado pelo uso!")
                 break
@@ -105,16 +104,16 @@ def cadastroViagens():
     os.system('cls') or None
     print("Manutenção de Viagens:")
     print("0 - Voltar")
-    print("1 - Excluir Viagem")
-    print("2 - Alterar Viagem")
+    print("1 - Incluir Viagem")
+    print("2 - Excluir Viagem")
     print("3 - Buscar Viagem")
     print("4 - Listar Viagem")
     escolha = input("Escolha: ")
     viagem = ManutencaoDeViagem(conexao)
     match escolha:
         case "0": return
-        case "1": viagem.excluir()
-        case "2": viagem.alterar()
+        case "1": viagem.incluir()
+        case "2": viagem.excluir_viagem()
         case "3": viagem.buscar()
         case "4": viagem.listar()
 
@@ -135,9 +134,8 @@ def vendaPassagens():
         case "2": passagens.cancelar()
         case "3": passagens.buscar()
         case "4": passagens.listar()
-        case "5": passagens.disponibilidade()
 
-def registroinicioefinal():
+'''def registroinicioefinal():
     os.system('cls') or None
     print("Registro de Viagens:")
     print("0 - Voltar")
@@ -151,6 +149,9 @@ def registroinicioefinal():
         case "1": viagem.Registroinicio()
         case "2": viagem.Registrofinal()
         case "3": viagem.Liberarpassageirosevagas()
+
+        NÃO FEITO
+'''
 
 def relatoriosGerenciais():
     os.system('cls') or None

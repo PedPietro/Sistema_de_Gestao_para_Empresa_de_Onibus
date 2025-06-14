@@ -52,11 +52,8 @@ class ManutencaoOnibus:
         if len(registros) == 0:
             print("Motoristas não encontrados.")
         else:
-            print("12345678901234567890123456789012345678901234567890123456789012345678901234567890")
             print("ID. \tCapacidade  \tMarca  \tModelo \tID Motorista")
             for motorista in registros:
-                #arrumar indexação dessa merda aaaaaaaaaaaaa
-                
                 print(f"{motorista[0]}   \t{motorista[1]}          \t{motorista[2]} \t{motorista[3]} \t{motorista[4]}           ")
             input("Tecle [enter] para terminar:")
 

@@ -3,7 +3,7 @@ class ManutencaoUF:
         self._conexao = conexao
         self.estados = []  # Lista para armazenar os estados (UF)
 
-def listar_viagem(self):
+def listar(self):
     meuCursor = self._conexao.cursor() # objeto de manipulação de dados
     # busca no BD os registros de departamentos
     #try: 
