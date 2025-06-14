@@ -69,7 +69,7 @@ class ManutencaoDeViagem:
         
     def incluir(self):
         meuCursor = self._conexao.cursor() # cria um cursor, objeto de comandos de SQL
-        opcao = input("Deseja Vender uma passagem? (s/n): ")
+        opcao = input("Deseja Incluir uma Viagem? (s/n): ")
         if opcao == 's':
             distancia = input("Distância: ")
             dataSaida_str = input("Data Da Saída: ")
@@ -89,7 +89,8 @@ class ManutencaoDeViagem:
                 print("Viagem Incluída com sucesso!")
             except Exception as e: # em caso de erro
                 print(f"Não foi possível incluir a viagem. Erro:{e}.")
-                
+        else:
+            input("Tecle [Enter] para Sair")        
         meuCursor.commit() # solicita ao servidor que registre as mudanças no BD 
                 
         # após digitar numDepto = 0, paramos o cadastramento

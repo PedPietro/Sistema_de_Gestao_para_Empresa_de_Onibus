@@ -41,7 +41,6 @@ def seletorDeOpcoes():
             case "1": cadastroPassageiros()
             case "2": cadastroViagens()
             case "3": vendaPassagens()
-            #case "4": registroinicioefinal()
             case "4": cadastroMotorista()
             case "5": buscaOnibus()
             case "6": relatoriosGerenciais()
@@ -135,23 +134,6 @@ def vendaPassagens():
         case "3": passagens.buscar()
         case "4": passagens.listar()
 
-'''def registroinicioefinal():
-    os.system('cls') or None
-    print("Registro de Viagens:")
-    print("0 - Voltar")
-    print("1 - Registrar Início da Viagem")
-    print("2 - Registrar Fim da Viagem")
-    print("3 - Liberar Passageiros e Vagas")
-    escolha = input("Escolha: ")
-    viagem = ManutencaoDeViagem(conexao)
-    match escolha:
-        case "0": return
-        case "1": viagem.Registroinicio()
-        case "2": viagem.Registrofinal()
-        case "3": viagem.Liberarpassageirosevagas()
-
-        NÃO FEITO
-'''
 
 def relatoriosGerenciais():
     os.system('cls') or None

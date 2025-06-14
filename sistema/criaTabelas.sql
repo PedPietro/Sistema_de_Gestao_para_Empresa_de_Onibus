@@ -86,6 +86,52 @@ ALTER TABLE EmpresaOnibus.Passagem ADD CONSTRAINT FK_Passagem_4
     FOREIGN KEY (idViagem)
     REFERENCES EmpresaOnibus.Viagem (idViagem);
 
+-- INSERINDO DADOS NO MODELO RELACIONAL DA EMPRESA DE ÔNIBUS
+
+-- 1. UF
+INSERT INTO EmpresaOnibus.UF (siglaUF, nomeUF) VALUES 
+('SP', 'São Paulo'),
+('RJ', 'Rio de Janeiro'),
+('MG', 'Minas Gerais'),
+('MS', 'Mato Grosso do Sul');
+
+-- 2. CIDADE
+INSERT INTO EmpresaOnibus.Cidade (nome, endereco_terminal, siglaUF) VALUES 
+('Campinas', 'Terminal Barão Geraldo', 'SP'),
+('São Paulo', 'Terminal Centro', 'SP'),
+('Campo Grande', 'Terminal Campo Grande', 'MS');
+
+-- 3. MOTORISTA
+INSERT INTO EmpresaOnibus.Motorista (nome) VALUES 
+('Carlos Silva'),
+('Maria Oliveira'),
+('João Pereira');
+
+-- 4. ÔNIBUS
+INSERT INTO EmpresaOnibus.Onibus (capacidade, marca, modelo, placa) VALUES 
+(50, 'Mercedes', 'OF-1721', 'BRA1C23'),
+(42, 'Volvo', 'B270F', 'DEF2D45'),
+(36, 'Scania', 'K310', 'GHI3E67');
+
+-- 5. VIAGEM
+INSERT INTO EmpresaOnibus.Viagem (distancia, custo, idCidadeOrigem, idCidadeDestino, idOnibus, idMotorista, dataSaida) VALUES 
+(100, 80.00, 1, 2, 1, 1, '2025-05-20T10:00:00'),   -- Campinas -> São Paulo
+(600, 150.00, 2, 3, 2, 2, '2025-05-20T10:00:00'),  -- São Paulo -> Campo Grande
+(100, 85.00, 3, 1, 3, 3, '2025-05-20T10:00:00');   -- Campo Grande -> Campinas
+
+-- 6. PASSAGEIRO
+INSERT INTO EmpresaOnibus.Passageiro (cpf, nome, telefone, dataNascimento, email) VALUES 
+('12345678901', 'Ana Souza', '11987654321', '1990-05-10', 'ana@gmail.com'),
+('23456789012', 'Pedro Lima', '11998765432', '1985-08-22', 'pedro@gmail.com'),
+('34567890123', 'Juliana Costa', '11991234567', '1995-03-15', 'juliana@gmail.com');
+
+-- 7. PASSAGEM
+INSERT INTO EmpresaOnibus.Passagem (assento, idViagem, idPassageiro) VALUES 
+(12, 1, 1),
+(8, 2, 1),
+(5, 3, 3);
+
+
 select * from EmpresaOnibus.Passageiro
 select * from EmpresaOnibus.Passagem
 select * from EmpresaOnibus.Viagem
@@ -93,106 +139,3 @@ select * from EmpresaOnibus.Onibus
 select * from EmpresaOnibus.UF
 select * from EmpresaOnibus.Cidade
 select * from EmpresaOnibus.Motorista
-
-
---1 - Tabela UF
-
-INSERT INTO EmpresaOnibus.UF (siglaUF, nomeUF) VALUES 
-('SP', 'São Paulo'),
-('RJ', 'Rio de Janeiro'),
-('MG', 'Minas Gerais'),
-('MS', 'Mato Grosso do Sul');
-
-
---2 - Tabela Cidade
-
-INSERT INTO EmpresaOnibus.Cidade (nome, endereco_terminal, siglaUF) VALUES 
-('Campinas', 'Terminal Barão Geraldo', 'SP'),
-('São Paulo', 'Terminal Centro', 'SP'),
-('Campo Grande', 'Terminal Campo Grande', 'MS');
-
-
---3 - Tabela Motorista
-
-INSERT INTO EmpresaOnibus.Motorista (nome) VALUES 
-('Carlos Silva'),
-('Maria Oliveira'),
-('João Pereira');
-
-
---4 - Tabela Onibus
-
-INSERT INTO EmpresaOnibus.Onibus (capacidade, marca, modelo, idMotorista) VALUES 
-(50, 'Mercedes', 'OF-1721', 1),
-(42, 'Volvo', 'B270F', 2),
-(36, 'Scania', 'K310', 3);
-
-
-ALTER TABLE EmpresaOnibus.Onibus
-ADD placa varchar(8) NOT NULL like '[A-Z][A-Z][A-Z][0-9][A-Z][0-9][0-9]'
-
-ALTER TABLE EmpresaOnibus.Onibus
-ADD CONSTRAINT chk_placa_mercosul CHECK (
-    placa COLLATE Latin1_General_CS_AS LIKE '[A-Z][A-Z][A-Z][0-9][A-Z][0-9][0-9]'
-);
-
-UPDATE EmpresaOnibus.Onibus
-SET placa = 'BRA1C23' WHERE idOnibus = 1;
-
-UPDATE EmpresaOnibus.Onibus
-SET placa = 'DEF2D45' WHERE idOnibus = 2;
-
-UPDATE EmpresaOnibus.Onibus
-SET placa = 'GHI3E67' WHERE idOnibus = 3;
-
-
---5 - Tabela Passageiro
-
-INSERT INTO EmpresaOnibus.Passageiro (cpf, nome, telefone, dataNascimento, email) VALUES 
-('12345678901', 'Ana Souza', '11987654321', '1990-05-10', 'ana@gmail.com'),
-('23456789012', 'Pedro Lima', '11998765432', '1985-08-22', 'pedro@gmail.com'),
-('34567890123', 'Juliana Costa', '11991234567', '1995-03-15', 'juliana@gmail.com');
-
-
---6 - Tabela Viagem
-
-INSERT INTO EmpresaOnibus.Viagem (distancia, custo, idCidadeOrigem, idCidadeDestino) VALUES 
-(100, 80.00, 1, 2), -- Campinas -> São Paulo
-(600, 150.00, 2, 3), -- São Paulo -> Campo Grande
-(100, 85.00, 3, 1); -- Campo Grande -> Campinas
-
-
---7 - Tabela Passagem
-INSERT INTO EmpresaOnibus.Passagem (assento, data_e_hora, idOnibus, idPassageiro,idViagem) VALUES 
-(12, '2025-05-20T10:00:00', 1, 1,1),
-(8, '2025-05-22T08:30:00', 2, 1,2),
-(5, '2025-05-25T07:00:00', 3, 3,3);
-
---SE NECESSÁRIO:
-/*drop table EmpresaOnibus.Passageiro
-drop table EmpresaOnibus.Passagem
-drop table EmpresaOnibus.UF
-drop table EmpresaOnibus.Viagem
-drop table EmpresaOnibus.Onibus
-drop table EmpresaOnibus.Motorista
-drop table EmpresaOnibus.Cidade*/
-
---SELECTS DO JEITO DO CHICO:
---POR QUE FEZ ISSO? Para podermos se necessário guardas
---se necessário as colunas em PYTHON e porque o Chico fez o mesmo :p
-
---ERRADO, ARRUMAR EM CASA (PIPI)
---UF
-SELECT siglaUF, nomeUF FROM EmpresaOnibus.UF 
---CIDADE
-SELECT idCidade, nome, endereco_terminal, siglaUF FROM EmpresaOnibus.Cidade 
---MOTORISTA
-SELECT idMotorista, nome FROM EmpresaOnibus.Motorista
---ONIBUS
-SELECT idOnibus, capacidade, marca, modelo, idMotorista FROM EmpresaOnibus.Onibus
---PASSAGEIRO
-SELECT idPassageiro, cpf, nome, telefone, dataNascimento, email FROM EmpresaOnibus.Passageiro
---VIAGEM
-SELECT idViagem, distancia, custo, idCidadeOrigem, idCidadeDestino FROM EmpresaOnibus.Viagem
---PASSAGEM
-SELECT IdPassagem, assento, data_e_hora, idOnibus, idPassageiro,idViagem FROM EmpresaOnibus.Passagem

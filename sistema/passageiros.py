@@ -10,40 +10,46 @@ class ManutencaoPassageiros:
 
 
 
-    def cadastro_motorista(self):              # Salva os dados do formulário (incluídos ou editados) no banco de dados
+    def incluir(self):          # Salva os dados do formulário (incluídos ou editados) no banco de dados
         meuCursor = self._conexao.cursor() # cria um cursor, objeto de comandos de SQL
-        opcao = input("Deseja Vender uma passagem? (s/n): ")
-        if opcao == 's':
-                nome = input("Nome: ")
+        opcao = input("Deseja Incluir Um Passageiro?(s/n)")
+        if opcao == "s":
+                cpf = input("CPF: ")
+                nome = input("Nome do Passageiro: ")
+                telefone = input("Telefone: ")
+                dataNascimento_str = input("Data do Nascimento (yyyy/mm/dd): ")
+                dataNascimento = datetime.strptime(dataNascimento_str, "%Y/%m/%d").date()
+                email = input("Email do Passageiro: ")
      
                 # montamos string com o comando Insert contendo os dados digitados:
-                sComando =  "insert into EmpresaOnibus.Motorista " +\
-                            " (nome)"+\
-                            "VALUES (?)"
+                sComando =  "insert into EmpresaOnibus.Passageiro " +\
+                            " (cpf, nome, telefone, dataNascimento, email)"+\
+                            "VALUES (?, ?, ?, Convert(date, ?, 13), ?)"
                 
                 # fazemos o cursor enviar ao servidor, para análise e execução,
                 # a string com o comando Insert acima
                 try: 
-                    meuCursor.execute(sComando,(nome))
+                    meuCursor.execute(sComando,(cpf, nome, telefone, str(dataNascimento), email))
                     print("Passageiro incluído com sucesso!")
                 except Exception as e: # em caso de erro
                     print(f"Não foi possível incluir. Erro: {e}.")
-                    
+        else:
+            input("Tecle [Enter] para sair")        
     def alterar(self):
         # cursor é o objeto que permite ao programa executar comandos SQL no servidor:
         meuCursor = self._conexao.cursor() # objeto de manipulação de dados
-        motoristaEscolhido = 1
-        while motoristaEscolhido != 0:
+        passageiroEscolhido = 1
+        while passageiroEscolhido != 0:
             # pedimos que o usuário digite o número do departamento a ser alterado
-            motoristaEscolhido = int(input("ID do Motorista (0 para terminar): "))
+            passageiroEscolhido = int(input("ID do Passageiro (0 para terminar): "))
             
-            if motoristaEscolhido!= 0: # usuário não quer terminar o cadastro
+            if passageiroEscolhido!= 0: # usuário não quer terminar o cadastro
                 # verifica no BD se existe um departamento com esse número digitado
                 sComando = 'SELECT idPassageiro, cpf, nome, '+\
                 ' telefone, dataNascimento, email '+\
                 ' FROM EmpresaOnibus.Passageiro '+\
                 ' WHERE idPassageiro = ?'
-                result = meuCursor.execute(sComando, motoristaEscolhido)                   
+                result = meuCursor.execute(sComando, passageiroEscolhido)                   
                 registros = result.fetchall()
                 if len(registros) == 0:
                     print("Passageiro não encontrado.")
@@ -93,7 +99,7 @@ class ManutencaoPassageiros:
                                 "     email = ?, "+\
                                 " where idPassageiro = ? "
                     try:
-                        meuCursor.execute(sComando,(idPassageiro, cpf, nome, telefone, dataNascimento, email, motoristaEscolhido))
+                        meuCursor.execute(sComando,(idPassageiro, cpf, nome, telefone, dataNascimento, email, passageiroEscolhido))
                         meuCursor.commit() # registrar definitivamente as mudanças para o BD 
                         print("Passageiro alterado com sucesso!")
                     except Exception as e: # em caso de erro
@@ -144,7 +150,7 @@ class ManutencaoPassageiros:
                             print(f"Não foi possível excluir. Pode ser um passageiro em uso por outra tabela. Erro:{e}") 
         
         meuCursor.commit() # enviar as mudanças para o BD 
-#precisava de um commit kkkkkkk
+
     def buscar(self):
         meuCursor = self._conexao.cursor() # objeto de manipulação de dados (insert, update, delete, select)
         # cursor é o objeto que permite ao programa executar comandos SQL no servidor:
