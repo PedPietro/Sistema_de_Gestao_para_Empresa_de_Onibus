@@ -15,9 +15,8 @@ Este projeto tem como objetivo desenvolver um sistema para auxiliar no gerenciam
 
 ## 🔧 Tecnologias previstas:
 
-- Linguagem de programação: a definir (ex: Python, C#)
+- Linguagem de programação: Python
 - Banco de dados: MySQL
-- Interface: a definir (desktop e web)
 
 ## 👥 Equipe de desenvolvimento:
 

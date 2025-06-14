@@ -19,7 +19,7 @@ def listar(self):
     else:
         print("Sigla UF   \tNome")
         for uf in registros:
-            print(f"{uf[0]:<5} \t{uf[1]:<10}")
+            print(f"{(uf[0]).ljust(3, ' ')} \t{uf[1]}")
             # passagem[2].strftime() serve para converter o datetime do bd em texto
         input("Tecle [enter] para terminar:")
 

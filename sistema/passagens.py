@@ -123,5 +123,5 @@ class ManutencaoPassagens:
         else:
             print("ID.   \tAssento \tData e Hora   \tID Ônibus \tID Passageiro \tID Viagem")
             for passagem in registros:
-                print(f"{passagem[0]:<5} \t{passagem[1]:<10} \t{passagem[2]:<15} {passagem[3]:<20} {passagem[4]:<25} {passagem[5]:<30}")
+                print(f"{(passagem[0]).ljust(3, ' ')} \t{(passagem[1]).ljust(6, ' ')} \t{(passagem[2]).ljust(26, ' ')} {(passagem[3].ljust(29, ' '))} {(passagem[4]).ljust(32, ' ')} {passagem[5]}")
             input("Tecle [enter] para terminar:")

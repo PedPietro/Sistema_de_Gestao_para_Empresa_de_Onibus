@@ -144,8 +144,8 @@ class ManutencaoOnibus:
             print("Motoristas não encontrados.")
         else:
             print("ID. \tCapacidade  \tMarca  \tModelo \tID Motorista")
-            for motorista in registros:
-                print(f"{str(motorista[0]).ljust(3, ' ')}   \t{str(motorista[1]).ljust(6, ' ')}          \t{str(motorista[2]).ljust(26, ' ')} \t{str(motorista[3]).ljust(40, ' ')} \t{str(motorista[4]).ljust(43, ' ')}           ")
+            for onibus in registros:
+                print(f"{str(onibus[0]).ljust(3, ' ')}   \t{str(onibus[1]).ljust(6, ' ')}          \t{str(onibus[2]).ljust(26, ' ')} \t{str(onibus[3]).ljust(40, ' ')} \t{str(onibus[4])} ")
             input("Tecle [enter] para terminar:")
 
         meuCursor.commit()

@@ -5,6 +5,8 @@ from relatorios import Relatorios
 from viagem import ManutencaoDeViagem
 from motorista import ManutencaoMotorista
 from onibus import ManutencaoOnibus
+from cidade import ManutencaoCidade
+from UF import ManutencaoUF
 #from relatorios import Relatorios
 
 import pyodbc as bd
@@ -34,6 +36,8 @@ def seletorDeOpcoes():
         print("4 - Manutenção de Motoristas")
         print("5 - Consulta de Ônibus")
         print("6 - Relatórios Gerenciais")
+        print("7 - Manutenção de Cidades")
+        print("8 - Manutenção de UF")
         print("0 - Sair")
         
         opcao = str(input("Escolha: "))
@@ -43,7 +47,8 @@ def seletorDeOpcoes():
             case "3": vendaPassagens()
             case "4": cadastroMotorista()
             case "5": buscaOnibus()
-            case "6": relatoriosGerenciais()
+            case "6": manutencaoCidade()
+            case "7": manutencaoUF()
             case "0": 
                 print("Saindo... Obrigado pelo uso!")
                 break
@@ -63,7 +68,7 @@ def cadastroPassageiros():
     passageiros = ManutencaoPassageiros(conexao)
     match escolha:
         case "0": return
-        case "1": passageiros.cadastropassageiros()
+        case "1": passageiros.incluir()
         case "2": passageiros.excluir()
         case "3": passageiros.alterar()
         case "4": passageiros.buscar()
@@ -134,17 +139,43 @@ def vendaPassagens():
         case "3": passagens.buscar()
         case "4": passagens.listar()
 
-
-def relatoriosGerenciais():
+def manutencaoUF():
     os.system('cls') or None
-    print("Relatórios Gerenciais:")
+    print("Manutenção de Passageiros:")
     print("0 - Voltar")
-    print("1 - Dados de uma Viagem")
+    print("1 - Cadastro de UF")
+    print("2 - Excluir UF")
+    print("3 - Alterar UF")
+    print("4 - Buscar UF")
+    print("5 - Listar UF")
     escolha = input("Escolha: ")
-    relatorios = Relatorios(conexao)
+    uf = ManutencaoUF(conexao)
     match escolha:
         case "0": return
-        case "1": relatorios.passageirosEmUmaViagem()
+        case "1": uf.incluir()
+        case "2": uf.excluir()
+        case "3": uf.alterar()
+        case "4": uf.buscar()
+        case "5": uf.listar()
+
+def manutencaoCidade():
+    os.system('cls') or None
+    print("Manutenção de Passageiros:")
+    print("0 - Voltar")
+    print("1 - Cadastro de Cidades")
+    print("2 - Excluir Cidades")
+    print("3 - Alterar Cidades")
+    print("4 - Buscar Cidades")
+    print("5 - Listar Cidades")
+    escolha = input("Escolha: ")
+    cidades = ManutencaoCidade(conexao)
+    match escolha:
+        case "0": return
+        case "1": cidades.incluir()
+        case "2": cidades.excluir()
+        case "3": cidades.alterar()
+        case "4": cidades.buscar()
+        case "5": cidades.listar()
 
 if __name__ == '__main__':
     if conectouAoBancoDeDados():

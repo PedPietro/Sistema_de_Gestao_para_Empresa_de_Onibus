@@ -55,9 +55,12 @@ class ManutencaoPassageiros:
                     print("Passageiro não encontrado.")
                 else:
                     print("Registro encontrado:")
-                    nome            = registros[0][0]
-                    print("ID Passageiro: " + nome)
-                    
+                    idPassageiro            = registros[0][0]
+                    cpf            = registros[0][1]
+                    nome            = registros[0][2]
+                    telefone            = registros[0][3]
+                    dataNascimento            = registros[0][4]
+                    email            = registros[0][5]
 
                     print("Digite os novos dados. [Enter] manterá os atuais:")
                     
@@ -126,11 +129,11 @@ class ManutencaoPassageiros:
                 else:
                     print("Registro encontrado:")
                     idPassageiro            = registros[0][0]
-                    cpf           = registros[0][1]
-                    nome               = registros[0][2]
-                    telefone      = registros[0][3]
-                    dataNascimento     = registros[0][4]
-                    email     = registros[0][5]
+                    cpf                     = registros[0][1]
+                    nome                    = registros[0][2]
+                    telefone                = registros[0][3]
+                    dataNascimento          = registros[0][4]
+                    email                   = registros[0][5]
                     print("ID Passageiro: " + str(idPassageiro))
                     print("CPF: "+cpf)
                     print("Nome: "+nome)
@@ -187,22 +190,19 @@ class ManutencaoPassageiros:
         meuCursor.commit()
                     
     def listar(self):
-        meuCursor = self._conexao.cursor() # objeto de manipulação de dados (insert, update, delete, select)
-        # cursor é o objeto que permite ao programa executar comandos SQL no servidor:
-        # pedimos que o usuário digite o número do departamento a ser excluído
-                # verifica no BD se existe um departamento com esse número digitado
+        meuCursor = self._conexao.cursor()
         result = meuCursor.execute(
                             ' SELECT idPassageiro, cpf, '+\
                             ' nome, telefone,'+\
                             ' dataNascimento, email'+\
                             ' FROM EmpresaOnibus.Passageiro ')
         registros = result.fetchall()
-        if len(registros) == 0:     # se o departamento não existe, não podemos excluí-lo
+        if len(registros) == 0:
             print("Passageiros não encontrados.")
         else:
             print("ID. \tCpf              \tNome                 \tTelefone       \tData De Nascimento     \tEmail")
             for passageiro in registros:
-                print(f"{passageiro[0]}   \t{passageiro[1]}        \t{passageiro[2]:15}     \t{passageiro[3]}   \t{passageiro[4]}           \t{passageiro[5]}")          
+                print(f"{(passageiro[0]).ljust(3, ' ')}   \t{(passageiro[1]).ljust(15, ' ')}        \t{(passageiro[2]).ljust(46, ' ')}     \t{passageiro[3].ljust(58, ' ')}   \t{passageiro[4].ljust(69, ' ')}           \t{passageiro[5]}")          
 
             input("Tecle [enter] para terminar:")
         meuCursor.commit()
